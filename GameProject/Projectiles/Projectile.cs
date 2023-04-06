@@ -10,6 +10,12 @@ namespace GameProject.Projectiles
 {
     internal abstract class Projectile : IMovable , IGameComponent
     {
+        private string tag;
+
+        private int id;
+
+        public int ID { get { return id; } set { id = value; } }
+        public string Tag { get { return tag; } set { tag = value; } }
 
         private Texture2D _texture;
 
@@ -37,7 +43,7 @@ namespace GameProject.Projectiles
         }
         public IInputReader InputReader { get; set; }
 
-        private Rectangle hitbox;
+        protected Rectangle hitbox;
         public Rectangle Hitbox
         {
             get { return hitbox; }

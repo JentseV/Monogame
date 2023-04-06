@@ -19,6 +19,14 @@ namespace GameProject
     internal abstract class Character : IGameComponent
     {
 
+        private int id;
+
+        public int ID { get { return id; } set { id = value; } }
+
+        private string tag;
+
+        public string Tag { get { return tag; } set { tag = value; } }
+
         private float hitpoints;
 
         protected Rectangle hitbox;
@@ -54,7 +62,7 @@ namespace GameProject
         public Vector2 Direction { get { return direction; } set { direction = value; } }
         public Vector2 Speed { get { return speed; } set { speed = value; } }
         public Vector2 Center { get ; set; }
-        public Rectangle Hitbox { get ; set ; }
+        public Rectangle Hitbox { get { return hitbox; } set { hitbox = value; }  }
 
 
         public void Draw(SpriteBatch spriteBatch)

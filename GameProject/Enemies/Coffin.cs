@@ -29,13 +29,14 @@ namespace GameProject.Enemies
 
         private Texture2D _textureAttackRight, _textureAttackUp, _textureAttackFront;
         private Texture2D TextureAttacking;
-        private bool moving,attacking;
+        public bool moving,attacking,dead;
         private Vector2 heroPos,facing;
         private Animation _animationIdle;
         private Animation _animationRun;
         private Animation _animationAttacking;
         public Coffin(Vector2 speed, Vector2 position, Texture2D[] textures)
         {
+            this.Hitpoints = 3;
             this.Hitbox = new Rectangle((int)Position.X, (int)Position.Y, 40, 40);
             this.Center = new Vector2(50 + position.X, 55 + position.Y);
             //SPRITESHEET 74x55
@@ -94,19 +95,20 @@ namespace GameProject.Enemies
             spriteBatch.Draw(hitboxText, Center , Hitbox, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
         }
 
-        public new void Update(GameTime gameTime, Hero hero)
+        public new void Update(GameTime gameTime, Hero hero, List<IGameComponent> gameComponents)
         {
-            this.Center = new Vector2(this.Position.X - 32, this.Position.Y - 32);
-            this.Hitbox = new Rectangle((int)Center.X, (int)Center.Y, 32, 32);
+            this.Center = new Vector2(this.Position.X + 16, this.Position.Y + 16);
+            this.Hitbox = new Rectangle((int)Center.X , (int)Center.Y , 32, 36);
             
 
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             timeSinceLastAttack -= deltaTime;
 
-           
+            
             heroPos = hero.Position;
             Direction = Vector2.Normalize(heroPos - Position);
 
+            CheckCollision(gameComponents);
             DecideAction();
             GetFacingDirection();
             DecideAnimation();
@@ -220,6 +222,33 @@ namespace GameProject.Enemies
             {
                 _animationIdle.Update(gameTime);
             }
+        }
+
+        private void CheckCollision(List<IGameComponent> gameComponents)
+        {
+            foreach(Bullet gameComponent1 in gameComponents)
+            if (this.Hitbox.Intersects(gameComponent1.Hitbox))
+            {
+                if(gameComponent1.Tag == "BulletHero")
+                {
+                    gameComponent1.destroy = true;
+                    TakeDamage();
+                }
+            }
+        }
+
+        private void TakeDamage()
+        {
+            if(this.Hitpoints > 0)
+            {
+                
+                this.Hitpoints -= 1;
+            }
+            else
+            {
+                dead = true;
+            }
+            
         }
     }
 }

@@ -40,7 +40,7 @@ namespace GameProject
             base.Initialize();
             hero = new Hero(heroTextures, new KeyboardReader());
             coffin = new Coffin(new Vector2(1f,1f),new Vector2(50f,50f),coffinTextures);
-            for(int i = 0; i < 1; i++)
+            for(int i = 0; i < 3; i++)
             {
                 coffins.Add(new Coffin(new Vector2(1f, 1f), new Vector2(test[i], test[i]), coffinTextures));
             }
@@ -101,7 +101,11 @@ namespace GameProject
             
             foreach(Coffin c in coffins)
             {
-                c.Update(gameTime,hero) ;
+                if(c.dead == false)
+                {
+                    c.Update(gameTime, hero, hero.bullets);
+                }
+                
             }
             hero.CheckCollision(testHitboxes);
             
@@ -121,7 +125,11 @@ namespace GameProject
 
             foreach (Coffin c in coffins)
             {
-                c.Draw(_spriteBatch);
+                if(c.dead == false)
+                {
+                    c.Draw(_spriteBatch);
+                }
+                
             }
             //_spriteBatch.Draw(coffinTextures[0], new Vector2(50f, 50f), Color.White);
             //_spriteBatch.Draw(heroTextures[10], testHitbox,Color.Green);

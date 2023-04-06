@@ -17,13 +17,14 @@ namespace GameProject.Content
 {
     internal class Hero : Character, IMovable , IGameComponent
     {
+
         private Texture2D _texture, _textureRunning, _textureIdling , _textureShooting , _textureUpRun , _textureDownRun;
         private Texture2D _textureIdleFacingFront, _textureIdleFacingRight, _textureIdleFacingUp, _textureIdleFacingUpRight, _textureIdleFacingDownRight, _textureIdle;
         private Texture2D _textureShootUp, _textureShootFront, _textureShootRight, _textureShootUpRight, _textureShootDownRight;
         private Texture2D _textureRunRight, _textureRunUpRight, _textureRunDownRight;
         private Texture2D hitboxText;
 
-        private List<Bullet> bullets = new List<Bullet>();
+        public List<IGameComponent> bullets = new List<IGameComponent>();
 
         
 
@@ -85,6 +86,8 @@ namespace GameProject.Content
         private MovementManager movementManager;
         public Hero(Texture2D[] textures, IInputReader inputReader)
         {
+            this.Tag = "Hero";
+
             this._texture = textures[3];
             this._textureIdle = textures[3];
             this._textureUpRun = textures[0];
@@ -198,7 +201,8 @@ namespace GameProject.Content
             {
                 b.Update(gameTime);
                 if (b.Destroy()) {
-                    toDelete = bullets.Find(o => o.id == b.id);
+                    toDelete = (Bullet)bullets.Find(o => o.ID == b.ID);
+                   
                 };
             }
 
@@ -377,7 +381,7 @@ namespace GameProject.Content
             if (timeSinceLastShot <= 0)
             {
                 shooting = true;
-                Bullet bullet = new Bullet(bullets.Count,Position, facing, new Vector2(2f, 2f), bulletTexture);
+                Bullet bullet = new Bullet(bullets.Count,"BulletHero",Center, facing, new Vector2(2f, 2f), bulletTexture);
                 bullets.Add(bullet);
                 timeSinceLastShot = shotCooldown;
             }
