@@ -68,7 +68,43 @@ namespace GameProject.Projectiles
             {
                 case Vector2(0f, -1f):
                     {
-                        rotation = 90f;
+                        rotation = MathHelper.ToRadians(90f);
+                        break;
+                    }
+                case Vector2(0f, 1f):
+                    {
+                        rotation = MathHelper.ToRadians(270f);
+                        break;
+                    }
+                case Vector2(1f, -1f):
+                    {
+                        rotation = MathHelper.ToRadians(135f);
+                        break;
+                    }
+                case Vector2(1f, 1f):
+                    {
+                        rotation = MathHelper.ToRadians(225f);
+                        break;
+                    }
+                case Vector2(-1f, 1f):
+                    {
+                        rotation = MathHelper.ToRadians(315f);
+                        break;
+                    }
+                case Vector2(-1f, -1f):
+                    {
+                        rotation = MathHelper.ToRadians(-315f);
+                        break;
+                    }
+                case Vector2(1f, 0f):
+                    {
+                        rotation = MathHelper.ToRadians(180f);
+                        break;
+                    }
+
+                default:
+                    {
+                        rotation = 0f;
                         break;
                     }
             }
