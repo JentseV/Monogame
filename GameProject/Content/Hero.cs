@@ -1,6 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameProject.Projectiles;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SharpDX.DirectWrite;
+using SharpDX.Mathematics.Interop;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,30 +15,36 @@ using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace GameProject.Content
 {
-    internal class Hero : IMovable , IGameComponent
+    internal class Hero : Character, IMovable , IGameComponent
     {
-        private Texture2D _texture, _textureRun, _textureIdle, _textureUpRun , _textureDownRun;
-        private Texture2D _textureIdleFacingFront, _textureIdleFacingRight, _textureIdleFacingUp;
-        private Texture2D _textureShootUp, _textureShootFront, _textureShootRight, _textureShootLeft;
-        private Texture2D _textureRunRight;
+        private Texture2D _texture, _textureRunning, _textureIdling , _textureShooting , _textureUpRun , _textureDownRun;
+        private Texture2D _textureIdleFacingFront, _textureIdleFacingRight, _textureIdleFacingUp, _textureIdleFacingUpRight, _textureIdleFacingDownRight, _textureIdle;
+        private Texture2D _textureShootUp, _textureShootFront, _textureShootRight, _textureShootUpRight, _textureShootDownRight;
+        private Texture2D _textureRunRight, _textureRunUpRight, _textureRunDownRight;
         private Texture2D hitboxText;
 
-        private string facing;
-        string facing2 = null;
+        private List<Bullet> bullets = new List<Bullet>();
+
+        
+
+        private float shotCooldown;
+        private float timeSinceLastShot;
+
+        private Texture2D bulletTexture;
+        private bool moving = false, movable= true, shooting=false, canShoot= false;
+        private Vector2 facing;
         private SpriteEffects flip = SpriteEffects.None;
         private Animation _animation;
-        KeyboardState state;
-        private Keys lastKeyPress;
+        private Animation _animationRun;
+        private Animation _animationShooting;
 
         private Vector2 position;
         private Vector2 speed;
         private Vector2 direction;
-        private Vector2 center;
-
-
+       
         private Rectangle hitbox;
 
-        public  Vector2 Position
+        public new Vector2 Position
         {
             get { return position; }
             set { position = value; }
@@ -61,18 +70,8 @@ namespace GameProject.Content
             set { inputReader = value; }
         }
 
-        public Vector2 Center
-        {
-            get
-            {
-                return center;
-            }
-            set
-            {
-                center = value;
-            }
-        }
-        public Rectangle Hitbox {
+        private float timerToShoot = 0;
+        public new Rectangle Hitbox {
             get
             {
                 return hitbox;
@@ -97,195 +96,236 @@ namespace GameProject.Content
             this._textureRunRight = textures[6];
             this._textureShootRight = textures[7];
             this._textureShootUp = textures[8];
+            this._textureRunDownRight = textures[11];
+            this._textureRunUpRight = textures[12];
+            this._textureShootDownRight = textures[13];
+            this._textureShootUpRight = textures[14];
+            this._textureIdleFacingUpRight = textures[15];
+            this._textureIdleFacingDownRight = textures[16];
+            this.bulletTexture = textures[17];
+            _textureIdling = _textureIdle;
+            _textureRunning = _textureRunRight;
+            _textureShooting = _textureShootUp;
+
             hitboxText = textures[10];
             position = new Vector2(2f, 2f);
             
             this.Hitbox = new Rectangle((int)this.position.X, (int)this.position.Y, 48,43);
-            this.Center = new Vector2(this.position.X + this._texture.Width / 2f, this.position.Y + this._texture.Height / 2f);
+
+
+            shotCooldown = 0.5f;
+            timeSinceLastShot = shotCooldown;
             speed = new Vector2(3f, 3f);
+
             _animation = new Animation();
+            _animationRun = new Animation();
+            _animationShooting = new Animation();
+
             _animation.GetFramesFromTextureProperties(_texture.Width, _texture.Height, 6, 1);
-            // (48,43)
+            _animationRun.GetFramesFromTextureProperties(_textureRunning.Width, _textureRunning.Height, 8, 1);
+            _animationShooting.GetFramesFromTextureProperties(_textureShooting.Width, _textureShooting.Height, 6, 1);
+            
             this.movementManager = new MovementManager();
             this.inputReader = inputReader;
         }
 
 
-        public void Draw(SpriteBatch spriteBatch)
+        public new void Draw(SpriteBatch spriteBatch)
         {
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            if (Keyboard.GetState().IsKeyDown(Keys.Space) && canShoot)
             {
-                _animation.GetFramesFromTextureProperties(_texture.Width, _texture.Height, 8, 1);
-                spriteBatch.Draw(_texture, position, _animation.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 2f,flip, 0f);
-
+                
+                spriteBatch.Draw(_textureShooting, position, _animationShooting.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            else if( moving)
             {
-                _animation.GetFramesFromTextureProperties(_texture.Width, _texture.Height, 8, 1);
-                spriteBatch.Draw(_texture, position, _animation.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 2f, flip, 0f);
-
+                
+                spriteBatch.Draw(_textureRunning, position, _animationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
             }
-
-            else if (Keyboard.GetState().IsKeyDown(Keys.Up))
-            {
-                _animation.GetFramesFromTextureProperties(_texture.Width, _texture.Height, 8, 1);
-                spriteBatch.Draw(_texture, position, _animation.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 2f, SpriteEffects.None, 0f);
-            }
-
-            else if (Keyboard.GetState().IsKeyDown(Keys.Down))
-            {
-                _animation.GetFramesFromTextureProperties(_texture.Width, _texture.Height, 8, 1);
-                spriteBatch.Draw(_texture, position, _animation.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 2f, SpriteEffects.None, 0f);
-            }
-
             else
             {
-                _animation.GetFramesFromTextureProperties(_texture.Width, _texture.Height, 6, 1);
-                spriteBatch.Draw(_texture, position, _animation.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 2f, flip, 0f);
+                
+                spriteBatch.Draw(_textureIdling, position, _animation.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
             }
 
-             spriteBatch.Draw(hitboxText, Center, Hitbox, Color.White, 0f , new Vector2(0f,0f), 1f,SpriteEffects.None,0f);
+            foreach(Bullet b in bullets)
+            {
+                b.Draw(spriteBatch);
+            }
+
+            //spriteBatch.Draw(hitboxText, Center, Hitbox, Color.White, 0f , new Vector2(0f,0f), 1f,SpriteEffects.None,0f);
             
         }
 
 
-        public void Update(GameTime gameTime)
+        public new void Update(GameTime gameTime)
         {
+
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            timeSinceLastShot -= deltaTime;
+
             
+
             this.Center = new Vector2(this.position.X + 48 / 2f, this.position.Y + 43 / 2f);
             this.hitbox.X = (int)Center.X;
             this.hitbox.Y = (int)Center.Y;
-            state = Keyboard.GetState();
 
-            foreach(Keys k in state.GetPressedKeys())
+            direction = inputReader.ReadInput();
+            if (direction.X > 0 || direction.X < 0 || direction.Y > 0 || direction.Y < 0)
             {
-                lastKeyPress = k;
-                if(k == Keys.Up)
-                {
-                    facing = "Up";
-                }
-                else if ( k == Keys.Down)
-                {
-                    facing = "Down";
-                }
-                else if( k == Keys.Right)
-                {
-                    facing = "Right";
-                }
-                else if(k == Keys.Left)
-                {
-                    facing = "Left";
-                }
+                moving = true;
+                shooting = false;
+                canShoot = false;
             }
- 
-            DecideAnimation();
+            else
+            {
+                moving = false;
+                canShoot = true;
+            }
+
+            if(Keyboard.GetState().IsKeyDown(Keys.Space) && canShoot){
+                Shoot();
+            }
+
             Move();
-            _animation.Update(gameTime);
+            GetFacingDirection();
+            DecideAnimation();
+            UpdateAnimations(gameTime);
+
+            Bullet toDelete = null;
+            foreach (Bullet b in bullets)
+            {
+                b.Update(gameTime);
+                if (b.Destroy()) {
+                    toDelete = bullets.Find(o => o.id == b.id);
+                };
+            }
+
+            if (toDelete != null)
+            {
+                bullets.Remove(toDelete);
+            }
+
+            
+        }
+
+        private void GetFacingDirection()
+        {
+            if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            {
+                facing = new Vector2(1f, 0f); 
+            }
+             if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            {
+                facing = new Vector2(-1f, 0f);
+            }
+             if (Keyboard.GetState().IsKeyDown(Keys.Up))
+            {
+                facing = new Vector2(0f, -1f);
+            }
+             if (Keyboard.GetState().IsKeyDown(Keys.Down))
+            {
+                facing = new Vector2(0f, 1f);
+            }
+             if(Keyboard.GetState().IsKeyDown(Keys.Up) && Keyboard.GetState().IsKeyDown(Keys.Right))
+            {
+                facing = new Vector2(1f, -1f);
+            }
+             if(Keyboard.GetState().IsKeyDown(Keys.Up) && Keyboard.GetState().IsKeyDown(Keys.Left))
+            {
+                facing = new Vector2(-1f, -1f);
+            }
+             if (Keyboard.GetState().IsKeyDown(Keys.Down) && Keyboard.GetState().IsKeyDown(Keys.Left))
+            {
+                facing = new Vector2(-1f, 1f);
+                
+            }
+             if (Keyboard.GetState().IsKeyDown(Keys.Down) && Keyboard.GetState().IsKeyDown(Keys.Right))
+            {
+                facing = new Vector2(1f, 1f);
+            }
+
         }
 
         private void DecideAnimation()
         {
-            direction = inputReader.ReadInput();
-
-            if (direction.X > 0 )
-            {
-                flip = SpriteEffects.None;
-                _texture = _textureRunRight;
-            }
-
-            else if(direction.X < 0)
-            {
-                flip = SpriteEffects.FlipHorizontally;
-                _texture = _textureRunRight;
-            }
-
-            else if( direction.Y < 0)
-            {
-                flip = SpriteEffects.None;
-                _texture = _textureUpRun;
-            }
-
-            else if (direction.Y > 0)
-            {
-
-                flip = SpriteEffects.None;
-                _texture = _textureDownRun;
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Space))
-            {
-                _animation.GetFramesFromTextureProperties(_texture.Width, _texture.Height, 6, 1);
-                switch (facing)
-                {
-                    case "Up":
-                        {
-                            _texture = _textureShootUp;
-                            break;
-                        }
-                    case "Down":
-                        {
-                            _texture = _textureShootFront;
-                            break;
-                        }
-                    case "Right":
-                        {
-                            
-                            _texture = _textureShootRight;
-                            break;
-                        }
-                    case "Left":
-                        {
-                            flip = SpriteEffects.FlipHorizontally;
-                            _texture = _textureShootRight;
-                            break;
-                        }
-                }
-                
-            }
-
-            else
+            
+            if (moving)
             {
                 switch (facing)
                 {
-                    case "Up":
+                    case Vector2(1f, 0f):
                         {
-                            _animation.GetFramesFromTextureProperties(_texture.Width, _texture.Height, 6, 1);
-                            _texture = _textureIdleFacingUp;
-                            break;
-                        }
-
-                    case "Right":
-                        {
-                            _animation.GetFramesFromTextureProperties(_texture.Width, _texture.Height, 6, 1);
                             flip = SpriteEffects.None;
-                            _texture = _textureIdleFacingRight;
+                            _textureIdling = _textureIdleFacingRight;
+                            _textureShooting = _textureShootRight;
+                            _textureRunning = _textureRunRight;
                             break;
                         }
 
-                    case "Left":
+                    case Vector2(-1f, 0f):
                         {
-                            _animation.GetFramesFromTextureProperties(_texture.Width, _texture.Height, 6, 1);
                             flip = SpriteEffects.FlipHorizontally;
-                            _texture = _textureIdleFacingRight;
+                            _textureRunning = _textureRunRight;
+                            _textureIdling = _textureIdleFacingRight;
+                            _textureShooting = _textureShootRight;
                             break;
                         }
-                    case "Down":
+                    case Vector2(0f, -1f):
                         {
-                            _animation.GetFramesFromTextureProperties(_texture.Width, _texture.Height, 6, 1);
-                            _texture = _textureIdleFacingFront;
+                            flip = SpriteEffects.None;
+                            _textureIdling = _textureIdleFacingUp;
+                            _textureShooting = _textureShootUp;
+                            _textureRunning = _textureUpRun;
+                            break;
+                        }
+                    case Vector2(0f, 1f):
+                        {
+                            flip = SpriteEffects.None;
+                            _textureIdling = _textureIdleFacingFront;
+                            _textureShooting = _textureShootFront;
+                            _textureRunning = _textureDownRun;
                             break;
                         }
 
-                    default:
+                    case Vector2(1f, -1f):
                         {
-                            _animation.GetFramesFromTextureProperties(_texture.Width, _texture.Height, 6, 1);
-                            _texture = _textureIdle;
+                            flip = SpriteEffects.None;
+                            _textureRunning = _textureRunUpRight;
+                            _textureIdling = _textureIdleFacingUpRight;
+                            _textureShooting = _textureShootUpRight;
+                            break;
+                        }
+
+                    case Vector2(-1f, -1f):
+                        {
+                            flip = SpriteEffects.FlipHorizontally;
+                            _textureRunning = _textureRunUpRight;
+                            _textureIdling = _textureIdleFacingUpRight;
+                            _textureShooting = _textureShootUpRight;
+                            break;
+                        }
+
+                    case Vector2(1f, 1f):
+                        {
+                            flip = SpriteEffects.None;
+                            _textureRunning = _textureRunDownRight;
+                            _textureIdling = _textureIdleFacingDownRight;
+                            _textureShooting = _textureShootDownRight;
+                            break;
+                        }
+
+                    case Vector2(-1f, 1f):
+                        {
+                            flip = SpriteEffects.FlipHorizontally;
+                            _textureRunning = _textureRunDownRight;
+                            _textureIdling = _textureIdleFacingDownRight;
+                            _textureShooting = _textureShootDownRight;
                             break;
                         }
                 }
-
             }
-
         }
         public void ChangeInput(IInputReader inputReader)
         {
@@ -294,32 +334,55 @@ namespace GameProject.Content
 
         public void Move()
         {
-            movementManager.Move(this);
+          
+             if(movable) movementManager.Move(this);
+            
+        }
+
+        public void UpdateAnimations(GameTime gameTime)
+        {
+            if (moving)
+            {
+                _animationRun.Update(gameTime);
+            }else if (shooting)
+            {
+                _animationShooting.Update(gameTime);
+            }
+            else
+            {
+                _animation.Update(gameTime);
+            }
+            
+            
         }
 
         public void CheckCollision(Rectangle[] rect)
         {
-            foreach(Rectangle r in rect)
+
+            foreach (Rectangle r in rect)
             {
                 if (this.hitbox.Intersects(r))
                 {
-                    if (facing2 == null) facing2 = facing;
-                    if (facing.Contains(facing2))
-                    {
-                        Speed = Vector2.Zero;
-                        break;
-                    }
-                    else
-                    {
-                        Speed = new Vector2(3f, 3f);
-                        break;
-                    }
+                    
                 }
                 else
                 {
-                    facing2 = null;
+
                 }
             }
+        }
+
+        public void Shoot()
+        {
+            if (timeSinceLastShot <= 0)
+            {
+                shooting = true;
+                Bullet bullet = new Bullet(bullets.Count,Position, facing, new Vector2(2f, 2f), bulletTexture);
+                bullets.Add(bullet);
+                timeSinceLastShot = shotCooldown;
+            }
+            
+            
         }
     }
 }

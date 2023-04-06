@@ -98,3 +98,24 @@ D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\heroText\Fi
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\heroText\Fixed\shootRight.xnb
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\heroText\Fixed\shootUp.xnb
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\heroText\red_square.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\heroText\Fixed\runDownRight.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\heroText\Fixed\runUpRight.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\heroText\Fixed\shootDownRight.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\heroText\Fixed\shootUpRight.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\heroText\Player Angle 2 Sheet.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\heroText\Fixed\idleFacingDownRight.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\heroText\Fixed\idleFacingUpRight.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Projectiles\MuzzleFlash.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Projectiles\SpongeBullet.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coffinEn\Coffin Back Sheet.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coffinEn\Coffin Front Sheet.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coffinEn\Coffin Side Sheet.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coffinEn\coffinIdleFront.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coffinEn\coffinWalkRight.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coffinEn\coffinIdleUp.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coffinEn\coffinRunUp.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coffinEn\coffinIdleRight.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coffinEn\coffinRunDown.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coffinEn\coffinAttackFront.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coffinEn\coffinAttackRight.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coffinEn\coffinAttackUp.xnb

@@ -1,7 +1,10 @@
 ﻿using GameProject.Content;
+using GameProject.Enemies;
+using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace GameProject
 {
@@ -10,7 +13,14 @@ namespace GameProject
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Hero hero;
-        private Texture2D[] heroTextures = new Texture2D[11];
+        private Coffin coffin;
+        private int[] test = { 10, 50, 100, 300, 200 };
+        private List<Coffin> coffins = new List<Coffin>();
+        private Texture2D[] coffinTextures = new Texture2D[10];
+        private Texture2D[] heroTextures = new Texture2D[18];
+        private Texture2D bulletText;
+
+        private Bullet bullet;
 
         private Rectangle[] testHitboxes = new Rectangle[2];
         private Rectangle testHitbox, testHitbox2;
@@ -29,6 +39,11 @@ namespace GameProject
             // TODO: Add your initialization logic here
             base.Initialize();
             hero = new Hero(heroTextures, new KeyboardReader());
+            coffin = new Coffin(new Vector2(1f,1f),new Vector2(50f,50f),coffinTextures);
+            for(int i = 0; i < 1; i++)
+            {
+                coffins.Add(new Coffin(new Vector2(1f, 1f), new Vector2(test[i], test[i]), coffinTextures));
+            }
             testHitbox = new Rectangle(250, 100, 32, 32);
             testHitbox2 = new Rectangle(550, 100, 32, 32);
             testHitboxes[0] = testHitbox;
@@ -48,6 +63,29 @@ namespace GameProject
             heroTextures[8] = Content.Load<Texture2D>("heroText/Fixed/shootUp");
             heroTextures[9] = Content.Load<Texture2D>("heroText/Fixed/runDown");
             heroTextures[10] = Content.Load<Texture2D>("heroText/red_square");
+            heroTextures[11] = Content.Load<Texture2D>("heroText/Fixed/runDownRight");
+            heroTextures[12] = Content.Load<Texture2D>("heroText/Fixed/runUpRight");
+            heroTextures[13] = Content.Load<Texture2D>("heroText/Fixed/shootDownRight");
+            heroTextures[14] = Content.Load<Texture2D>("heroText/Fixed/shootUpRight");
+            heroTextures[15] = Content.Load<Texture2D>("heroText/Fixed/idleFacingUpRight");
+            heroTextures[16] = Content.Load<Texture2D>("heroText/Fixed/idleFacingDownRight");
+
+            heroTextures[17] = Content.Load<Texture2D>("Projectiles/SpongeBullet");
+
+            coffinTextures[0] = Content.Load<Texture2D>("coffinEn/coffinIdleFront");
+            coffinTextures[1] = Content.Load<Texture2D>("coffinEn/coffinWalkRight");
+            coffinTextures[2] = Content.Load<Texture2D>("coffinEn/coffinRunUp");
+            coffinTextures[3] = Content.Load<Texture2D>("coffinEn/coffinIdleUp");
+            coffinTextures[4] = Content.Load<Texture2D>("coffinEn/coffinIdleRight");
+            coffinTextures[5] = Content.Load<Texture2D>("coffinEn/coffinRunDown");
+            coffinTextures[6] = Content.Load<Texture2D>("coffinEn/coffinAttackFront");
+            coffinTextures[7] = Content.Load<Texture2D>("coffinEn/coffinAttackRight");
+            coffinTextures[8] = Content.Load<Texture2D>("coffinEn/coffinAttackUp");
+            coffinTextures[9] = Content.Load<Texture2D>("heroText/red_square");
+
+
+
+
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
@@ -60,6 +98,11 @@ namespace GameProject
 
             // TODO: Add your update logic here
             hero.Update(gameTime);
+            
+            foreach(Coffin c in coffins)
+            {
+                c.Update(gameTime,hero) ;
+            }
             hero.CheckCollision(testHitboxes);
             
              
@@ -74,8 +117,15 @@ namespace GameProject
 
             _spriteBatch.Begin();
             hero.Draw(_spriteBatch);
-            _spriteBatch.Draw(heroTextures[10], testHitbox,Color.Green);
-            _spriteBatch.Draw(heroTextures[10], testHitbox2, Color.Green);
+            
+
+            foreach (Coffin c in coffins)
+            {
+                c.Draw(_spriteBatch);
+            }
+            //_spriteBatch.Draw(coffinTextures[0], new Vector2(50f, 50f), Color.White);
+            //_spriteBatch.Draw(heroTextures[10], testHitbox,Color.Green);
+            //_spriteBatch.Draw(heroTextures[10], testHitbox2, Color.Green);
 
             _spriteBatch.End();
 

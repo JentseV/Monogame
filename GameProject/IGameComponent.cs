@@ -11,7 +11,6 @@ namespace GameProject
     internal interface IGameComponent
     {
         Vector2 Position { get; set; }
-        Vector2 Center { get; set; }
         Rectangle Hitbox { get; set; }
         void Update(GameTime gameTime);
         void Draw(SpriteBatch spriteBatch);
