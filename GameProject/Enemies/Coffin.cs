@@ -31,11 +31,12 @@ namespace GameProject.Enemies
         private Animation _animationIdle;
         private Animation _animationRun;
         private Animation _animationAttacking;
+        private Animation _animationHit;
         public Coffin(Vector2 speed, Vector2 position, Texture2D[] textures)
         {
             this.Hitpoints = 3;
             this.Hitbox = new Rectangle((int)Position.X, (int)Position.Y, 40, 40);
-            this.Center = new Vector2(50 + position.X, 55 + position.Y);
+            this.Center = new Vector2(50 + Position.X, 55 + Position.Y);
             //SPRITESHEET 74x55
             this.Speed = speed;
             this.Position = position;
@@ -51,6 +52,7 @@ namespace GameProject.Enemies
             this.TextureAttackRight = textures[7];
             this.TextureAttackUp = textures[8];
             this.TextureAttackFront = textures[6];
+            this.TextureHit = textures[10];
 
             this.TextureIdling = TextureIdle;
             this.TextureRunning = TextureRunRight;
@@ -61,6 +63,9 @@ namespace GameProject.Enemies
             _animationIdle = new Animation();
             _animationRun = new Animation();
             _animationAttacking = new Animation();
+            _animationHit = new Animation();
+
+            _animationHit.GetFramesFromTextureProperties(this.TextureHit.Width, this.TextureHit.Height, 1, 1);
             _animationIdle.GetFramesFromTextureProperties(this.TextureIdle.Width, this.TextureIdle.Height, 6, 1);
             _animationRun.GetFramesFromTextureProperties(this.TextureRunRight.Width, this.TextureRunRight.Height, 14, 1);
             _animationAttacking.GetFramesFromTextureProperties(this.TextureAttacking.Width, this.TextureAttacking.Height, 18, 1);
@@ -77,19 +82,24 @@ namespace GameProject.Enemies
         {
             if (Moving)
             {
-                spriteBatch.Draw(TextureRunning, Position, _animationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 0.7f, flip, 0f);
+                spriteBatch.Draw(TextureRunning, Center, _animationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
             }
             else if(Attacking)
             {
 
-                spriteBatch.Draw(TextureAttacking, Position, _animationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 0.7f, flip, 0f);
+                spriteBatch.Draw(TextureAttacking, Center, _animationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
+            }
+
+            else if (Hit)
+            {
+                spriteBatch.Draw(TextureHit, Center, null, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
             }
             else
             {
-                spriteBatch.Draw(TextureIdling, Position, _animationIdle.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 0.7f, flip, 0f);
+                spriteBatch.Draw(TextureIdling, Center, _animationIdle.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
             }
 
-            //spriteBatch.Draw(hitboxText, Center , Hitbox, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(hitboxText, Center , Hitbox, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
         }
 
         public new void Update(GameTime gameTime, Hero hero, List<IGameComponent> gameComponents)
@@ -100,8 +110,14 @@ namespace GameProject.Enemies
 
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             TimeSinceLastAttack -= deltaTime;
-
             
+
+            if (Hit)
+            {
+                Moving = false;
+                Attacking = false;
+            }
+
             heroPos = hero.Position;
             Direction = Vector2.Normalize(heroPos - Position);
 
@@ -139,6 +155,7 @@ namespace GameProject.Enemies
 
         public void DecideAction()
         {
+
             if (Vector2.Distance(Position, heroPos) >= 32f)
             {
                 Moving = true;
@@ -162,6 +179,7 @@ namespace GameProject.Enemies
                             TextureIdling = TextureIdleFacingRight;
                             TextureRunning = TextureRunRight;
                             TextureAttacking = TextureAttackRight;
+                        
                             break;
                         }
 
@@ -238,7 +256,7 @@ namespace GameProject.Enemies
         {
             if(this.Hitpoints > 0)
             {
-                
+                this.Hit = true;
                 this.Hitpoints -= 1;
             }
             else

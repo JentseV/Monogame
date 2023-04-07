@@ -20,8 +20,8 @@ namespace GameProject
     {
 
 
-        private bool moving, attacking, dead;
-
+        private bool moving, attacking, dead, hit;
+        public bool Hit { get { return hit; } set { hit = value; } }
         public bool Moving { get { return moving; } set { moving = value; } }
         public bool Attacking { get { return attacking; } set { attacking = value; } }
         public bool Dead { get { return dead; } set { dead = value; } }
@@ -52,10 +52,11 @@ namespace GameProject
 
         private Texture2D _textureAttackRight, _textureAttackUp, _textureAttackFront;
         private Texture2D _textureAttacking;
-
+        private Texture2D _textureHit;
         private Texture2D _texture, _textureRunning, _textureIdling;
         private Texture2D _textureIdleFacingFront, _textureIdleFacingRight, _textureIdleFacingUp, _textureIdle;
         private Texture2D _textureRunRight, _textureUpRun, _textureDownRun;
+        public Texture2D TextureHit { get { return _textureHit; } set { _textureHit = value; } }
         public Texture2D Texture{get { return _texture; }set { _texture = value; }}
         public Texture2D TextureRunning { get { return _textureRunning; } set { _textureRunning = value;  } }
         public Texture2D TextureIdling { get { return _textureIdling; } set { _textureIdling = value; } }

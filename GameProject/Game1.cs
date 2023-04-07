@@ -19,7 +19,7 @@ namespace GameProject
         private Coffin coffin;
         private int[] test = { 10, 50, 100, 300, 200 };
         private List<Coffin> coffins = new List<Coffin>();
-        private Texture2D[] coffinTextures = new Texture2D[10];
+        private Texture2D[] coffinTextures = new Texture2D[11];
         private Texture2D[] heroTextures = new Texture2D[18];
         
         private Rectangle[] testHitboxes = new Rectangle[2];
@@ -30,8 +30,8 @@ namespace GameProject
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
-            _graphics.PreferredBackBufferHeight = 1080;
-            _graphics.PreferredBackBufferWidth = 1920;
+            _graphics.PreferredBackBufferHeight = 800;
+            _graphics.PreferredBackBufferWidth = 1200;
             _graphics.ApplyChanges();
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
@@ -88,6 +88,7 @@ namespace GameProject
             coffinTextures[7] = Content.Load<Texture2D>("coffinEn/coffinAttackRight");
             coffinTextures[8] = Content.Load<Texture2D>("coffinEn/coffinAttackUp");
             coffinTextures[9] = Content.Load<Texture2D>("heroText/red_square");
+            coffinTextures[10] = Content.Load<Texture2D>("coffinEn/coffinHitAnimation");
 
             background = Content.Load<Texture2D>("testTree");
 
