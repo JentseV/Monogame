@@ -34,30 +34,6 @@ namespace GameProject.Content
         private Animation _animationRun;
         private Animation _animationShooting;
 
-        private Vector2 position;
-        private Vector2 speed;
-        private Vector2 direction;
-       
-        private Rectangle hitbox;
-
-        public new Vector2 Position
-        {
-            get { return position; }
-            set { position = value; }
-        }
-
-        public Vector2 Speed
-        {
-            get { return speed; }
-            set { speed = value; }
-        }
-
-        public Vector2 Direction
-        {
-            get { return direction; }
-            set { direction = value; }
-        }
-
 
         private IInputReader inputReader;
         public IInputReader InputReader
@@ -104,14 +80,14 @@ namespace GameProject.Content
             _textureShooting = _textureShootUp;
 
             hitboxText = textures[10];
-            position = new Vector2(2f, 2f);
+            Position = new Vector2(2f, 2f);
             
-            this.Hitbox = new Rectangle((int)this.position.X, (int)this.position.Y, 48,43);
+            this.Hitbox = new Rectangle((int)this.Position.X, (int)this.Position.Y, 48,43);
 
 
             AttackCooldown = 0.5f;
             TimeSinceLastAttack = AttackCooldown;
-            speed = new Vector2(3f, 3f);
+            Speed = new Vector2(3f, 3f);
 
             _animation = new Animation();
             _animationRun = new Animation();
@@ -133,17 +109,17 @@ namespace GameProject.Content
             if (Keyboard.GetState().IsKeyDown(Keys.Space) && canShoot)
             {
                 
-                spriteBatch.Draw(_textureShooting, position, _animationShooting.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
+                spriteBatch.Draw(_textureShooting, Position, _animationShooting.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
             }
             else if( moving)
             {
                 
-                spriteBatch.Draw(_textureRunning, position, _animationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
+                spriteBatch.Draw(_textureRunning, Position, _animationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
             }
             else
             {
                 
-                spriteBatch.Draw(_textureIdling, position, _animation.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
+                spriteBatch.Draw(_textureIdling, Position, _animation.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
             }
 
             foreach(Bullet b in bullets)
@@ -164,14 +140,12 @@ namespace GameProject.Content
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             TimeSinceLastAttack -= deltaTime;
 
-            
-
-            this.Center = new Vector2(this.position.X + 48 / 2f, this.position.Y + 43 / 2f);
+            this.Center = new Vector2(this.Position.X + 48 / 2f, this.Position.Y + 43 / 2f);
             this.hitbox.X = (int)Center.X;
             this.hitbox.Y = (int)Center.Y;
 
-            direction = inputReader.ReadInput();
-            if (direction.X > 0 || direction.X < 0 || direction.Y > 0 || direction.Y < 0)
+            Direction = inputReader.ReadInput();
+            if (Direction.X > 0 || Direction.X < 0 || Direction.Y > 0 || Direction.Y < 0)
             {
                 moving = true;
                 shooting = false;

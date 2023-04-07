@@ -19,6 +19,13 @@ namespace GameProject
     internal abstract class Character : IGameComponent
     {
 
+
+        private bool moving, attacking, dead;
+
+        public bool Moving { get { return moving; } set { moving = value; } }
+        public bool Attacking { get { return attacking; } set { attacking = value; } }
+        public bool Dead { get { return dead; } set { dead = value; } }
+
         private float attackCooldown = 2f;
         private float timeSinceLastAttack;
 
@@ -42,6 +49,10 @@ namespace GameProject
 
         #region 
         //Textures
+
+        private Texture2D _textureAttackRight, _textureAttackUp, _textureAttackFront;
+        private Texture2D _textureAttacking;
+
         private Texture2D _texture, _textureRunning, _textureIdling;
         private Texture2D _textureIdleFacingFront, _textureIdleFacingRight, _textureIdleFacingUp, _textureIdle;
         private Texture2D _textureRunRight, _textureUpRun, _textureDownRun;
@@ -55,6 +66,10 @@ namespace GameProject
         public Texture2D TextureRunRight { get { return _textureRunRight; } set { _textureRunRight = value; } }
         public Texture2D TextureIdle { get { return _textureIdle; } set { _textureIdle = value; } }
         public Texture2D TextureDownRun { get { return _textureDownRun; } set { _textureDownRun = value; } }
+        public Texture2D TextureAttackRight { get { return _textureAttackRight; } set { _textureAttackRight = value; } }
+        public Texture2D TextureAttacking { get { return _textureAttacking; } set { _textureAttacking = value; } }
+        public Texture2D TextureAttackUp { get { return _textureAttackUp; } set { _textureAttackUp = value; } }
+        public Texture2D TextureAttackFront { get { return _textureAttackFront; } set { _textureAttackFront = value; } }
         #endregion
 
         #region

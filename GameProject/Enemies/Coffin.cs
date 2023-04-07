@@ -26,9 +26,7 @@ namespace GameProject.Enemies
         
         private Texture2D hitboxText;
 
-        private Texture2D _textureAttackRight, _textureAttackUp, _textureAttackFront;
-        private Texture2D TextureAttacking;
-        public bool moving,attacking,dead;
+        
         private Vector2 heroPos,facing;
         private Animation _animationIdle;
         private Animation _animationRun;
@@ -50,13 +48,13 @@ namespace GameProject.Enemies
             this.TextureIdleFacingFront = textures[0];
             this.TextureDownRun = textures[5];
 
-            this._textureAttackRight = textures[7];
-            this._textureAttackUp = textures[8];
-            this._textureAttackFront = textures[6];
+            this.TextureAttackRight = textures[7];
+            this.TextureAttackUp = textures[8];
+            this.TextureAttackFront = textures[6];
 
             this.TextureIdling = TextureIdle;
             this.TextureRunning = TextureRunRight;
-            this.TextureAttacking = _textureAttackFront;
+            this.TextureAttacking = TextureAttackFront;
 
             TimeSinceLastAttack = AttackCooldown;
 
@@ -77,11 +75,11 @@ namespace GameProject.Enemies
 
         public new void Draw(SpriteBatch spriteBatch)
         {
-            if (moving)
+            if (Moving)
             {
                 spriteBatch.Draw(TextureRunning, Position, _animationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 0.7f, flip, 0f);
             }
-            else if(attacking)
+            else if(Attacking)
             {
 
                 spriteBatch.Draw(TextureAttacking, Position, _animationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 0.7f, flip, 0f);
@@ -143,13 +141,13 @@ namespace GameProject.Enemies
         {
             if (Vector2.Distance(Position, heroPos) >= 32f)
             {
-                moving = true;
-                attacking = false;
+                Moving = true;
+                Attacking = false;
                 Move();
             }
             else
             {
-                moving = false;
+                Moving = false;
                 Attack();
             }
         }
@@ -163,7 +161,7 @@ namespace GameProject.Enemies
                             flip = SpriteEffects.None;
                             TextureIdling = TextureIdleFacingRight;
                             TextureRunning = TextureRunRight;
-                            TextureAttacking = _textureAttackRight;
+                            TextureAttacking = TextureAttackRight;
                             break;
                         }
 
@@ -172,7 +170,7 @@ namespace GameProject.Enemies
                             flip = SpriteEffects.FlipHorizontally;
                             TextureRunning = TextureRunRight;
                             TextureIdling = TextureIdleFacingRight;
-                            TextureAttacking = _textureAttackRight;
+                            TextureAttacking = TextureAttackRight;
                             break;
                         }
                     case Vector2(0f, -1f):
@@ -180,7 +178,7 @@ namespace GameProject.Enemies
                             flip = SpriteEffects.None;
                             TextureIdling = TextureIdleFacingUp;
                             TextureRunning = TextureUpRun;
-                            TextureAttacking = _textureAttackUp;
+                            TextureAttacking = TextureAttackUp;
                             break;
                         }
                     case Vector2(0f, 1f):
@@ -188,7 +186,7 @@ namespace GameProject.Enemies
                             flip = SpriteEffects.None;
                             TextureIdling = TextureIdleFacingFront;
                             TextureRunning = TextureDownRun;
-                            TextureAttacking = _textureAttackFront;
+                            TextureAttacking = TextureAttackFront;
                             break;
                         }
                 }
@@ -200,7 +198,7 @@ namespace GameProject.Enemies
             
             if (TimeSinceLastAttack <= 0)
             {
-                attacking = true;
+                Attacking = true;
                 
                 TimeSinceLastAttack = AttackCooldown;
                 
@@ -209,11 +207,11 @@ namespace GameProject.Enemies
 
         private void UpdateAnimations(GameTime gameTime)
         {
-            if (moving)
+            if (Moving)
             {
                 _animationRun.Update(gameTime);
             }
-            else if (attacking)
+            else if (Attacking)
             {
                 _animationAttacking.Update(gameTime);
             }
@@ -245,7 +243,7 @@ namespace GameProject.Enemies
             }
             else
             {
-                dead = true;
+                Dead = true;
             }
             
         }

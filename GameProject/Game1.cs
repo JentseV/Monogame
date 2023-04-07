@@ -108,7 +108,7 @@ namespace GameProject
             
             foreach(Coffin c in coffins)
             {
-                if(c.dead == false)
+                if(c.Dead == false)
                 {
                     c.Update(gameTime, hero, hero.bullets);
                 }
@@ -134,7 +134,7 @@ namespace GameProject
 
             foreach (Coffin c in coffins)
             {
-                if(c.dead == false)
+                if(c.Dead == false)
                 {
                     c.Draw(_spriteBatch);
                 }
