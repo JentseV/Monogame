@@ -23,8 +23,7 @@ namespace GameProject.Enemies
     {
         private SpriteEffects flip = SpriteEffects.None;
 
-        private float attackCooldown = 2f;
-        private float timeSinceLastAttack;
+        
         private Texture2D hitboxText;
 
         private Texture2D _textureAttackRight, _textureAttackUp, _textureAttackFront;
@@ -59,7 +58,7 @@ namespace GameProject.Enemies
             this.TextureRunning = TextureRunRight;
             this.TextureAttacking = _textureAttackFront;
 
-            timeSinceLastAttack = attackCooldown;
+            TimeSinceLastAttack = AttackCooldown;
 
             _animationIdle = new Animation();
             _animationRun = new Animation();
@@ -80,19 +79,19 @@ namespace GameProject.Enemies
         {
             if (moving)
             {
-                spriteBatch.Draw(TextureRunning, Position, _animationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
+                spriteBatch.Draw(TextureRunning, Position, _animationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 0.7f, flip, 0f);
             }
             else if(attacking)
             {
 
-                spriteBatch.Draw(TextureAttacking, Position, _animationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
+                spriteBatch.Draw(TextureAttacking, Position, _animationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 0.7f, flip, 0f);
             }
             else
             {
-                spriteBatch.Draw(TextureIdling, Position, _animationIdle.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
+                spriteBatch.Draw(TextureIdling, Position, _animationIdle.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 0.7f, flip, 0f);
             }
 
-            spriteBatch.Draw(hitboxText, Center , Hitbox, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
+            //spriteBatch.Draw(hitboxText, Center , Hitbox, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
         }
 
         public new void Update(GameTime gameTime, Hero hero, List<IGameComponent> gameComponents)
@@ -102,7 +101,7 @@ namespace GameProject.Enemies
             
 
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            timeSinceLastAttack -= deltaTime;
+            TimeSinceLastAttack -= deltaTime;
 
             
             heroPos = hero.Position;
@@ -199,11 +198,11 @@ namespace GameProject.Enemies
         private void Attack()
         {
             
-            if (timeSinceLastAttack <= 0)
+            if (TimeSinceLastAttack <= 0)
             {
                 attacking = true;
                 
-                timeSinceLastAttack = attackCooldown;
+                TimeSinceLastAttack = AttackCooldown;
                 
             }
         }

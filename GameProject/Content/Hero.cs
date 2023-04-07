@@ -17,7 +17,7 @@ namespace GameProject.Content
 {
     internal class Hero : Character, IMovable , IGameComponent
     {
-
+        
         private Texture2D _texture, _textureRunning, _textureIdling , _textureShooting , _textureUpRun , _textureDownRun;
         private Texture2D _textureIdleFacingFront, _textureIdleFacingRight, _textureIdleFacingUp, _textureIdleFacingUpRight, _textureIdleFacingDownRight, _textureIdle;
         private Texture2D _textureShootUp, _textureShootFront, _textureShootRight, _textureShootUpRight, _textureShootDownRight;
@@ -25,11 +25,6 @@ namespace GameProject.Content
         private Texture2D hitboxText;
 
         public List<IGameComponent> bullets = new List<IGameComponent>();
-
-        
-
-        private float shotCooldown;
-        private float timeSinceLastShot;
 
         private Texture2D bulletTexture;
         private bool moving = false, movable= true, shooting=false, canShoot= false;
@@ -70,8 +65,6 @@ namespace GameProject.Content
             get { return inputReader; }
             set { inputReader = value; }
         }
-
-        private float timerToShoot = 0;
         public new Rectangle Hitbox {
             get
             {
@@ -116,8 +109,8 @@ namespace GameProject.Content
             this.Hitbox = new Rectangle((int)this.position.X, (int)this.position.Y, 48,43);
 
 
-            shotCooldown = 0.5f;
-            timeSinceLastShot = shotCooldown;
+            AttackCooldown = 0.5f;
+            TimeSinceLastAttack = AttackCooldown;
             speed = new Vector2(3f, 3f);
 
             _animation = new Animation();
@@ -135,6 +128,7 @@ namespace GameProject.Content
 
         public new void Draw(SpriteBatch spriteBatch)
         {
+           
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space) && canShoot)
             {
@@ -157,7 +151,9 @@ namespace GameProject.Content
                 b.Draw(spriteBatch);
             }
 
+
             //spriteBatch.Draw(hitboxText, Center, Hitbox, Color.White, 0f , new Vector2(0f,0f), 1f,SpriteEffects.None,0f);
+            
             
         }
 
@@ -166,7 +162,7 @@ namespace GameProject.Content
         {
 
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            timeSinceLastShot -= deltaTime;
+            TimeSinceLastAttack -= deltaTime;
 
             
 
@@ -378,12 +374,12 @@ namespace GameProject.Content
 
         public void Shoot()
         {
-            if (timeSinceLastShot <= 0)
+            if (TimeSinceLastAttack <= 0)
             {
                 shooting = true;
-                Bullet bullet = new Bullet(bullets.Count,"BulletHero",Center, facing, new Vector2(2f, 2f), bulletTexture);
+                Bullet bullet = new Bullet(bullets.Count,"BulletHero",new Vector2(Center.X,Center.Y + 7f), facing, new Vector2(2f, 2f), bulletTexture);
                 bullets.Add(bullet);
-                timeSinceLastShot = shotCooldown;
+                TimeSinceLastAttack = AttackCooldown;
             }
             
             

@@ -19,6 +19,13 @@ namespace GameProject
     internal abstract class Character : IGameComponent
     {
 
+        private float attackCooldown = 2f;
+        private float timeSinceLastAttack;
+
+        public float AttackCooldown { get { return attackCooldown; } set { attackCooldown = value; } }
+
+        public float TimeSinceLastAttack { get { return timeSinceLastAttack; } set { timeSinceLastAttack = value; } }
+
         private int id;
 
         public int ID { get { return id; } set { id = value; } }
@@ -28,22 +35,17 @@ namespace GameProject
         public string Tag { get { return tag; } set { tag = value; } }
 
         private float hitpoints;
-
-        protected Rectangle hitbox;
-
-        
         public float Hitpoints { get { return hitpoints; } set { hitpoints = value; } }
 
+
+
+
+        #region 
+        //Textures
         private Texture2D _texture, _textureRunning, _textureIdling;
         private Texture2D _textureIdleFacingFront, _textureIdleFacingRight, _textureIdleFacingUp, _textureIdle;
         private Texture2D _textureRunRight, _textureUpRun, _textureDownRun;
-
-        public Texture2D Texture
-        {
-            get { return _texture; }
-            set { _texture = value; }
-        }
-
+        public Texture2D Texture{get { return _texture; }set { _texture = value; }}
         public Texture2D TextureRunning { get { return _textureRunning; } set { _textureRunning = value;  } }
         public Texture2D TextureIdling { get { return _textureIdling; } set { _textureIdling = value; } }
         public Texture2D TextureUpRun { get { return _textureUpRun; } set { _textureUpRun = value; } }
@@ -53,8 +55,11 @@ namespace GameProject
         public Texture2D TextureRunRight { get { return _textureRunRight; } set { _textureRunRight = value; } }
         public Texture2D TextureIdle { get { return _textureIdle; } set { _textureIdle = value; } }
         public Texture2D TextureDownRun { get { return _textureDownRun; } set { _textureDownRun = value; } }
+        #endregion
 
-
+        #region
+        protected Rectangle hitbox;
+        // Movement en collision
         private Vector2 position;
         private Vector2 direction;
         private Vector2 speed;
@@ -63,7 +68,7 @@ namespace GameProject
         public Vector2 Speed { get { return speed; } set { speed = value; } }
         public Vector2 Center { get ; set; }
         public Rectangle Hitbox { get { return hitbox; } set { hitbox = value; }  }
-
+        #endregion
 
         public void Draw(SpriteBatch spriteBatch)
         {

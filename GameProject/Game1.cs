@@ -1,6 +1,7 @@
 ﻿using GameProject.Content;
 using GameProject.Enemies;
 using GameProject.Projectiles;
+using GameProject.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -10,6 +11,8 @@ namespace GameProject
 {
     public class Game1 : Game
     {
+        private Rectangle backgroundRect;
+        private Texture2D background;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Hero hero;
@@ -18,17 +21,17 @@ namespace GameProject
         private List<Coffin> coffins = new List<Coffin>();
         private Texture2D[] coffinTextures = new Texture2D[10];
         private Texture2D[] heroTextures = new Texture2D[18];
-        private Texture2D bulletText;
-
-        private Bullet bullet;
-
+        
         private Rectangle[] testHitboxes = new Rectangle[2];
         private Rectangle testHitbox, testHitbox2;
+
+        private IScreen screen;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
-            _graphics.PreferredBackBufferHeight = 900;
-            _graphics.PreferredBackBufferWidth = 1600;
+            _graphics.PreferredBackBufferHeight = 1080;
+            _graphics.PreferredBackBufferWidth = 1920;
             _graphics.ApplyChanges();
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
@@ -48,6 +51,9 @@ namespace GameProject
             testHitbox2 = new Rectangle(550, 100, 32, 32);
             testHitboxes[0] = testHitbox;
             testHitboxes[1] = testHitbox2;
+            backgroundRect = new Rectangle(0, 0, 32, 47);
+            screen = new SplashScreen();
+
         }
 
         protected override void LoadContent()
@@ -83,7 +89,7 @@ namespace GameProject
             coffinTextures[8] = Content.Load<Texture2D>("coffinEn/coffinAttackUp");
             coffinTextures[9] = Content.Load<Texture2D>("heroText/red_square");
 
-
+            background = Content.Load<Texture2D>("testTree");
 
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -93,6 +99,7 @@ namespace GameProject
 
         protected override void Update(GameTime gameTime)
         {
+            screen.Update(gameTime);
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
@@ -120,8 +127,10 @@ namespace GameProject
             // TODO: Add your drawing code here
 
             _spriteBatch.Begin();
-            hero.Draw(_spriteBatch);
             
+
+            _spriteBatch.Draw(background, Vector2.Zero , backgroundRect, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
+            hero.Draw(_spriteBatch);
 
             foreach (Coffin c in coffins)
             {
