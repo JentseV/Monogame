@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content
+namespace GameProject.Projectiles
 {
     internal class PowerUp
     {

@@ -1,25 +1,24 @@
-﻿using GameProject.Content;
+﻿using GameProject.Animations;
+using GameProject.Enemies;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SharpDX.DirectWrite;
 using SharpDX.Mathematics.Interop;
-using SharpDX.WIC;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace GameProject.Enemies
 {
-    internal class Coffin : Enemy, IMovable,IGameComponent
+    internal class Coffin : Enemy, IMovable,IGameComponent, ICollidable
     {
         private SpriteEffects flip = SpriteEffects.None;
 
@@ -35,11 +34,14 @@ namespace GameProject.Enemies
         public Coffin(Vector2 speed, Vector2 position, Texture2D[] textures)
         {
             this.Hitpoints = 3;
-            this.Hitbox = new Rectangle((int)Position.X, (int)Position.Y, 40, 40);
-            this.Center = new Vector2(50 + Position.X, 55 + Position.Y);
+            
+            
             //SPRITESHEET 74x55
             this.Speed = speed;
             this.Position = position;
+
+            this.Center = new Vector2(50 + Position.X, 55 + Position.Y);
+            this.Hitbox = new Rectangle((int)Center.X, (int)Center.Y, 45, 45);
             this.TextureIdle = textures[0];
             this.TextureRunRight = textures[1];
             this.TextureUpRun = textures[2];
@@ -80,17 +82,17 @@ namespace GameProject.Enemies
 
         public new void Draw(SpriteBatch spriteBatch)
         {
-            if (Moving)
+            if (Moving && Invincible == false)
             {
                 spriteBatch.Draw(TextureRunning, Center, _animationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
             }
-            else if(Attacking)
+            else if(Attacking && Invincible == false)
             {
 
                 spriteBatch.Draw(TextureAttacking, Center, _animationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
             }
 
-            else if (Hit)
+            else if (Hit && Invincible == true)
             {
                 spriteBatch.Draw(TextureHit, Center, null, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
             }
@@ -99,29 +101,43 @@ namespace GameProject.Enemies
                 spriteBatch.Draw(TextureIdling, Center, _animationIdle.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
             }
 
-            spriteBatch.Draw(hitboxText, Center , Hitbox, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
+             spriteBatch.Draw(hitboxText, Center , Hitbox, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
+            
         }
 
-        public new void Update(GameTime gameTime, Hero hero, List<IGameComponent> gameComponents)
+        public new void Update(GameTime gameTime, Hero hero, List<ICollidable> collidables)
         {
-            this.Center = new Vector2(this.Position.X + 16, this.Position.Y + 16);
-            this.Hitbox = new Rectangle((int)Center.X , (int)Center.Y , 32, 36);
+            this.Center = new Vector2((int)Position.X, (int)Position.Y);
+            this.hitbox.X = (int)Center.X;
+            this.hitbox.Y = (int)Center.Y;
             
 
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             TimeSinceLastAttack -= deltaTime;
-            
 
             if (Hit)
             {
+                Invincible = true;
                 Moving = false;
                 Attacking = false;
+                InvincibleTimer += deltaTime;
+                if(InvincibleTimer > 1.5f)
+                {
+                    Invincible = false;
+                    Hit = false;
+                    InvincibleTimer = 0f;
+                }
+            }
+
+            if(Attacking == false)
+            {
+                this.hitbox.Width = 45;
             }
 
             heroPos = hero.Position;
-            Direction = Vector2.Normalize(heroPos - Position);
+           
 
-            CheckCollision(gameComponents);
+            CheckCollision(collidables);
             DecideAction();
             GetFacingDirection();
             DecideAnimation();
@@ -132,6 +148,7 @@ namespace GameProject.Enemies
 
         public void GetFacingDirection()
         {
+            Direction = Vector2.Normalize(heroPos - Position);
             if (Direction.X > 0f && Direction.X > Direction.Y)
             {
                
@@ -156,7 +173,7 @@ namespace GameProject.Enemies
         public void DecideAction()
         {
 
-            if (Vector2.Distance(Position, heroPos) >= 32f)
+            if (!Attacking && Invincible == false)
             {
                 Moving = true;
                 Attacking = false;
@@ -219,7 +236,7 @@ namespace GameProject.Enemies
                 Attacking = true;
                 
                 TimeSinceLastAttack = AttackCooldown;
-                
+                this.hitbox.Width = 55;
             }
         }
 
@@ -239,23 +256,42 @@ namespace GameProject.Enemies
             }
         }
 
-        private void CheckCollision(List<IGameComponent> gameComponents)
+        private void CheckCollision(List<ICollidable> gameComponents)
         {
-            foreach(Bullet gameComponent1 in gameComponents)
-            if (this.Hitbox.Intersects(gameComponent1.Hitbox))
+            gameComponents.Remove(this);
+            
+            foreach (ICollidable gameComponent1 in gameComponents)
             {
-                if(gameComponent1.Tag == "BulletHero")
+                
+                if (this.Hitbox.Intersects(gameComponent1.Hitbox) )
                 {
-                    gameComponent1.destroy = true;
-                    TakeDamage();
+                    
+                    if (gameComponent1 is Bullet bullet)
+                    {
+                        
+                        Bullet b = gameComponent1 as Bullet;
+                        if (!b.destroy && Invincible == false)
+                        {
+                            b.destroy = true;
+                            TakeDamage();
+                        }
+                        
+                    }
+                    else if (gameComponent1 is Hero hero)
+                    {
+                        Attack();
+                    }
                 }
+                
             }
+            
         }
 
         private void TakeDamage()
         {
-            if(this.Hitpoints > 0)
+            if(this.Hitpoints > 0 && Invincible == false)
             {
+                this.Invincible = true;
                 this.Hit = true;
                 this.Hitpoints -= 1;
             }

@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace GameProject.Projectiles
 {
-    internal class Bullet : Projectile , IGameComponent
+    internal class Bullet : Projectile , IGameComponent, ICollidable
     {
 
         private float rotation = 0;
@@ -63,7 +63,7 @@ namespace GameProject.Projectiles
 
         private void Rotate()
         {
-            Debug.WriteLine(Direction);
+            
             switch (Direction)
             {
                 case Vector2(0f, -1f):

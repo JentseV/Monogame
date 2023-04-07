@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
 
-namespace GameProject
+namespace GameProject.Animations
 {
     internal class Animation
     {
@@ -27,7 +27,7 @@ namespace GameProject
         {
             frames.Add(frame);
             CurrentFrame = frames[0];
-            
+
         }
 
         public void Update(GameTime gameTime)
@@ -38,12 +38,12 @@ namespace GameProject
 
             int fps = 15;
 
-            
+
             if (secondCounter >= 1d / fps)
             {
                 counter++;
                 secondCounter = 0;
-             
+
             }
 
             if (counter >= frames.Count)
@@ -62,9 +62,9 @@ namespace GameProject
             {
                 for (int j = 0; j <= width - widthOfFrame; j += widthOfFrame)
                 {
-                    
+
                     frames.Add(new AnimationFrame(new Rectangle(j, i, widthOfFrame, heightOfFrame)));
-                    
+
                 }
             }
         }

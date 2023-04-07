@@ -1,4 +1,4 @@
-﻿using GameProject.Content;
+﻿
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,11 +16,15 @@ using System.Windows.Forms;
 
 namespace GameProject
 {
-    internal abstract class Character : IGameComponent
+    internal abstract class Character : IGameComponent 
     {
 
 
-        private bool moving, attacking, dead, hit;
+        private float invincibleTimer;
+
+        private bool moving, attacking, dead, hit , invincible;
+
+        public bool Invincible { get { return invincible; } set { invincible = value; } }
         public bool Hit { get { return hit; } set { hit = value; } }
         public bool Moving { get { return moving; } set { moving = value; } }
         public bool Attacking { get { return attacking; } set { attacking = value; } }
@@ -29,6 +33,7 @@ namespace GameProject
         private float attackCooldown = 2f;
         private float timeSinceLastAttack;
 
+        public float InvincibleTimer { get { return invincibleTimer; } set { invincibleTimer = value; } }
         public float AttackCooldown { get { return attackCooldown; } set { attackCooldown = value; } }
 
         public float TimeSinceLastAttack { get { return timeSinceLastAttack; } set { timeSinceLastAttack = value; } }

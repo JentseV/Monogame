@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 namespace GameProject.Enemies
 {
-    internal abstract class Enemy : Character
+    internal abstract class Enemy : Character, ICollidable
     {
 
        

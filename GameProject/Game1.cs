@@ -1,4 +1,4 @@
-﻿using GameProject.Content;
+﻿
 using GameProject.Enemies;
 using GameProject.Projectiles;
 using GameProject.Screens;
@@ -18,7 +18,8 @@ namespace GameProject
         private Hero hero;
         private Coffin coffin;
         private int[] test = { 10, 50, 100, 300, 200 };
-        private List<Coffin> coffins = new List<Coffin>();
+        private List<IGameComponent> coffins = new List<IGameComponent>();
+        private List<ICollidable> collidables = new List<ICollidable>();
         private Texture2D[] coffinTextures = new Texture2D[11];
         private Texture2D[] heroTextures = new Texture2D[18];
         
@@ -43,10 +44,12 @@ namespace GameProject
             base.Initialize();
             hero = new Hero(heroTextures, new KeyboardReader());
             coffin = new Coffin(new Vector2(1f,1f),new Vector2(50f,50f),coffinTextures);
-            for(int i = 0; i < 3; i++)
+            for(int i = 0; i < 1; i++)
             {
                 coffins.Add(new Coffin(new Vector2(1f, 1f), new Vector2(test[i], test[i]), coffinTextures));
             }
+
+            collidables.Add(hero);
             testHitbox = new Rectangle(250, 100, 32, 32);
             testHitbox2 = new Rectangle(550, 100, 32, 32);
             testHitboxes[0] = testHitbox;
@@ -105,17 +108,23 @@ namespace GameProject
                 Exit();
 
             // TODO: Add your update logic here
-            hero.Update(gameTime);
+            hero.Update(gameTime, collidables);
             
+            foreach(Bullet b in hero.bullets)
+            {
+                if (collidables.Contains(b) == false) collidables.Add(b);
+            }
+
             foreach(Coffin c in coffins)
             {
                 if(c.Dead == false)
                 {
-                    c.Update(gameTime, hero, hero.bullets);
+                    if(collidables.Contains(c) == false) collidables.Add(c);
+                    c.Update(gameTime, hero, collidables);
                 }
                 
             }
-            hero.CheckCollision(testHitboxes);
+           
             
              
             base.Update(gameTime);
