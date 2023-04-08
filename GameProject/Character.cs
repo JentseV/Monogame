@@ -16,7 +16,7 @@ using System.Windows.Forms;
 
 namespace GameProject
 {
-    internal abstract class Character : IGameComponent 
+    internal abstract class Character : IGameComponent ,IMovable, ICollidable
     {
 
 
@@ -89,6 +89,8 @@ namespace GameProject
         public Vector2 Speed { get { return speed; } set { speed = value; } }
         public Vector2 Center { get ; set; }
         public Rectangle Hitbox { get { return hitbox; } set { hitbox = value; }  }
+
+        public IInputReader InputReader { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         #endregion
 
         public void Draw(SpriteBatch spriteBatch)
@@ -114,6 +116,16 @@ namespace GameProject
                 Dead = true;
             }
 
+        }
+
+        public void CheckCollision(List<ICollidable> collidables)
+        {
+            
+        }
+
+        public void Move()
+        {
+            
         }
     }
 }

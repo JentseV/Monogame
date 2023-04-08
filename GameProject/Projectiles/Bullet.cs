@@ -1,4 +1,5 @@
-﻿using GameProject.Projectiles;
+﻿using GameProject.Enemies;
+using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -22,6 +23,7 @@ namespace GameProject.Projectiles
         public bool destroy = false;
         public Bullet(int ID,string tag,Vector2 position, Vector2 direction, Vector2 speed, Texture2D texture)
         {
+            this.destroy = false;
             this.ID = ID;
             this.Tag = tag;
             this.Position = position;
@@ -42,17 +44,24 @@ namespace GameProject.Projectiles
             base.Move();
         }
 
-        public new void Update(GameTime gameTime)
+        public new void Update(GameTime gameTime, List<ICollidable> collidables)
         {
-            this.hitbox.X = (int)Position.X;
-            this.hitbox.Y = (int)Position.Y;
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            created += deltaTime;
-            if(created >= timeToLive)
+            
+            if (destroy == false)
             {
-                destroy = true;
+                Move();
+                this.hitbox.X = (int)Position.X;
+                this.hitbox.Y = (int)Position.Y;
+                float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                created += deltaTime;
+                if (created >= timeToLive)
+                {
+                    destroy = true;
+                }
+                Rotate();
+                CheckCollision(collidables);
             }
-            Rotate();
+            
             base.Update(gameTime);
         }
 
@@ -107,6 +116,18 @@ namespace GameProject.Projectiles
                         rotation = 0f;
                         break;
                     }
+            }
+        }
+
+        public void CheckCollision(List<ICollidable> collidables)
+        {
+            foreach (ICollidable collidable in collidables)
+            {
+                if (hitbox.Intersects(collidable.Hitbox) && !(collidable is Bullet) && !(collidable is Hero))
+                {
+                    this.destroy = true;
+                }
+
             }
         }
     }

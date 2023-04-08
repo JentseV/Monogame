@@ -113,12 +113,14 @@ namespace GameProject
             // TODO: Add your update logic here
 
 
-            Debug.WriteLine(collidables.Count);
+            
 
             foreach(Bullet b in hero.bullets)
             {
+                Debug.WriteLine(b.destroy);
                 if(b.destroy == false)
                 {
+                    b.Update(gameTime, collidables);
                     if (collidables.Contains(b) == false) collidables.Add(b);
                 }
             }
@@ -142,6 +144,7 @@ namespace GameProject
                     Bullet t = x as Bullet;
                     if(t.destroy == true)
                     {
+                        Debug.WriteLine("Should remove bullet");
                         collidables.Remove(t);
                     }
                 }
@@ -175,6 +178,15 @@ namespace GameProject
             _spriteBatch.Draw(background, Vector2.Zero , null, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
             hero.Draw(_spriteBatch);
 
+            foreach (Bullet b in hero.bullets)
+            {
+                if (b.destroy == false)
+                {
+                    b.Draw(_spriteBatch);
+                }
+
+            }
+
             foreach (Coffin c in coffins)
             {
                 if(c.Dead == false)
@@ -183,6 +195,8 @@ namespace GameProject
                 }
                 
             }
+
+            
             //_spriteBatch.Draw(coffinTextures[0], new Vector2(50f, 50f), Color.White);
             //_spriteBatch.Draw(heroTextures[10], testHitbox,Color.Green);
             //_spriteBatch.Draw(heroTextures[10], testHitbox2, Color.Green);

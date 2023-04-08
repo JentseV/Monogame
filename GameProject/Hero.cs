@@ -129,12 +129,6 @@ namespace GameProject
                 spriteBatch.Draw(_textureIdling, Position, _animation.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
             }
 
-            foreach (Bullet b in bullets)
-            {
-                b.Draw(spriteBatch);
-            }
-
-
             //spriteBatch.Draw(hitboxText, Center, Hitbox, Color.White, 0f , new Vector2(0f,0f), 1f,SpriteEffects.None,0f);
 
 
@@ -184,21 +178,21 @@ namespace GameProject
             DecideAnimation();
             UpdateAnimations(gameTime);
 
-            Bullet toDelete = null;
-            foreach (Bullet b in bullets)
-            {
-                b.Update(gameTime);
-                if (b.Destroy())
-                {
-                    toDelete = (Bullet)bullets.Find(o => o.ID == b.ID);
-
-                };
-            }
-
-            if (toDelete != null)
-            {
-                bullets.Remove(toDelete);
-            }
+            //Bullet toDelete = null;
+            //foreach (Bullet b in bullets)
+            //{
+            //    b.Update(gameTime);
+            //    if (b.Destroy())
+            //    {
+            //        toDelete = (Bullet)bullets.Find(o => o.ID == b.ID);
+            //
+            //    };
+            //}
+            //
+            //if (toDelete != null)
+            //{
+            //    bullets.Remove(toDelete);
+            //}
 
 
         }
@@ -325,7 +319,7 @@ namespace GameProject
             this.inputReader = inputReader;
         }
 
-        public void Move()
+        public new void Move()
         {
 
             if (movable) movementManager.Move(this);
@@ -350,7 +344,7 @@ namespace GameProject
 
         }
 
-        public void CheckCollision(List<ICollidable> collidables)
+        protected new void CheckCollision(List<ICollidable> collidables)
         {
             foreach (ICollidable collidable in collidables)
             {

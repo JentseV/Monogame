@@ -18,7 +18,7 @@ using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace GameProject.Enemies
 {
-    internal class Coffin : Enemy, IMovable,IGameComponent, ICollidable , IEnemy
+    internal class Coffin : Enemy , IEnemy
     {
         private SpriteEffects flip = SpriteEffects.None;
 
@@ -256,7 +256,7 @@ namespace GameProject.Enemies
             }
         }
 
-        private void CheckCollision(List<ICollidable> collidables)
+        protected new void CheckCollision(List<ICollidable> collidables)
         {
             
             foreach (ICollidable collidable in collidables)
@@ -268,10 +268,8 @@ namespace GameProject.Enemies
                     if (collidable is Bullet)
                     {
                         
-                        Bullet b = collidable as Bullet;
-                        if (!b.destroy && Invincible == false)
+                        if  (Invincible == false)
                         {
-                            b.destroy = true;
                             TakeDamage(1f);
                         }
                         

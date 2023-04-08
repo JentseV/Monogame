@@ -20,5 +20,7 @@ namespace GameProject
     internal interface ICollidable
     {
         Rectangle Hitbox { get; set; }
+
+        void CheckCollision(List<ICollidable> collidables);
     }
 }
