@@ -5,7 +5,10 @@ using GameProject.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace GameProject
 {
@@ -18,7 +21,7 @@ namespace GameProject
         private Hero hero;
         private Coffin coffin;
         private int[] test = { 10, 50, 100, 300, 200 };
-        private List<IGameComponent> coffins = new List<IGameComponent>();
+        private List<Coffin> coffins = new List<Coffin>();
         private List<ICollidable> collidables = new List<ICollidable>();
         private Texture2D[] coffinTextures = new Texture2D[11];
         private Texture2D[] heroTextures = new Texture2D[18];
@@ -44,11 +47,11 @@ namespace GameProject
             base.Initialize();
             hero = new Hero(heroTextures, new KeyboardReader());
             coffin = new Coffin(new Vector2(1f,1f),new Vector2(50f,50f),coffinTextures);
-            for(int i = 0; i < 1; i++)
+            for(int i = 0; i < 3; i++)
             {
                 coffins.Add(new Coffin(new Vector2(1f, 1f), new Vector2(test[i], test[i]), coffinTextures));
             }
-
+            hero.Position = new Vector2(600f, 600f);
             collidables.Add(hero);
             testHitbox = new Rectangle(250, 100, 32, 32);
             testHitbox2 = new Rectangle(550, 100, 32, 32);
@@ -93,7 +96,7 @@ namespace GameProject
             coffinTextures[9] = Content.Load<Texture2D>("heroText/red_square");
             coffinTextures[10] = Content.Load<Texture2D>("coffinEn/coffinHitAnimation");
 
-            background = Content.Load<Texture2D>("testTree");
+            background = Content.Load<Texture2D>("World/background");
 
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -108,15 +111,21 @@ namespace GameProject
                 Exit();
 
             // TODO: Add your update logic here
-            hero.Update(gameTime, collidables);
-            
+
+
+            Debug.WriteLine(collidables.Count);
+
             foreach(Bullet b in hero.bullets)
             {
-                if (collidables.Contains(b) == false) collidables.Add(b);
+                if(b.destroy == false)
+                {
+                    if (collidables.Contains(b) == false) collidables.Add(b);
+                }
             }
 
             foreach(Coffin c in coffins)
             {
+                
                 if(c.Dead == false)
                 {
                     if(collidables.Contains(c) == false) collidables.Add(c);
@@ -124,9 +133,33 @@ namespace GameProject
                 }
                 
             }
-           
-            
-             
+
+            foreach (ICollidable x in collidables.ToList())
+            {
+                
+                if(x is Bullet)
+                {
+                    Bullet t = x as Bullet;
+                    if(t.destroy == true)
+                    {
+                        collidables.Remove(t);
+                    }
+                }
+
+                if (x is Coffin)
+                {
+                    Coffin t = x as Coffin;
+                    if (t.Dead == true)
+                    {
+                        collidables.Remove(t);
+                    }
+                }
+
+            }
+
+            hero.Update(gameTime, collidables);
+
+
             base.Update(gameTime);
         }
 
@@ -139,7 +172,7 @@ namespace GameProject
             _spriteBatch.Begin();
             
 
-            _spriteBatch.Draw(background, Vector2.Zero , backgroundRect, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
+            _spriteBatch.Draw(background, Vector2.Zero , null, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
             hero.Draw(_spriteBatch);
 
             foreach (Coffin c in coffins)

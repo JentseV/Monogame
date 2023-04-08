@@ -100,5 +100,20 @@ namespace GameProject
         {
             
         }
+
+        protected void TakeDamage(float amountOfDamage)
+        {
+            if (this.Hitpoints > 0 && Invincible == false)
+            {
+                this.Invincible = true;
+                this.Hit = true;
+                this.Hitpoints -= amountOfDamage;
+            }
+            else
+            {
+                Dead = true;
+            }
+
+        }
     }
 }

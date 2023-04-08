@@ -18,7 +18,7 @@ using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace GameProject.Enemies
 {
-    internal class Coffin : Enemy, IMovable,IGameComponent, ICollidable
+    internal class Coffin : Enemy, IMovable,IGameComponent, ICollidable , IEnemy
     {
         private SpriteEffects flip = SpriteEffects.None;
 
@@ -101,7 +101,7 @@ namespace GameProject.Enemies
                 spriteBatch.Draw(TextureIdling, Center, _animationIdle.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
             }
 
-             spriteBatch.Draw(hitboxText, Center , Hitbox, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
+             //spriteBatch.Draw(hitboxText, Center , Hitbox, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
             
         }
 
@@ -256,28 +256,27 @@ namespace GameProject.Enemies
             }
         }
 
-        private void CheckCollision(List<ICollidable> gameComponents)
+        private void CheckCollision(List<ICollidable> collidables)
         {
-            gameComponents.Remove(this);
             
-            foreach (ICollidable gameComponent1 in gameComponents)
+            foreach (ICollidable collidable in collidables)
             {
                 
-                if (this.Hitbox.Intersects(gameComponent1.Hitbox) )
+                if (this.Hitbox.Intersects(collidable.Hitbox) && !(collidable is Coffin) )
                 {
                     
-                    if (gameComponent1 is Bullet bullet)
+                    if (collidable is Bullet)
                     {
                         
-                        Bullet b = gameComponent1 as Bullet;
+                        Bullet b = collidable as Bullet;
                         if (!b.destroy && Invincible == false)
                         {
                             b.destroy = true;
-                            TakeDamage();
+                            TakeDamage(1f);
                         }
                         
                     }
-                    else if (gameComponent1 is Hero hero)
+                    else if (collidable is Hero )
                     {
                         Attack();
                     }
@@ -287,19 +286,6 @@ namespace GameProject.Enemies
             
         }
 
-        private void TakeDamage()
-        {
-            if(this.Hitpoints > 0 && Invincible == false)
-            {
-                this.Invincible = true;
-                this.Hit = true;
-                this.Hitpoints -= 1;
-            }
-            else
-            {
-                Dead = true;
-            }
-            
-        }
+        
     }
 }

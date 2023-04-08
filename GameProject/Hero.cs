@@ -350,34 +350,23 @@ namespace GameProject
 
         }
 
-        public void CheckCollision(List<ICollidable> gameComponents)
+        public void CheckCollision(List<ICollidable> collidables)
         {
-
-            foreach (ICollidable gameComponent in gameComponents)
+            foreach (ICollidable collidable in collidables)
             {
-                if (hitbox.Intersects(gameComponent.Hitbox))
+                if (hitbox.Intersects(collidable.Hitbox) && !(collidable is Hero))
                 {
-                    //add collidable check and tag checks
                     
-                    TakeDamage();
+                    if(collidable is Coffin)
+                    {
+                        Debug.WriteLine("Enemy");
+                        TakeDamage(1F);
+                    }
                 }
 
             }
         }
 
-
-        public void TakeDamage()
-        {
-            if (Hitpoints > 0)
-            {
-                Hitpoints--;
-                Invincible = true;
-            }
-            else
-            {
-                Dead = true;
-            }
-        }
         public void Shoot()
         {
             if (TimeSinceLastAttack <= 0)
@@ -387,8 +376,6 @@ namespace GameProject
                 bullets.Add(bullet);
                 TimeSinceLastAttack = AttackCooldown;
             }
-
-
         }
     }
 }
