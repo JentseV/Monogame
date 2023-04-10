@@ -39,7 +39,7 @@ namespace GameProject
 
 
         private IInputReader inputReader;
-        public IInputReader InputReader
+        public new  IInputReader InputReader
         {
             get { return inputReader; }
             set { inputReader = value; }
@@ -135,11 +135,13 @@ namespace GameProject
         }
 
 
-        public new void Update(GameTime gameTime, List<ICollidable> collidables)
+        public void Update(GameTime gameTime, List<ICollidable> collidables)
         {
 
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             TimeSinceLastAttack -= deltaTime;
+
+            //Debug.WriteLine(Invincible);
 
             if (Invincible)
             {
@@ -177,23 +179,6 @@ namespace GameProject
             GetFacingDirection();
             DecideAnimation();
             UpdateAnimations(gameTime);
-
-            //Bullet toDelete = null;
-            //foreach (Bullet b in bullets)
-            //{
-            //    b.Update(gameTime);
-            //    if (b.Destroy())
-            //    {
-            //        toDelete = (Bullet)bullets.Find(o => o.ID == b.ID);
-            //
-            //    };
-            //}
-            //
-            //if (toDelete != null)
-            //{
-            //    bullets.Remove(toDelete);
-            //}
-
 
         }
 
@@ -341,20 +326,28 @@ namespace GameProject
                 _animation.Update(gameTime);
             }
 
-
         }
 
         protected new void CheckCollision(List<ICollidable> collidables)
         {
             foreach (ICollidable collidable in collidables)
             {
-                if (hitbox.Intersects(collidable.Hitbox) && !(collidable is Hero))
+                if (this.Hitbox.Intersects(collidable.Hitbox) && !(collidable is Hero))
                 {
                     
                     if(collidable is Coffin)
                     {
-                        Debug.WriteLine("Enemy");
                         TakeDamage(1F);
+                    }
+
+                    if (collidable is Bullet)
+                    {
+                        Bullet b = collidable as Bullet;
+                        if (b.Tag.Equals("CactusBullet")  && Invincible == false)
+                        {
+                            Debug.WriteLine("Shot by enemy");
+                            TakeDamage(1f);
+                        }
                     }
                 }
 

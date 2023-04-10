@@ -124,3 +124,13 @@ D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Screens\bac
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\testTree.xnb
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coffinEn\coffinHitAnimation.xnb
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\World\background.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\cactusEn\cactusAttackFront.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\cactusEn\cactusAttackRight.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\cactusEn\cactusAttackUp.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\cactusEn\cactusHitAnimation.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\cactusEn\cactusIdleFront.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\cactusEn\cactusIdleRight.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\cactusEn\cactusIdleUp.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\cactusEn\cactusRunDown.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\cactusEn\cactusRunRight.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\cactusEn\cactusRunUp.xnb

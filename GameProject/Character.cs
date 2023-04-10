@@ -22,8 +22,9 @@ namespace GameProject
 
         private float invincibleTimer;
 
-        private bool moving, attacking, dead, hit , invincible;
+        private bool moving, attacking, dead, hit , invincible, movable;
 
+        public bool Movable { get { return movable; } set { movable = value; } }
         public bool Invincible { get { return invincible; } set { invincible = value; } }
         public bool Hit { get { return hit; } set { hit = value; } }
         public bool Moving { get { return moving; } set { moving = value; } }
@@ -125,7 +126,8 @@ namespace GameProject
 
         public void Move()
         {
-            
+            Moving = true;
+            Position += Direction * Speed;
         }
     }
 }

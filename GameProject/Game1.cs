@@ -22,9 +22,11 @@ namespace GameProject
         private Coffin coffin;
         private int[] test = { 10, 50, 100, 300, 200 };
         private List<Coffin> coffins = new List<Coffin>();
+        private List<Cactus> cacti = new List<Cactus>();
         private List<ICollidable> collidables = new List<ICollidable>();
         private Texture2D[] coffinTextures = new Texture2D[11];
         private Texture2D[] heroTextures = new Texture2D[18];
+        private Texture2D[] cactusTextures = new Texture2D[12];
         
         private Rectangle[] testHitboxes = new Rectangle[2];
         private Rectangle testHitbox, testHitbox2;
@@ -46,11 +48,18 @@ namespace GameProject
             // TODO: Add your initialization logic here
             base.Initialize();
             hero = new Hero(heroTextures, new KeyboardReader());
-            coffin = new Coffin(new Vector2(1f,1f),new Vector2(50f,50f),coffinTextures);
-            for(int i = 0; i < 3; i++)
+            
+            for(int i = 0; i < 1; i++)
             {
                 coffins.Add(new Coffin(new Vector2(1f, 1f), new Vector2(test[i], test[i]), coffinTextures));
             }
+
+            for (int i = 0; i < 1; i++)
+            {
+                cacti.Add(new Cactus(new Vector2(1f, 1f), new Vector2(test[i+3], test[i+3]), cactusTextures));
+            }
+
+
             hero.Position = new Vector2(600f, 600f);
             collidables.Add(hero);
             testHitbox = new Rectangle(250, 100, 32, 32);
@@ -96,6 +105,19 @@ namespace GameProject
             coffinTextures[9] = Content.Load<Texture2D>("heroText/red_square");
             coffinTextures[10] = Content.Load<Texture2D>("coffinEn/coffinHitAnimation");
 
+            cactusTextures[0] = Content.Load<Texture2D>("cactusEn/cactusIdleFront");
+            cactusTextures[1] = Content.Load<Texture2D>("cactusEn/cactusRunRight");
+            cactusTextures[2] = Content.Load<Texture2D>("cactusEn/cactusRunUp");
+            cactusTextures[3] = Content.Load<Texture2D>("cactusEn/cactusIdleUp");
+            cactusTextures[4] = Content.Load<Texture2D>("cactusEn/cactusIdleRight");
+            cactusTextures[5] = Content.Load<Texture2D>("cactusEn/cactusRunDown");
+            cactusTextures[6] = Content.Load<Texture2D>("cactusEn/cactusAttackFront");
+            cactusTextures[7] = Content.Load<Texture2D>("cactusEn/cactusAttackRight");
+            cactusTextures[8] = Content.Load<Texture2D>("cactusEn/cactusAttackUp");
+            cactusTextures[9] = Content.Load<Texture2D>("heroText/red_square");
+            cactusTextures[10] = Content.Load<Texture2D>("cactusEn/cactusHitAnimation");
+            cactusTextures[11] = Content.Load<Texture2D>("Projectiles/SpongeBullet");
+
             background = Content.Load<Texture2D>("World/background");
 
 
@@ -113,16 +135,37 @@ namespace GameProject
             // TODO: Add your update logic here
 
 
-            
+            hero.Update(gameTime, collidables);
 
-            foreach(Bullet b in hero.bullets)
+            foreach (Bullet b in hero.bullets)
             {
-                Debug.WriteLine(b.destroy);
-                if(b.destroy == false)
+
+                if (b.destroy == false)
                 {
                     b.Update(gameTime, collidables);
                     if (collidables.Contains(b) == false) collidables.Add(b);
                 }
+            }
+
+            foreach (Cactus c in cacti)
+            {
+                if (c.Dead == false)
+                {
+                    c.Update(gameTime, hero, collidables);
+                    if (collidables.Contains(c) == false) collidables.Add(c);
+
+                }
+
+                foreach (Bullet b in c.cactusBullets)
+                {
+                    if(b.destroy == false)
+                    {
+                        b.Update(gameTime, collidables);
+                        if (collidables.Contains(b) == false) collidables.Add(b);
+                    }
+                    
+                }
+
             }
 
             foreach(Coffin c in coffins)
@@ -144,24 +187,22 @@ namespace GameProject
                     Bullet t = x as Bullet;
                     if(t.destroy == true)
                     {
-                        Debug.WriteLine("Should remove bullet");
                         collidables.Remove(t);
                     }
                 }
 
-                if (x is Coffin)
+                else if (x is Enemy)
                 {
-                    Coffin t = x as Coffin;
+                    Enemy t = x as Enemy;
                     if (t.Dead == true)
                     {
                         collidables.Remove(t);
                     }
                 }
-
             }
 
-            hero.Update(gameTime, collidables);
-
+            
+            
 
             base.Update(gameTime);
         }
@@ -177,6 +218,24 @@ namespace GameProject
 
             _spriteBatch.Draw(background, Vector2.Zero , null, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
             hero.Draw(_spriteBatch);
+
+
+            foreach(Cactus c in cacti)
+            {
+                if(c.Dead == false)
+                {
+                    c.Draw(_spriteBatch);
+                    foreach (Bullet b in c.cactusBullets)
+                    {
+                        if(b.destroy == false)
+                        {
+                            b.Draw(_spriteBatch);
+                        }
+                       
+                    }
+                }
+                
+            }
 
             foreach (Bullet b in hero.bullets)
             {

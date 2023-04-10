@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameProject.Animations;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SharpDX.DirectWrite;
@@ -15,6 +16,20 @@ namespace GameProject.Enemies
     internal abstract class Enemy : Character, ICollidable
     {
 
-       
+
+        private Animation _animationIdle;
+        private Animation _animationRun;
+        private Animation _animationAttacking;
+        private Animation _animationHit;
+
+        public Animation AnimationIdle { get { return _animationIdle; } set { _animationIdle = value; } }
+        public Animation AnimationRun { get { return _animationRun; } set { _animationRun = value; } }
+
+        public Animation AnimationAttacking { get { return _animationAttacking; } set { _animationAttacking = value; } }
+
+        public Animation AnimationHit { get { return _animationHit; } set { _animationHit = value; } }
+
+
+
     }
 }

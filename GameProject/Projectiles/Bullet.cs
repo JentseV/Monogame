@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -39,13 +40,10 @@ namespace GameProject.Projectiles
             spriteBatch.Draw(Texture, Position, null, Color.White, rotation, new Vector2(0f, 0f), 2f, SpriteEffects.None, 0f);
         }
 
-        public new void Move()
-        {
-            base.Move();
-        }
 
-        public new void Update(GameTime gameTime, List<ICollidable> collidables)
+        public void Update(GameTime gameTime, List<ICollidable> collidables)
         {
+            
             
             if (destroy == false)
             {
@@ -123,9 +121,31 @@ namespace GameProject.Projectiles
         {
             foreach (ICollidable collidable in collidables)
             {
-                if (hitbox.Intersects(collidable.Hitbox) && !(collidable is Bullet) && !(collidable is Hero))
+                if (hitbox.Intersects(collidable.Hitbox) && !(collidable is Bullet))
                 {
-                    this.destroy = true;
+                    if(this.Tag == "BulletHero")
+                    {
+                        if (collidable is Coffin)
+                        {
+                            Coffin c = collidable as Coffin;
+                            if (!c.Invincible) destroy = true;
+                        }
+
+                        if (collidable is Cactus)
+                        {
+                            Cactus c = collidable as Cactus;
+                            if (!c.Invincible) destroy = true;
+                        }
+                    }
+                    if(this.Tag == "CactusBullet")
+                    {
+                        if(collidable is Hero)
+                        {
+                            Hero h = collidable as Hero;
+                            if (!h.Invincible) destroy = true;
+                        }
+                    }
+                    
                 }
 
             }

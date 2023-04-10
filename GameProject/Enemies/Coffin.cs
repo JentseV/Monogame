@@ -73,12 +73,6 @@ namespace GameProject.Enemies
             _animationAttacking.GetFramesFromTextureProperties(this.TextureAttacking.Width, this.TextureAttacking.Height, 18, 1);
         }
 
-        public IInputReader InputReader { get ; set ; }
-
-        public void Move()
-        {
-            this.Position += Direction * Speed;
-        }
 
         public new void Draw(SpriteBatch spriteBatch)
         {
@@ -105,7 +99,7 @@ namespace GameProject.Enemies
             
         }
 
-        public new void Update(GameTime gameTime, Hero hero, List<ICollidable> collidables)
+        public void Update(GameTime gameTime, Hero hero, List<ICollidable> collidables)
         {
             this.Center = new Vector2((int)Position.X, (int)Position.Y);
             this.hitbox.X = (int)Center.X;
@@ -264,14 +258,13 @@ namespace GameProject.Enemies
                 
                 if (this.Hitbox.Intersects(collidable.Hitbox) && !(collidable is Coffin) )
                 {
-                    
                     if (collidable is Bullet)
                     {
-                        
-                        if  (Invincible == false)
+                        Bullet b = collidable as Bullet;
+                        if(b.Tag == "BulletHero" && Invincible == false)
                         {
-                            TakeDamage(1f);
-                        }
+                                TakeDamage(1f);
+                        }   
                         
                     }
                     else if (collidable is Hero )
