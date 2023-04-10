@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace GameProject.Enemies
 {
-    internal class Coyote
+    internal class Coyote : Enemy,IEnemy
     {
+        //SPRITESHEET 70x70
+
+        public Coyote()
+        {
+            
+        }
     }
 }

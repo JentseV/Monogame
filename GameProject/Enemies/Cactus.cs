@@ -106,8 +106,8 @@ namespace GameProject.Enemies
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             TimeSinceLastAttack -= deltaTime;
 
-
-            
+            Debug.WriteLine(Hit);
+                        
 
             if (Hit)
             {
@@ -140,6 +140,7 @@ namespace GameProject.Enemies
             }
             else
             {
+                Attacking = false;
                 heroInRange = false;
             }
 
@@ -243,12 +244,12 @@ namespace GameProject.Enemies
         private void Attack()
         {
 
-            if (TimeSinceLastAttack <= 0)
+            if (TimeSinceLastAttack <= 0 && Invincible == false)
             {
                 Attacking = true;
                
                
-                Bullet b = new Bullet(cactusBullets.Count, "CactusBullet", new Vector2(Center.X + 2f, Center.Y + 12f), Direction, new Vector2(3f, 3f), BulletTexture);
+                Bullet b = new Bullet(cactusBullets.Count, "CactusBullet", new Vector2(Center.X + 2f, Center.Y + 12f), Direction, new Vector2(1.5f, 1.5f), BulletTexture);
                 cactusBullets.Add(b);
 
                 TimeSinceLastAttack = AttackCooldown;

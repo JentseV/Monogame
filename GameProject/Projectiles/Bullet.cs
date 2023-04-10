@@ -37,7 +37,7 @@ namespace GameProject.Projectiles
 
         public new void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, Position, null, Color.White, rotation, new Vector2(0f, 0f), 2f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(Texture, Position, null, Color.White, rotation, new Vector2(0f, 0f), 2.5f, SpriteEffects.None, 0f);
         }
 
 
@@ -70,8 +70,9 @@ namespace GameProject.Projectiles
 
         private void Rotate()
         {
-            
-            switch (Direction)
+            Point point = new Point((int)Math.Round(Direction.X), (int)Math.Round(Direction.Y));
+            Vector2 direction2 = new Vector2(point.X, point.Y);
+            switch (direction2)
             {
                 case Vector2(0f, -1f):
                     {

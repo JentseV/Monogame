@@ -49,12 +49,12 @@ namespace GameProject
             base.Initialize();
             hero = new Hero(heroTextures, new KeyboardReader());
             
-            for(int i = 0; i < 1; i++)
+            for(int i = 0; i < 2; i++)
             {
                 coffins.Add(new Coffin(new Vector2(1f, 1f), new Vector2(test[i], test[i]), coffinTextures));
             }
 
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 2; i++)
             {
                 cacti.Add(new Cactus(new Vector2(1f, 1f), new Vector2(test[i+3], test[i+3]), cactusTextures));
             }
@@ -225,16 +225,18 @@ namespace GameProject
                 if(c.Dead == false)
                 {
                     c.Draw(_spriteBatch);
-                    foreach (Bullet b in c.cactusBullets)
-                    {
-                        if(b.destroy == false)
-                        {
-                            b.Draw(_spriteBatch);
-                        }
-                       
-                    }
+                    
                 }
-                
+
+                foreach (Bullet b in c.cactusBullets)
+                {
+                    if (b.destroy == false)
+                    {
+                        b.Draw(_spriteBatch);
+                    }
+
+                }
+
             }
 
             foreach (Bullet b in hero.bullets)

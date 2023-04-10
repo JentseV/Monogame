@@ -22,7 +22,7 @@ namespace GameProject.Enemies
     {
         private SpriteEffects flip = SpriteEffects.None;
 
-        
+        private bool heroInRange = false;
         private Texture2D hitboxText;
 
         
@@ -167,7 +167,17 @@ namespace GameProject.Enemies
         public void DecideAction()
         {
 
-            if (!Attacking && Invincible == false)
+            if (Vector2.Distance(heroPos, this.Position) < 32f)
+            {
+                heroInRange = true;
+            }
+            else
+            {
+                Attacking = false;
+                heroInRange = false;
+            }
+
+            if (!Attacking && Invincible == false && heroInRange == false)
             {
                 Moving = true;
                 Attacking = false;
@@ -225,7 +235,7 @@ namespace GameProject.Enemies
         private void Attack()
         {
             
-            if (TimeSinceLastAttack <= 0)
+            if (TimeSinceLastAttack <= 0 && Invincible == false)
             {
                 Attacking = true;
                 
@@ -267,10 +277,8 @@ namespace GameProject.Enemies
                         }   
                         
                     }
-                    else if (collidable is Hero )
-                    {
-                        Attack();
-                    }
+                    
+                    
                 }
                 
             }
