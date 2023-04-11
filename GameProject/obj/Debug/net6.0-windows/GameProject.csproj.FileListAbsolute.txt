@@ -134,3 +134,13 @@ D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\cactusEn\ca
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\cactusEn\cactusRunDown.xnb
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\cactusEn\cactusRunRight.xnb
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\cactusEn\cactusRunUp.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coyoteEn\coyoteAttackFront.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coyoteEn\coyoteAttackRight.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coyoteEn\coyoteAttackUp.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coyoteEn\coyoteIdleFront.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coyoteEn\coyoteIdleRight.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coyoteEn\coyoteIdleUp.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coyoteEn\coyoteRunDown.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coyoteEn\coyoteRunRight.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coyoteEn\coyoteRunUp.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coyoteEn\coyoteHitAnimation.xnb

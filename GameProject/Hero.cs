@@ -37,6 +37,9 @@ namespace GameProject
         private Animation _animationRun;
         private Animation _animationShooting;
 
+        private float gold;
+
+        public float Gold { get { return gold;  } set { gold = value; } }
 
         private IInputReader inputReader;
         public new  IInputReader InputReader
@@ -363,6 +366,16 @@ namespace GameProject
                 bullets.Add(bullet);
                 TimeSinceLastAttack = AttackCooldown;
             }
+        }
+
+        public void GainGold(float amount)
+        {
+            this.Gold += amount;
+        }
+
+        public void GainHealth(float amount)
+        {
+            this.Hitpoints += amount;
         }
     }
 }

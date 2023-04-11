@@ -1,5 +1,6 @@
 ﻿
 using GameProject.Enemies;
+using GameProject.Pickups;
 using GameProject.Projectiles;
 using GameProject.Screens;
 using Microsoft.Xna.Framework;
@@ -14,6 +15,9 @@ namespace GameProject
 {
     public class Game1 : Game
     {
+        public static Texture2D healthTexture,coinTexture;
+        private static List<Pickup> s = new List<Pickup>();
+
         private Rectangle backgroundRect;
         private Texture2D background;
         private GraphicsDeviceManager _graphics;
@@ -23,11 +27,14 @@ namespace GameProject
         private int[] test = { 10, 50, 100, 300, 200 };
         private List<Coffin> coffins = new List<Coffin>();
         private List<Cactus> cacti = new List<Cactus>();
+        private List<Coyote> coyotes = new List<Coyote>();
         private List<ICollidable> collidables = new List<ICollidable>();
         private Texture2D[] coffinTextures = new Texture2D[11];
         private Texture2D[] heroTextures = new Texture2D[18];
         private Texture2D[] cactusTextures = new Texture2D[12];
-        
+        private Texture2D[] coyoteTextures = new Texture2D[12];
+
+
         private Rectangle[] testHitboxes = new Rectangle[2];
         private Rectangle testHitbox, testHitbox2;
 
@@ -49,7 +56,7 @@ namespace GameProject
             base.Initialize();
             hero = new Hero(heroTextures, new KeyboardReader());
             
-            for(int i = 0; i < 2; i++)
+            for(int i = 0; i < 0; i++)
             {
                 coffins.Add(new Coffin(new Vector2(1f, 1f), new Vector2(test[i], test[i]), coffinTextures));
             }
@@ -57,6 +64,11 @@ namespace GameProject
             for (int i = 0; i < 2; i++)
             {
                 cacti.Add(new Cactus(new Vector2(1f, 1f), new Vector2(test[i+3], test[i+3]), cactusTextures));
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                coyotes.Add(new Coyote(new Vector2(1f, 1f), new Vector2(test[i + 3], test[i + 3]), coyoteTextures));
             }
 
 
@@ -118,6 +130,19 @@ namespace GameProject
             cactusTextures[10] = Content.Load<Texture2D>("cactusEn/cactusHitAnimation");
             cactusTextures[11] = Content.Load<Texture2D>("Projectiles/SpongeBullet");
 
+            coyoteTextures[0] = Content.Load<Texture2D>("coyoteEn/coyoteIdleFront");
+            coyoteTextures[1] = Content.Load<Texture2D>("coyoteEn/coyoteRunRight");
+            coyoteTextures[2] = Content.Load<Texture2D>("coyoteEn/coyoteRunUp");
+            coyoteTextures[3] = Content.Load<Texture2D>("coyoteEn/coyoteIdleUp");
+            coyoteTextures[4] = Content.Load<Texture2D>("coyoteEn/coyoteIdleRight");
+            coyoteTextures[5] = Content.Load<Texture2D>("coyoteEn/coyoteRunDown");
+            coyoteTextures[6] = Content.Load<Texture2D>("coyoteEn/coyoteAttackFront");
+            coyoteTextures[7] = Content.Load<Texture2D>("coyoteEn/coyoteAttackRight");
+            coyoteTextures[8] = Content.Load<Texture2D>("coyoteEn/coyoteAttackUp");
+            coyoteTextures[9] = Content.Load<Texture2D>("heroText/red_square");
+            coyoteTextures[10] = Content.Load<Texture2D>("coyoteEn/coyoteHitAnimation");
+            coyoteTextures[11] = Content.Load<Texture2D>("Projectiles/SpongeBullet");
+
             background = Content.Load<Texture2D>("World/background");
 
 
@@ -144,6 +169,16 @@ namespace GameProject
                 {
                     b.Update(gameTime, collidables);
                     if (collidables.Contains(b) == false) collidables.Add(b);
+                }
+            }
+
+
+            foreach(Coyote co in coyotes)
+            {
+                if(co.Dead == false)
+                {
+                    co.Update(gameTime, hero, collidables);
+                    if (collidables.Contains(co) == false) collidables.Add(co);
                 }
             }
 
@@ -218,6 +253,15 @@ namespace GameProject
 
             _spriteBatch.Draw(background, Vector2.Zero , null, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
             hero.Draw(_spriteBatch);
+
+
+            foreach(Coyote co in coyotes)
+            {
+                if(co.Dead == false)
+                {
+                    co.Draw(_spriteBatch);
+                }
+            }
 
 
             foreach(Cactus c in cacti)

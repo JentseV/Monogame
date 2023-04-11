@@ -14,7 +14,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Keys = Microsoft.Xna.Framework.Input.Keys;
+
 
 namespace GameProject.Enemies
 {
@@ -78,12 +78,12 @@ namespace GameProject.Enemies
         {
             if (Moving && Invincible == false)
             {
-                spriteBatch.Draw(TextureRunning, Center, _animationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
+                spriteBatch.Draw(TextureRunning, Center, AnimationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
             }
             else if(Attacking && Invincible == false)
             {
 
-                spriteBatch.Draw(TextureAttacking, Center, _animationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
+                spriteBatch.Draw(TextureAttacking, Center, AnimationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
             }
 
             else if (Hit && Invincible == true)
@@ -92,7 +92,7 @@ namespace GameProject.Enemies
             }
             else
             {
-                spriteBatch.Draw(TextureIdling, Center, _animationIdle.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
+                spriteBatch.Draw(TextureIdling, Center, AnimationIdle.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
             }
 
              //spriteBatch.Draw(hitboxText, Center , Hitbox, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
@@ -248,15 +248,15 @@ namespace GameProject.Enemies
         {
             if (Moving)
             {
-                _animationRun.Update(gameTime);
+                AnimationRun.Update(gameTime);
             }
             else if (Attacking)
             {
-                _animationAttacking.Update(gameTime);
+                AnimationAttacking.Update(gameTime);
             }
             else
             {
-                _animationIdle.Update(gameTime);
+                AnimationIdle.Update(gameTime);
             }
         }
 

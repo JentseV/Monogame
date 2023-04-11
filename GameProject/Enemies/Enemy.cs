@@ -1,4 +1,5 @@
 ﻿using GameProject.Animations;
+using GameProject.Pickups;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -29,6 +30,17 @@ namespace GameProject.Enemies
 
         public Animation AnimationHit { get { return _animationHit; } set { _animationHit = value; } }
 
+
+        public void OnDeath()
+        {
+            if (Dead)
+            {
+                Moving = false;
+                Attacking = false;
+                Random r = new Random();
+                Pickup.SpawnPickup(r.Next(),"Pickup",this.Position,5f);
+            }
+        }
 
 
     }

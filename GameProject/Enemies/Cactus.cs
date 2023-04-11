@@ -35,7 +35,7 @@ namespace GameProject.Enemies
             this.Position = position;
 
             this.Center = new Vector2(50 + Position.X, 55 + Position.Y);
-            this.Hitbox = new Rectangle((int)Center.X, (int)Center.Y, 45, 45);
+            this.Hitbox = new Rectangle((int)Center.X+5, (int)Center.Y, 30, 40);
             this.TextureIdle = textures[0];
             this.TextureRunRight = textures[1];
             this.TextureUpRun = textures[2];

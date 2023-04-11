@@ -22,7 +22,7 @@ namespace GameProject.Projectiles
         private float rotation = 0;
         private float timeToLive = 5f, created = 0f;
         public bool destroy = false;
-        public Bullet(int ID,string tag,Vector2 position, Vector2 direction, Vector2 speed, Texture2D texture)
+        public Bullet(int ID,string tag,Vector2 position, Vector2 direction, Vector2 speed, Texture2D texture) 
         {
             this.destroy = false;
             this.ID = ID;
@@ -124,7 +124,7 @@ namespace GameProject.Projectiles
             {
                 if (hitbox.Intersects(collidable.Hitbox) && !(collidable is Bullet))
                 {
-                    if(this.Tag == "BulletHero")
+                    if (this.Tag == "BulletHero")
                     {
                         if (collidable is Coffin)
                         {
@@ -136,6 +136,12 @@ namespace GameProject.Projectiles
                         {
                             Cactus c = collidable as Cactus;
                             if (!c.Invincible) destroy = true;
+                        }
+
+                        if (collidable is Coyote)
+                        {
+                            Coyote c = collidable as Coyote;
+                            if(!c.Invincible) destroy = true;
                         }
                     }
                     if(this.Tag == "CactusBullet")
