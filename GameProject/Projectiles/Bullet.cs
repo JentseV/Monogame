@@ -1,4 +1,5 @@
 ﻿using GameProject.Enemies;
+using GameProject.Pickups;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -122,7 +123,7 @@ namespace GameProject.Projectiles
         {
             foreach (ICollidable collidable in collidables)
             {
-                if (hitbox.Intersects(collidable.Hitbox) && !(collidable is Bullet))
+                if (hitbox.Intersects(collidable.Hitbox) && !(collidable is Bullet) && !(collidable is Pickup))
                 {
                     if (this.Tag == "BulletHero")
                     {

@@ -22,8 +22,9 @@ namespace GameProject
 
         private float invincibleTimer;
 
-        private bool moving, attacking, dead, hit , invincible, movable;
+        private bool moving, attacking, dead, hit , invincible, movable, remove;
 
+        public bool Remove { get { return remove; } set { remove = value; } }
         public bool Movable { get { return movable; } set { movable = value; } }
         public bool Invincible { get { return invincible; } set { invincible = value; } }
         public bool Hit { get { return hit; } set { hit = value; } }

@@ -31,14 +31,19 @@ namespace GameProject.Enemies
         public Animation AnimationHit { get { return _animationHit; } set { _animationHit = value; } }
 
 
-        public void OnDeath()
+        public void OnDeath(List<ICollidable> collidables)
         {
             if (Dead)
             {
+                Debug.WriteLine("Should spawn");
                 Moving = false;
                 Attacking = false;
                 Random r = new Random();
-                Pickup.SpawnPickup(r.Next(),"Pickup",this.Position,5f);
+                Pickup p = Pickup.SpawnPickup(r.Next(),"Pickup",this.Position,5f);
+                Debug.WriteLine(p.Hitbox);
+                collidables.Add(p);
+                Remove = true;
+                
             }
         }
 

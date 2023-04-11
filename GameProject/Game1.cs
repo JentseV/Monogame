@@ -3,12 +3,13 @@ using GameProject.Enemies;
 using GameProject.Pickups;
 using GameProject.Projectiles;
 using GameProject.Screens;
+using GameProject.Screens.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
 using System.Collections.Generic;
 using System.Diagnostics;
+
 using System.Linq;
 
 namespace GameProject
@@ -18,13 +19,17 @@ namespace GameProject
         public static Texture2D healthTexture,coinTexture;
         private static List<Pickup> s = new List<Pickup>();
 
+
+        private UI ui;
+        
         private Rectangle backgroundRect;
         private Texture2D background;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Hero hero;
-        private Coffin coffin;
-        private int[] test = { 10, 50, 100, 300, 200 };
+
+        private SpriteFont font;
+        private int[] test = { 10, 50, 100, 300, 200, 10, 50, 100, 300, 200 };
         private List<Coffin> coffins = new List<Coffin>();
         private List<Cactus> cacti = new List<Cactus>();
         private List<Coyote> coyotes = new List<Coyote>();
@@ -35,8 +40,7 @@ namespace GameProject
         private Texture2D[] coyoteTextures = new Texture2D[12];
 
 
-        private Rectangle[] testHitboxes = new Rectangle[2];
-        private Rectangle testHitbox, testHitbox2;
+
 
         private IScreen screen;
 
@@ -54,30 +58,27 @@ namespace GameProject
         {
             // TODO: Add your initialization logic here
             base.Initialize();
+            ui = new UI(font);
             hero = new Hero(heroTextures, new KeyboardReader());
             
-            for(int i = 0; i < 0; i++)
+            for(int i = 0; i < 1; i++)
             {
                 coffins.Add(new Coffin(new Vector2(1f, 1f), new Vector2(test[i], test[i]), coffinTextures));
             }
 
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 1; i++)
             {
                 cacti.Add(new Cactus(new Vector2(1f, 1f), new Vector2(test[i+3], test[i+3]), cactusTextures));
             }
 
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 1; i++)
             {
-                coyotes.Add(new Coyote(new Vector2(1f, 1f), new Vector2(test[i + 3], test[i + 3]), coyoteTextures));
+                coyotes.Add(new Coyote(new Vector2(1f, 1f), new Vector2(test[i], test[i]), coyoteTextures));
             }
 
 
             hero.Position = new Vector2(600f, 600f);
             collidables.Add(hero);
-            testHitbox = new Rectangle(250, 100, 32, 32);
-            testHitbox2 = new Rectangle(550, 100, 32, 32);
-            testHitboxes[0] = testHitbox;
-            testHitboxes[1] = testHitbox2;
             backgroundRect = new Rectangle(0, 0, 32, 47);
             screen = new SplashScreen();
 
@@ -143,8 +144,10 @@ namespace GameProject
             coyoteTextures[10] = Content.Load<Texture2D>("coyoteEn/coyoteHitAnimation");
             coyoteTextures[11] = Content.Load<Texture2D>("Projectiles/SpongeBullet");
 
+            healthTexture = Content.Load<Texture2D>("Pickups/Heart");
+            coinTexture = Content.Load<Texture2D>("Pickups/Coin");
             background = Content.Load<Texture2D>("World/background");
-
+            font = Content.Load<SpriteFont>("Fonts/west");
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -175,7 +178,7 @@ namespace GameProject
 
             foreach(Coyote co in coyotes)
             {
-                if(co.Dead == false)
+                if(co.Remove == false)
                 {
                     co.Update(gameTime, hero, collidables);
                     if (collidables.Contains(co) == false) collidables.Add(co);
@@ -184,7 +187,7 @@ namespace GameProject
 
             foreach (Cactus c in cacti)
             {
-                if (c.Dead == false)
+                if (c.Remove == false)
                 {
                     c.Update(gameTime, hero, collidables);
                     if (collidables.Contains(c) == false) collidables.Add(c);
@@ -206,13 +209,29 @@ namespace GameProject
             foreach(Coffin c in coffins)
             {
                 
-                if(c.Dead == false)
+                if(c.Remove == false)
                 {
                     if(collidables.Contains(c) == false) collidables.Add(c);
                     c.Update(gameTime, hero, collidables);
                 }
                 
             }
+
+
+            foreach (ICollidable c in collidables)
+            {
+                if (c is Coin)
+                {
+                    Coin p = c as Coin;
+                    p.Update(gameTime, collidables);
+                }
+                else if (c is Health)
+                {
+                    Health h = c as Health;
+                    h.Update(gameTime, collidables);
+                }
+            }
+
 
             foreach (ICollidable x in collidables.ToList())
             {
@@ -229,15 +248,26 @@ namespace GameProject
                 else if (x is Enemy)
                 {
                     Enemy t = x as Enemy;
-                    if (t.Dead == true)
+                    if (t.Remove == true)
+                    {
+                        collidables.Remove(t);
+                    }
+                }
+
+                else if(x is Pickup)
+                {
+                    Pickup t = x as Pickup;
+                    if(t.Despawn == true)
                     {
                         collidables.Remove(t);
                     }
                 }
             }
 
-            
-            
+
+
+
+            ui.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -249,27 +279,28 @@ namespace GameProject
             // TODO: Add your drawing code here
 
             _spriteBatch.Begin();
-            
 
-            _spriteBatch.Draw(background, Vector2.Zero , null, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
+
+            _spriteBatch.Draw(background, Vector2.Zero, null, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
             hero.Draw(_spriteBatch);
 
 
-            foreach(Coyote co in coyotes)
+
+            foreach (Coyote co in coyotes)
             {
-                if(co.Dead == false)
+                if (co.Remove == false)
                 {
                     co.Draw(_spriteBatch);
                 }
             }
 
 
-            foreach(Cactus c in cacti)
+            foreach (Cactus c in cacti)
             {
-                if(c.Dead == false)
+                if (c.Remove == false)
                 {
                     c.Draw(_spriteBatch);
-                    
+
                 }
 
                 foreach (Bullet b in c.cactusBullets)
@@ -294,17 +325,29 @@ namespace GameProject
 
             foreach (Coffin c in coffins)
             {
-                if(c.Dead == false)
+                if (c.Remove == false)
                 {
                     c.Draw(_spriteBatch);
                 }
-                
+
             }
 
-            
-            //_spriteBatch.Draw(coffinTextures[0], new Vector2(50f, 50f), Color.White);
-            //_spriteBatch.Draw(heroTextures[10], testHitbox,Color.Green);
-            //_spriteBatch.Draw(heroTextures[10], testHitbox2, Color.Green);
+            foreach (ICollidable c in collidables)
+            {
+                if(c is Coin)
+                {
+                    Coin p = c as Coin;
+                    p.Draw(_spriteBatch);
+                }
+                else if(c is Health)
+                {
+                    Health h = c as Health;
+                    h.Draw(_spriteBatch);
+                }
+            }
+
+
+            ui.Draw(_spriteBatch);
 
             _spriteBatch.End();
 

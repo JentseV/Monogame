@@ -96,7 +96,7 @@ namespace GameProject.Enemies
             //spriteBatch.Draw(hitboxText, Center , Hitbox, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
         }
 
-        public new void Update(GameTime gameTime, Hero hero , List<ICollidable> collidables)
+        public  void Update(GameTime gameTime, Hero hero , List<ICollidable> collidables)
         {
             this.Center = new Vector2((int)Position.X, (int)Position.Y);
             this.hitbox.X = (int)Center.X;
@@ -126,10 +126,12 @@ namespace GameProject.Enemies
             heroPos = hero.Position;
 
             CheckCollision(collidables);
+            OnDeath(collidables);
             DecideAction();
             GetFacingDirection();
             DecideAnimation();
             UpdateAnimations(gameTime);
+            
         }
 
 

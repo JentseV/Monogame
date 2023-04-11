@@ -1,5 +1,6 @@
 ﻿using GameProject.Animations;
 using GameProject.Enemies;
+using GameProject.Pickups;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -25,7 +26,7 @@ namespace GameProject.Enemies
 
         private Texture2D BulletTexture;
         private bool heroInRange = false;
-        private float rotate;
+
         private Texture2D hitboxText;
 
         public List<Bullet> fireBalls = new List<Bullet>();
@@ -126,13 +127,14 @@ namespace GameProject.Enemies
            
             heroPos = hero.Position;
 
-            OnDeath();
+            
             CheckCollision(collidables);
+            OnDeath(collidables);
             DecideAction();
             GetFacingDirection();
             DecideAnimation();
             UpdateAnimations(gameTime);
-
+            
 
         }
 
@@ -257,26 +259,28 @@ namespace GameProject.Enemies
 
         protected new void CheckCollision(List<ICollidable> collidables)
         {
-
-            foreach (ICollidable collidable in collidables)
+            if(Dead == false)
             {
-
-                if (this.Hitbox.Intersects(collidable.Hitbox) && !(collidable is Coyote))
+                foreach (ICollidable collidable in collidables)
                 {
-                    if (collidable is Bullet)
+
+                    if (this.Hitbox.Intersects(collidable.Hitbox) && !(collidable is Coyote) && !(collidable is Pickup))
                     {
-                        Bullet b = collidable as Bullet;
-                        if (b.Tag == "BulletHero" && Invincible == false)
+                        if (collidable is Bullet)
                         {
-                            TakeDamage(1f);
+                            Bullet b = collidable as Bullet;
+                            if (b.Tag == "BulletHero" && Invincible == false)
+                            {
+                                TakeDamage(1f);
+                            }
+
                         }
 
                     }
 
-
                 }
-
             }
+            
 
         }
 

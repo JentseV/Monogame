@@ -21,6 +21,8 @@ namespace GameProject
     internal class Hero : Character, IMovable, IGameComponent, ICollidable
     {
 
+        public static float hitPoints2;
+
         private Texture2D _texture, _textureRunning, _textureIdling, _textureShooting, _textureUpRun, _textureDownRun;
         private Texture2D _textureIdleFacingFront, _textureIdleFacingRight, _textureIdleFacingUp, _textureIdleFacingUpRight, _textureIdleFacingDownRight, _textureIdle;
         private Texture2D _textureShootUp, _textureShootFront, _textureShootRight, _textureShootUpRight, _textureShootDownRight;
@@ -37,7 +39,7 @@ namespace GameProject
         private Animation _animationRun;
         private Animation _animationShooting;
 
-        private float gold;
+        public static float gold;
 
         public float Gold { get { return gold;  } set { gold = value; } }
 
@@ -62,6 +64,7 @@ namespace GameProject
         private MovementManager movementManager;
         public Hero(Texture2D[] textures, IInputReader inputReader)
         {
+
 
             Hitpoints = 3f;
 
@@ -140,7 +143,7 @@ namespace GameProject
 
         public void Update(GameTime gameTime, List<ICollidable> collidables)
         {
-
+            hitPoints2 = Hitpoints;
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             TimeSinceLastAttack -= deltaTime;
 
@@ -377,5 +380,6 @@ namespace GameProject
         {
             this.Hitpoints += amount;
         }
+
     }
 }

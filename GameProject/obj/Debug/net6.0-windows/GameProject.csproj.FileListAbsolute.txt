@@ -144,3 +144,7 @@ D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coyoteEn\co
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coyoteEn\coyoteRunRight.xnb
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coyoteEn\coyoteRunUp.xnb
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coyoteEn\coyoteHitAnimation.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Pickups\Coin.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Pickups\Heart.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Fonts\wFont.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Fonts\west.xnb

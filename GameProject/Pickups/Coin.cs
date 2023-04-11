@@ -20,6 +20,7 @@ namespace GameProject.Pickups
     {
         public Coin(int idIn, string tagIn, Vector2 postionIn, float timeTillDespawnIn) : base(idIn, tagIn, postionIn, timeTillDespawnIn)
         {
+            Hitbox = new Rectangle((int)Position.X, (int)Position.Y, 25, 25);
             this.Texture = Game1.coinTexture;
             this.Animation = new Animation();
             this.Animation.GetFramesFromTextureProperties(Texture.Width, Texture.Height, 6, 1);

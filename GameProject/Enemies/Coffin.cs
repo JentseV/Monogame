@@ -27,10 +27,7 @@ namespace GameProject.Enemies
 
         
         private Vector2 heroPos,facing;
-        private Animation _animationIdle;
-        private Animation _animationRun;
-        private Animation _animationAttacking;
-        private Animation _animationHit;
+
         public Coffin(Vector2 speed, Vector2 position, Texture2D[] textures)
         {
             this.Hitpoints = 3;
@@ -62,15 +59,15 @@ namespace GameProject.Enemies
 
             TimeSinceLastAttack = AttackCooldown;
 
-            _animationIdle = new Animation();
-            _animationRun = new Animation();
-            _animationAttacking = new Animation();
-            _animationHit = new Animation();
+            AnimationIdle = new Animation();
+            AnimationRun = new Animation();
+            AnimationAttacking = new Animation();
+            AnimationHit = new Animation();
 
-            _animationHit.GetFramesFromTextureProperties(this.TextureHit.Width, this.TextureHit.Height, 1, 1);
-            _animationIdle.GetFramesFromTextureProperties(this.TextureIdle.Width, this.TextureIdle.Height, 6, 1);
-            _animationRun.GetFramesFromTextureProperties(this.TextureRunRight.Width, this.TextureRunRight.Height, 14, 1);
-            _animationAttacking.GetFramesFromTextureProperties(this.TextureAttacking.Width, this.TextureAttacking.Height, 18, 1);
+            AnimationHit.GetFramesFromTextureProperties(this.TextureHit.Width, this.TextureHit.Height, 1, 1);
+            AnimationIdle.GetFramesFromTextureProperties(this.TextureIdle.Width, this.TextureIdle.Height, 6, 1);
+            AnimationRun.GetFramesFromTextureProperties(this.TextureRunRight.Width, this.TextureRunRight.Height, 14, 1);
+            AnimationAttacking.GetFramesFromTextureProperties(this.TextureAttacking.Width, this.TextureAttacking.Height, 18, 1);
         }
 
 
@@ -129,8 +126,9 @@ namespace GameProject.Enemies
             }
 
             heroPos = hero.Position;
-           
 
+
+            OnDeath(collidables);
             CheckCollision(collidables);
             DecideAction();
             GetFacingDirection();

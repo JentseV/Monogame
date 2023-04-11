@@ -52,16 +52,18 @@ namespace GameProject.Pickups
             Hitbox = new Rectangle((int)Position.X,(int)Position.Y,25,25);
             Despawn = false;
             TimeTillDespawn = timeTillDespawnIn;
+            this.Animation = new Animation();
         }
 
         public void CheckCollision(List<ICollidable> collidables)
         {
             foreach(ICollidable collidable in collidables)
             {
-                if(this.Hitbox.Intersects(collidable.Hitbox) && !(collidable is Pickup))
+                if(this.Hitbox.Intersects(collidable.Hitbox) && !(collidable is Pickup) && !(collidable is Bullet))
                 {
                     if(collidable is Hero)
                     {
+                        Debug.WriteLine("Ls");
                         Hero h = collidable as Hero;
                         OnPickup(h);
                     }
@@ -71,8 +73,6 @@ namespace GameProject.Pickups
 
         public void OnPickup(Hero h)
         {
-            this.Despawn = true;
-
             if(this is Coin)
             {
                 h.GainGold(5f);
@@ -82,10 +82,12 @@ namespace GameProject.Pickups
             {
                 h.GainHealth(1f);
             }
+            this.Despawn = true;
         }
 
         public static Pickup SpawnPickup(int id,string tag, Vector2 position,float timeDespawn)
         {
+            
             Random r = new Random();
             int rn = r.Next(0, 11);
             {
@@ -93,13 +95,9 @@ namespace GameProject.Pickups
                 {
                     return new Health(id,tag,position,timeDespawn);
                 }
-                else if(rn > 3 && rn < 7)
-                {
-                    return new Coin(id, tag, position, timeDespawn);
-                }
                 else
                 {
-                    return null;
+                    return new Coin(id, tag, position, timeDespawn);
                 }
             }
         }

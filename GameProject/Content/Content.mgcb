@@ -433,6 +433,13 @@
 /processorParam:TextureFormat=Color
 /build:coyoteEn/coyoteRunUp.png
 
+#begin Fonts/wFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/wFont.spritefont;Fonts/west.spritefont
+
 #begin heroText/Fixed/idleDown.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -720,6 +727,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:heroText/test.png
+
+#begin Pickups/Coin.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Pickups/Coin.png
+
+#begin Pickups/Heart.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Pickups/Heart.png
 
 #begin Projectiles/MuzzleFlash.png
 /importer:TextureImporter

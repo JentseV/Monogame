@@ -21,8 +21,11 @@ namespace GameProject.Pickups
     {
         public Health(int idIn, string tagIn, Vector2 postionIn, float timeTillDespawnIn) : base(idIn, tagIn, postionIn, timeTillDespawnIn)
         {
+            Hitbox = new Rectangle((int)Position.X, (int)Position.Y, 25, 25);
             this.Texture = Game1.healthTexture;
-            
+            this.Animation = new Animation();
+            this.Animation.GetFramesFromTextureProperties(Texture.Width, Texture.Height, 4, 1);
+
         }
     }
 }
