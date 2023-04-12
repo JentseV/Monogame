@@ -30,6 +30,7 @@ namespace GameProject.Enemies
 
         public Cactus(Vector2 speed, Vector2 position, Texture2D[] textures)
         {
+            this.Damage = 1f;
             this.Hitpoints = 3;
             this.Speed = speed;
             this.Position = position;
@@ -251,7 +252,7 @@ namespace GameProject.Enemies
                 Attacking = true;
                
                
-                Bullet b = new Bullet(cactusBullets.Count, "CactusBullet", new Vector2(Center.X + 2f, Center.Y + 12f), Direction, new Vector2(1.5f, 1.5f), BulletTexture);
+                Bullet b = new Bullet(cactusBullets.Count, "CactusBullet", new Vector2(Center.X + 2f, Center.Y + 12f), Direction, new Vector2(1.5f, 1.5f), BulletTexture,Damage);
                 cactusBullets.Add(b);
 
                 TimeSinceLastAttack = AttackCooldown;
@@ -270,7 +271,7 @@ namespace GameProject.Enemies
                         Bullet b = collidable as Bullet;
                         if (b.Tag == "BulletHero" && Invincible == false)
                         {
-                            TakeDamage(1f);
+                            TakeDamage(b.Damage);
                         }
                     }
                     

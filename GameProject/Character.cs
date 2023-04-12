@@ -19,7 +19,8 @@ namespace GameProject
     internal abstract class Character : IGameComponent ,IMovable, ICollidable
     {
 
-
+        private float damage;
+        public float Damage { get { return damage; } set { damage = value; } }
         private float invincibleTimer;
 
         private bool moving, attacking, dead, hit , invincible, movable, remove;

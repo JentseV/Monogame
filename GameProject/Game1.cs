@@ -29,6 +29,7 @@ namespace GameProject
         private Hero hero;
         private Button button;
         private SpriteFont font;
+        private UpgradeUI upgradeUI;
         private int[] test = { 10, 50, 100, 300, 200, 10, 50, 100, 300, 200 };
         private List<Coffin> coffins = new List<Coffin>();
         private List<Cactus> cacti = new List<Cactus>();
@@ -56,25 +57,26 @@ namespace GameProject
             // TODO: Add your initialization logic here
             base.Initialize();
             ui = new UI(font);
+            
             button = new Button(buttonText, new Vector2(500f, 300f), "Buy Movement Speed ", font,() => hero.Hitpoints+=3);
             hero = new Hero(heroTextures, new KeyboardReader());
             
-            for(int i = 0; i < 0; i++)
+            for(int i = 0; i < 5; i++)
             {
                 coffins.Add(new Coffin(new Vector2(1f, 1f), new Vector2(test[i+2], test[i+2]), coffinTextures));
             }
 
-            for (int i = 0; i < 0; i++)
+            for (int i = 0; i < 5; i++)
             {
                 cacti.Add(new Cactus(new Vector2(1f, 1f), new Vector2(test[i+3], test[i+3]), cactusTextures));
             }
 
-            for (int i = 0; i < 0; i++)
+            for (int i = 0; i < 5; i++)
             {
                 coyotes.Add(new Coyote(new Vector2(1f, 1f), new Vector2(test[i], test[i]), coyoteTextures));
             }
 
-
+            upgradeUI = new UpgradeUI(font, buttonText, hero);
             hero.Position = new Vector2(600f, 600f);
             collidables.Add(hero);
             backgroundRect = new Rectangle(0, 0, 32, 47);
@@ -160,7 +162,7 @@ namespace GameProject
 
             // TODO: Add your update logic here
 
-            button.Update(Mouse.GetState());
+            upgradeUI.Update(Mouse.GetState()) ;
 
 
             hero.Update(gameTime, collidables);
@@ -350,7 +352,7 @@ namespace GameProject
                 }
             }
 
-
+            upgradeUI.Draw(_spriteBatch);
             ui.Draw(_spriteBatch);
 
             _spriteBatch.End();

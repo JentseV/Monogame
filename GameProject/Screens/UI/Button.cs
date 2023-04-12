@@ -19,6 +19,8 @@ namespace GameProject.Screens.UI
         private Rectangle hitbox;
         private bool destroy;
         private Action action;
+
+        public Action Action { get { return action; } set { action = value; } }
         public bool Destroy { get { return destroy; } set { destroy = value; } }
         public Button(Texture2D textureIn, Vector2 positionIn, string textIn, SpriteFont fontIn,Action actionIn)
         {
@@ -26,7 +28,7 @@ namespace GameProject.Screens.UI
             this.position = positionIn;
             this.text = textIn;
             this.font = fontIn;
-            this.action = actionIn;
+            this.Action = actionIn;
             this.Destroy = false;
             hitbox = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
         }
@@ -47,7 +49,7 @@ namespace GameProject.Screens.UI
         {
             if (OnClick(mouseState) && !Destroy)
             {
-                    action?.Invoke();
+                    Action?.Invoke();
                     Destroy = true;
             }
         }
@@ -55,10 +57,13 @@ namespace GameProject.Screens.UI
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            
-            spriteBatch.Draw(texture, position, null, Color.White, 0f, new Vector2(0f, 0f), 0.1f, SpriteEffects.None, 0f);
-            Vector2 textPosition = position + new Vector2(0f, 70f);
-            spriteBatch.DrawString(font, text, textPosition, Color.Red);
+            if (!Destroy)
+            {
+                spriteBatch.Draw(texture, position, null, Color.White, 0f, new Vector2(0f, 0f), 0.1f, SpriteEffects.None, 0f);
+                Vector2 textPosition = position + new Vector2(0f, 70f);
+                spriteBatch.DrawString(font, text, textPosition, Color.Red);
+            }
+           
         }
     }
 }

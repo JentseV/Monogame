@@ -23,7 +23,11 @@ namespace GameProject.Projectiles
         private float rotation = 0;
         private float timeToLive = 5f, created = 0f;
         public bool destroy = false;
-        public Bullet(int ID,string tag,Vector2 position, Vector2 direction, Vector2 speed, Texture2D texture) 
+
+      
+
+
+        public Bullet(int ID,string tag,Vector2 position, Vector2 direction, Vector2 speed, Texture2D texture,float damage) 
         {
             this.destroy = false;
             this.ID = ID;
@@ -33,6 +37,7 @@ namespace GameProject.Projectiles
             this.Speed = speed;
             this.Texture = texture;
             this.Hitbox = new Rectangle((int)Position.X, (int)Position.Y, 5, 5);
+            this.Damage = damage;
         }
 
 

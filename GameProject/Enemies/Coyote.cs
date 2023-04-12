@@ -271,7 +271,7 @@ namespace GameProject.Enemies
                             Bullet b = collidable as Bullet;
                             if (b.Tag == "BulletHero" && Invincible == false)
                             {
-                                TakeDamage(1f);
+                                TakeDamage(b.Damage);
                             }
 
                         }

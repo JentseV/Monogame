@@ -18,24 +18,15 @@ using System.Windows.Forms;
 
 namespace GameProject.Screens.UI
 {
-    internal class UI
+    internal class ScoreUI : UI
     {
-        public SpriteFont font;
-        
-        public UI(SpriteFont fontIn)
+        public ScoreUI(SpriteFont fontIn) : base(fontIn)
         {
-            font = fontIn;
             
-        }
-
-        public void Update(GameTime gameTime)
-        {
-
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-
             string temp = "\n\nCOINS : " + Hero.gold + "\n\nHEALTH : " + Hero.hitPoints2;
             Vector2 dimension = font.MeasureString(temp);
             Vector2 drawPos = new Vector2(10, 0);

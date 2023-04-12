@@ -23,6 +23,12 @@ namespace GameProject
 
         public static float hitPoints2;
 
+        private float  ammo;
+
+        
+
+        public float Ammo { get { return ammo; } set { ammo = value; } }
+
         private Texture2D _texture, _textureRunning, _textureIdling, _textureShooting, _textureUpRun, _textureDownRun;
         private Texture2D _textureIdleFacingFront, _textureIdleFacingRight, _textureIdleFacingUp, _textureIdleFacingUpRight, _textureIdleFacingDownRight, _textureIdle;
         private Texture2D _textureShootUp, _textureShootFront, _textureShootRight, _textureShootUpRight, _textureShootDownRight;
@@ -70,6 +76,7 @@ namespace GameProject
 
             Tag = "Hero";
 
+            this.Damage = 1f;
             _texture = textures[3];
             _textureIdle = textures[3];
             _textureUpRun = textures[0];
@@ -363,7 +370,7 @@ namespace GameProject
                         Bullet b = collidable as Bullet;
                         if (b.Tag == "CactusBullet"  && Invincible == false)
                         {
-                            TakeDamage(1f);
+                            TakeDamage(b.Damage);
                         }
                     }
                 }
@@ -376,7 +383,7 @@ namespace GameProject
             if (TimeSinceLastAttack <= 0)
             {
                 shooting = true;
-                Bullet bullet = new Bullet(bullets.Count, "BulletHero", new Vector2(Center.X + 2f, Center.Y + 12f), facing, new Vector2(2f, 2f), bulletTexture);
+                Bullet bullet = new Bullet(bullets.Count, "BulletHero", new Vector2(Center.X + 2f, Center.Y + 12f), facing, new Vector2(2f, 2f), bulletTexture,Damage);
                 bullets.Add(bullet);
                 TimeSinceLastAttack = AttackCooldown;
             }
@@ -398,6 +405,23 @@ namespace GameProject
                 GainGold(2f);
             }
             
+        }
+
+
+        public void IncreaseSpeed(Vector2 amount)
+        {
+            this.Speed += amount;
+        }
+
+        public void InceaseDamage(float amount)
+        {
+            this.Damage += amount;
+        }
+
+
+        public void IncreaseAmmo(float amount)
+        {
+            this.Ammo += amount;
         }
 
     }
