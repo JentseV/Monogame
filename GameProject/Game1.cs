@@ -23,11 +23,11 @@ namespace GameProject
         private UI ui;
         
         private Rectangle backgroundRect;
-        private Texture2D background;
+        private Texture2D background,buttonText;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Hero hero;
-
+        private Button button;
         private SpriteFont font;
         private int[] test = { 10, 50, 100, 300, 200, 10, 50, 100, 300, 200 };
         private List<Coffin> coffins = new List<Coffin>();
@@ -38,9 +38,6 @@ namespace GameProject
         private Texture2D[] heroTextures = new Texture2D[18];
         private Texture2D[] cactusTextures = new Texture2D[12];
         private Texture2D[] coyoteTextures = new Texture2D[12];
-
-
-
 
         private IScreen screen;
 
@@ -59,19 +56,20 @@ namespace GameProject
             // TODO: Add your initialization logic here
             base.Initialize();
             ui = new UI(font);
+            button = new Button(buttonText, new Vector2(500f, 300f), "Buy Movement Speed ", font,() => hero.Hitpoints+=3);
             hero = new Hero(heroTextures, new KeyboardReader());
             
-            for(int i = 0; i < 1; i++)
+            for(int i = 0; i < 0; i++)
             {
-                coffins.Add(new Coffin(new Vector2(1f, 1f), new Vector2(test[i], test[i]), coffinTextures));
+                coffins.Add(new Coffin(new Vector2(1f, 1f), new Vector2(test[i+2], test[i+2]), coffinTextures));
             }
 
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 0; i++)
             {
                 cacti.Add(new Cactus(new Vector2(1f, 1f), new Vector2(test[i+3], test[i+3]), cactusTextures));
             }
 
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 0; i++)
             {
                 coyotes.Add(new Coyote(new Vector2(1f, 1f), new Vector2(test[i], test[i]), coyoteTextures));
             }
@@ -148,7 +146,7 @@ namespace GameProject
             coinTexture = Content.Load<Texture2D>("Pickups/Coin");
             background = Content.Load<Texture2D>("World/background");
             font = Content.Load<SpriteFont>("Fonts/west");
-
+            buttonText = Content.Load<Texture2D>("Buttons/boots");
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
@@ -162,8 +160,42 @@ namespace GameProject
 
             // TODO: Add your update logic here
 
+            button.Update(Mouse.GetState());
+
 
             hero.Update(gameTime, collidables);
+
+
+            foreach (ICollidable x in collidables.ToList())
+            {
+
+                if (x is Bullet)
+                {
+                    Bullet t = x as Bullet;
+                    if (t.destroy == true)
+                    {
+                        collidables.Remove(t);
+                    }
+                }
+
+                else if (x is Enemy)
+                {
+                    Enemy t = x as Enemy;
+                    if (t.Remove == true)
+                    {
+                        collidables.Remove(t);
+                    }
+                }
+
+                else if (x is Pickup)
+                {
+                    Pickup t = x as Pickup;
+                    if (t.Despawn == true)
+                    {
+                        collidables.Remove(t);
+                    }
+                }
+            }
 
             foreach (Bullet b in hero.bullets)
             {
@@ -233,36 +265,7 @@ namespace GameProject
             }
 
 
-            foreach (ICollidable x in collidables.ToList())
-            {
-                
-                if(x is Bullet)
-                {
-                    Bullet t = x as Bullet;
-                    if(t.destroy == true)
-                    {
-                        collidables.Remove(t);
-                    }
-                }
-
-                else if (x is Enemy)
-                {
-                    Enemy t = x as Enemy;
-                    if (t.Remove == true)
-                    {
-                        collidables.Remove(t);
-                    }
-                }
-
-                else if(x is Pickup)
-                {
-                    Pickup t = x as Pickup;
-                    if(t.Despawn == true)
-                    {
-                        collidables.Remove(t);
-                    }
-                }
-            }
+            
 
 
 
@@ -284,7 +287,8 @@ namespace GameProject
             _spriteBatch.Draw(background, Vector2.Zero, null, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
             hero.Draw(_spriteBatch);
 
-
+            
+            if(!button.Destroy) button.Draw(_spriteBatch);
 
             foreach (Coyote co in coyotes)
             {

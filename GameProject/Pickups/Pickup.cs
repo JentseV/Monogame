@@ -63,7 +63,7 @@ namespace GameProject.Pickups
                 {
                     if(collidable is Hero)
                     {
-                        Debug.WriteLine("Ls");
+                        
                         Hero h = collidable as Hero;
                         OnPickup(h);
                     }

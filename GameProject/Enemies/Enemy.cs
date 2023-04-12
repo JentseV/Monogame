@@ -35,7 +35,7 @@ namespace GameProject.Enemies
         {
             if (Dead)
             {
-                Debug.WriteLine("Should spawn");
+                
                 Moving = false;
                 Attacking = false;
                 Random r = new Random();

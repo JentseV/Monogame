@@ -106,7 +106,7 @@ namespace GameProject.Enemies
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             TimeSinceLastAttack -= deltaTime;
 
-            Debug.WriteLine(Hit);
+            
                         
 
             if (Hit)

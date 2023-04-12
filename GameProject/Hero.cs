@@ -97,6 +97,7 @@ namespace GameProject
 
             Hitbox = new Rectangle((int)Position.X, (int)Position.Y, 32, 32);
 
+            InvincibleTimer = 5f;
 
             AttackCooldown = 0.5f;
             TimeSinceLastAttack = AttackCooldown;
@@ -147,39 +148,11 @@ namespace GameProject
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             TimeSinceLastAttack -= deltaTime;
 
-            //Debug.WriteLine(Invincible);
 
-            if (Invincible)
-            {
-                InvincibleTimer -= deltaTime;
-                if (InvincibleTimer < 0)
-                {
-                    Invincible = false;
-                    InvincibleTimer = 1f;
-                }
-            }
-            Center = new Vector2(Position.X + 10, Position.Y + 10);
-            hitbox.X = (int)Center.X;
-            hitbox.Y = (int)Center.Y;
 
-            Direction = inputReader.ReadInput();
-            if (Direction.X > 0 || Direction.X < 0 || Direction.Y > 0 || Direction.Y < 0)
-            {
-                moving = true;
-                shooting = false;
-                canShoot = false;
-            }
-            else
-            {
-                moving = false;
-                canShoot = true;
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Space) && canShoot)
-            {
-                Shoot();
-            }
-
+            UpdateHitbox();
+            CheckInvincible(deltaTime);
+            DecideAction();
             CheckCollision(collidables);
             Move();
             GetFacingDirection();
@@ -317,6 +290,25 @@ namespace GameProject
 
         }
 
+
+        public void UpdateHitbox()
+        {
+            Center = new Vector2(Position.X + 10, Position.Y + 10);
+            hitbox.X = (int)Center.X;
+            hitbox.Y = (int)Center.Y;
+        }
+        public void CheckInvincible(float deltaTime)
+        {
+            if (Invincible)
+            {
+                InvincibleTimer -= deltaTime;
+                if (InvincibleTimer < 0)
+                {
+                    Invincible = false;
+                    InvincibleTimer = 5f;
+                }
+            }
+        }
         public void UpdateAnimations(GameTime gameTime)
         {
             if (moving)
@@ -334,6 +326,26 @@ namespace GameProject
 
         }
 
+        public void DecideAction()
+        {
+            Direction = inputReader.ReadInput();
+            if (Direction.X > 0 || Direction.X < 0 || Direction.Y > 0 || Direction.Y < 0)
+            {
+                moving = true;
+                shooting = false;
+                canShoot = false;
+            }
+            else
+            {
+                moving = false;
+                canShoot = true;
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Space) && canShoot)
+            {
+                Shoot();
+            }
+        }
         protected new void CheckCollision(List<ICollidable> collidables)
         {
             foreach (ICollidable collidable in collidables)
@@ -349,9 +361,8 @@ namespace GameProject
                     if (collidable is Bullet)
                     {
                         Bullet b = collidable as Bullet;
-                        if (b.Tag.Equals("CactusBullet")  && Invincible == false)
+                        if (b.Tag == "CactusBullet"  && Invincible == false)
                         {
-                            Debug.WriteLine("Shot by enemy");
                             TakeDamage(1f);
                         }
                     }
@@ -378,7 +389,15 @@ namespace GameProject
 
         public void GainHealth(float amount)
         {
-            this.Hitpoints += amount;
+            if(Hitpoints < 3)
+            {
+                this.Hitpoints += amount;
+            }
+            else
+            {
+                GainGold(2f);
+            }
+            
         }
 
     }
