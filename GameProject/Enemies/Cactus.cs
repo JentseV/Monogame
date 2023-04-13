@@ -18,15 +18,12 @@ namespace GameProject.Enemies
     internal class Cactus : Enemy, IEnemy
     {
 
-        private SpriteEffects flip = SpriteEffects.None;
-
         private Texture2D BulletTexture;
         private bool heroInRange = false;
 
         private Texture2D hitboxText;
 
         public List<Bullet> cactusBullets = new List<Bullet>();
-        private Vector2 heroPos, facing;
 
         public Cactus(Vector2 speed, Vector2 position, Texture2D[] textures)
         {
@@ -77,21 +74,21 @@ namespace GameProject.Enemies
         {
             if (Moving && Invincible == false)
             {
-                spriteBatch.Draw(TextureRunning, Center, AnimationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
+                spriteBatch.Draw(TextureRunning, Center, AnimationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
             }
             else if (Attacking && Invincible == false)
             {
 
-                spriteBatch.Draw(TextureAttacking, Center, AnimationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
+                spriteBatch.Draw(TextureAttacking, Center, AnimationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
             }
 
             else if (Hit && Invincible == true)
             {
-                spriteBatch.Draw(TextureHit, Center, null, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
+                spriteBatch.Draw(TextureHit, Center, null, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
             }
             else
             {
-                spriteBatch.Draw(TextureIdling, Center, AnimationIdle.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
+                spriteBatch.Draw(TextureIdling, Center, AnimationIdle.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
             }
 
             //spriteBatch.Draw(hitboxText, Center , Hitbox, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
@@ -103,12 +100,9 @@ namespace GameProject.Enemies
             this.hitbox.X = (int)Center.X;
             this.hitbox.Y = (int)Center.Y;
 
-
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             TimeSinceLastAttack -= deltaTime;
 
-            
-                        
 
             if (Hit)
             {
@@ -124,7 +118,7 @@ namespace GameProject.Enemies
                 }
             }
 
-            heroPos = hero.Position;
+            HeroPos = hero.Position;
 
             CheckCollision(collidables);
             OnDeath(collidables);
@@ -138,7 +132,7 @@ namespace GameProject.Enemies
 
         public void DecideAction()
         {
-            if (Vector2.Distance(heroPos, this.Position) < 200F){
+            if (Vector2.Distance(HeroPos, this.Position) < 200F){
                 heroInRange = true;
             }
             else
@@ -157,90 +151,6 @@ namespace GameProject.Enemies
             {
                 Moving = false;
                 Attack();
-            }
-        }
-
-        private void DecideAnimation()
-        {
-
-            switch (facing)
-            {
-                case Vector2(1f, 0f):
-                    {
-                        flip = SpriteEffects.None;
-                        TextureIdling = TextureIdleFacingRight;
-                        TextureRunning = TextureRunRight;
-                        TextureAttacking = TextureAttackRight;
-
-                        break;
-                    }
-
-                case Vector2(-1f, 0f):
-                    {
-                        flip = SpriteEffects.FlipHorizontally;
-                        TextureRunning = TextureRunRight;
-                        TextureIdling = TextureIdleFacingRight;
-                        TextureAttacking = TextureAttackRight;
-                        break;
-                    }
-                case Vector2(0f, -1f):
-                    {
-                        flip = SpriteEffects.None;
-                        TextureIdling = TextureIdleFacingUp;
-                        TextureRunning = TextureUpRun;
-                        TextureAttacking = TextureAttackUp;
-                        break;
-                    }
-                case Vector2(0f, 1f):
-                    {
-                        flip = SpriteEffects.None;
-                        TextureIdling = TextureIdleFacingFront;
-                        TextureRunning = TextureDownRun;
-                        TextureAttacking = TextureAttackFront;
-                        break;
-                    }
-            }
-
-        }
-
-        public void GetFacingDirection()
-        {
-            Direction = Vector2.Normalize(heroPos - Position);
-            if (Direction.X > 0f && Direction.X > Direction.Y)
-            {
-
-                facing = new Vector2(1f, 0f);
-            }
-            else if (Direction.X < 0 && Direction.X < Direction.Y)
-            {
-                facing = new Vector2(-1f, 0f);
-            }
-
-            if (Direction.Y > 0 && Direction.Y > Direction.X)
-            {
-                facing = new Vector2(0f, 1f);
-            }
-            else if (Direction.Y < 0 && Direction.Y < Direction.X)
-            {
-                facing = new Vector2(0f, -1f);
-            }
-
-        }
-
-
-        private void UpdateAnimations(GameTime gameTime)
-        {
-            if (Moving)
-            {
-                AnimationRun.Update(gameTime);
-            }
-            else if (Attacking)
-            {
-                AnimationAttacking.Update(gameTime);
-            }
-            else
-            {
-                AnimationIdle.Update(gameTime);
             }
         }
 

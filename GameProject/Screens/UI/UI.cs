@@ -35,7 +35,6 @@ namespace GameProject.Screens.UI
 
         public void Draw(SpriteBatch spriteBatch)
         {
-
             string temp = "\n\nCOINS : " + Hero.gold + "\n\nHEALTH : " + Hero.hitPoints2;
             Vector2 dimension = font.MeasureString(temp);
             Vector2 drawPos = new Vector2(10, 0);

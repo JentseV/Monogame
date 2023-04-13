@@ -36,7 +36,7 @@ namespace GameProject
         private List<Coyote> coyotes = new List<Coyote>();
         private List<ICollidable> collidables = new List<ICollidable>();
         private Texture2D[] coffinTextures = new Texture2D[11];
-        private Texture2D[] heroTextures = new Texture2D[18];
+        private Texture2D[] heroTextures = new Texture2D[19];
         private Texture2D[] cactusTextures = new Texture2D[12];
         private Texture2D[] coyoteTextures = new Texture2D[12];
 
@@ -105,6 +105,7 @@ namespace GameProject
             heroTextures[16] = Content.Load<Texture2D>("heroText/Fixed/idleFacingDownRight");
 
             heroTextures[17] = Content.Load<Texture2D>("Projectiles/SpongeBullet");
+            heroTextures[18] = Content.Load<Texture2D>("heroText/Fixed/heroHitAnimation");
 
             coffinTextures[0] = Content.Load<Texture2D>("coffinEn/coffinIdleFront");
             coffinTextures[1] = Content.Load<Texture2D>("coffinEn/coffinWalkRight");

@@ -1,4 +1,5 @@
 ﻿
+using GameProject.Animations;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -51,6 +52,19 @@ namespace GameProject
 
         private float hitpoints;
         public float Hitpoints { get { return hitpoints; } set { hitpoints = value; } }
+
+
+        private Animation _animationIdle;
+        private Animation _animationRun;
+        private Animation _animationAttacking;
+        private Animation _animationHit;
+
+        public Animation AnimationIdle { get { return _animationIdle; } set { _animationIdle = value; } }
+        public Animation AnimationRun { get { return _animationRun; } set { _animationRun = value; } }
+
+        public Animation AnimationAttacking { get { return _animationAttacking; } set { _animationAttacking = value; } }
+
+        public Animation AnimationHit { get { return _animationHit; } set { _animationHit = value; } }
 
 
 
