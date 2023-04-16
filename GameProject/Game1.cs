@@ -12,6 +12,7 @@ using System.Diagnostics;
 
 using System.Linq;
 
+
 namespace GameProject
 {
     public class Game1 : Game
@@ -21,12 +22,15 @@ namespace GameProject
 
 
         private UI ui;
+        private ScoreUI scoreUI;
+        private bool spawnEnemies = true;
         
         private Rectangle backgroundRect;
         private Texture2D background,buttonText;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Hero hero;
+        private EnemyFactory enemyFactory;
         private Button button;
         private SpriteFont font;
         private UpgradeUI upgradeUI;
@@ -56,26 +60,26 @@ namespace GameProject
         {
             // TODO: Add your initialization logic here
             base.Initialize();
-            ui = new UI(font);
+            scoreUI = new ScoreUI(font);
             
             button = new Button(buttonText, new Vector2(500f, 300f), "Buy Movement Speed ", font,() => hero.Hitpoints+=3);
             hero = new Hero(heroTextures, new KeyboardReader());
             
-            for(int i = 0; i < 5; i++)
+            for(int i = 0; i < 0; i++)
             {
                 coffins.Add(new Coffin(new Vector2(1f, 1f), new Vector2(test[i+2], test[i+2]), coffinTextures));
             }
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 0; i++)
             {
                 cacti.Add(new Cactus(new Vector2(1f, 1f), new Vector2(test[i+3], test[i+3]), cactusTextures));
             }
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 0; i++)
             {
                 coyotes.Add(new Coyote(new Vector2(1f, 1f), new Vector2(test[i], test[i]), coyoteTextures));
             }
-
+            enemyFactory = new EnemyFactory(coffinTextures,cactusTextures,coyoteTextures);
             upgradeUI = new UpgradeUI(font, buttonText, hero);
             hero.Position = new Vector2(600f, 600f);
             collidables.Add(hero);
@@ -163,12 +167,22 @@ namespace GameProject
 
             // TODO: Add your update logic here
 
+
             upgradeUI.Update(Mouse.GetState()) ;
 
 
             hero.Update(gameTime, collidables);
 
 
+            enemyFactory.Update(gameTime, hero, collidables);
+
+            if (spawnEnemies)
+            {
+                enemyFactory.SpawnEnemies(1);
+                spawnEnemies = false;
+            }
+
+            // removing enemies and pickups 
             foreach (ICollidable x in collidables.ToList())
             {
 
@@ -200,6 +214,7 @@ namespace GameProject
                 }
             }
 
+            //updating bullet heroes
             foreach (Bullet b in hero.bullets)
             {
 
@@ -211,48 +226,49 @@ namespace GameProject
             }
 
 
-            foreach(Coyote co in coyotes)
-            {
-                if(co.Remove == false)
-                {
-                    co.Update(gameTime, hero, collidables);
-                    if (collidables.Contains(co) == false) collidables.Add(co);
-                }
-            }
+            //updating enemies, this should happen in enemyfactory -> rewriting now
+            //foreach(Coyote co in coyotes)
+            //{
+            //    if(co.Remove == false)
+            //    {
+            //        co.Update(gameTime, hero, collidables);
+            //        if (collidables.Contains(co) == false) collidables.Add(co);
+            //    }
+            //}
 
-            foreach (Cactus c in cacti)
-            {
-                if (c.Remove == false)
-                {
-                    c.Update(gameTime, hero, collidables);
-                    if (collidables.Contains(c) == false) collidables.Add(c);
+            //foreach (Cactus c in cacti)
+            //{
+            //    if (c.Remove == false)
+            //    {
+            //        c.Update(gameTime, hero, collidables);
+            //        if (collidables.Contains(c) == false) collidables.Add(c);
 
-                }
+            //    }
 
-                foreach (Bullet b in c.cactusBullets)
-                {
-                    if(b.destroy == false)
-                    {
-                        b.Update(gameTime, collidables);
-                        if (collidables.Contains(b) == false) collidables.Add(b);
-                    }
+            //    foreach (Bullet b in c.cactusBullets)
+            //    {
+            //        if(b.destroy == false)
+            //        {
+            //            b.Update(gameTime, collidables);
+            //            if (collidables.Contains(b) == false) collidables.Add(b);
+            //        }
                     
-                }
+            //    }
 
-            }
+            //}
 
-            foreach(Coffin c in coffins)
-            {
+            //foreach(Coffin c in coffins)
+            //{
                 
-                if(c.Remove == false)
-                {
-                    if(collidables.Contains(c) == false) collidables.Add(c);
-                    c.Update(gameTime, hero, collidables);
-                }
+            //    if(c.Remove == false)
+            //    {
+            //        if(collidables.Contains(c) == false) collidables.Add(c);
+            //        c.Update(gameTime, hero, collidables);
+            //    }
                 
-            }
+            //}
 
-
+            //pickup logic maybe this should belong in pickupfactory in the future?
             foreach (ICollidable c in collidables)
             {
                 if (c is Coin)
@@ -268,12 +284,7 @@ namespace GameProject
             }
 
 
-            
-
-
-
-
-            ui.Update(gameTime);
+            scoreUI.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -293,33 +304,49 @@ namespace GameProject
             
             if(!button.Destroy) button.Draw(_spriteBatch);
 
-            foreach (Coyote co in coyotes)
-            {
-                if (co.Remove == false)
-                {
-                    co.Draw(_spriteBatch);
-                }
-            }
+
+            enemyFactory.Draw(_spriteBatch);
+
+            //foreach (Coyote co in coyotes)
+            //{
+            //    if (co.Remove == false)
+            //    {
+            //        co.Draw(_spriteBatch);
+            //    }
+            //}
 
 
-            foreach (Cactus c in cacti)
-            {
-                if (c.Remove == false)
-                {
-                    c.Draw(_spriteBatch);
+            //foreach (Cactus c in cacti)
+            //{
+            //    if (c.Remove == false)
+            //    {
+            //        c.Draw(_spriteBatch);
 
-                }
+            //    }
 
-                foreach (Bullet b in c.cactusBullets)
-                {
-                    if (b.destroy == false)
-                    {
-                        b.Draw(_spriteBatch);
-                    }
+            //    foreach (Bullet b in c.cactusBullets)
+            //    {
+            //        if (b.destroy == false)
+            //        {
+            //            b.Draw(_spriteBatch);
+            //        }
 
-                }
+            //    }
 
-            }
+            //}
+
+            //foreach (Coffin c in coffins)
+            //{
+            //    if (c.Remove == false)
+            //    {
+            //        c.Draw(_spriteBatch);
+            //    }
+
+            //}
+
+
+
+
 
             foreach (Bullet b in hero.bullets)
             {
@@ -330,14 +357,7 @@ namespace GameProject
 
             }
 
-            foreach (Coffin c in coffins)
-            {
-                if (c.Remove == false)
-                {
-                    c.Draw(_spriteBatch);
-                }
-
-            }
+            
 
             foreach (ICollidable c in collidables)
             {
@@ -354,7 +374,7 @@ namespace GameProject
             }
 
             upgradeUI.Draw(_spriteBatch);
-            ui.Draw(_spriteBatch);
+            scoreUI.Draw(_spriteBatch);
 
             _spriteBatch.End();
 

@@ -35,7 +35,7 @@ namespace GameProject
         public List<IGameComponent> bullets = new List<IGameComponent>();
 
         private Texture2D bulletTexture;
-        private bool moving = false, movable = true, shooting = false, canShoot = false;
+        private bool moving = false, shooting = false, canShoot = false;
         private Vector2 facing;
         private SpriteEffects flip = SpriteEffects.None;
         //private Animation _animation;
@@ -68,7 +68,7 @@ namespace GameProject
         public Hero(Texture2D[] textures, IInputReader inputReader)
         {
 
-
+            Movable = true;
             Hitpoints = 3f;
 
             Tag = "Hero";
@@ -129,11 +129,11 @@ namespace GameProject
         public new void Draw(SpriteBatch spriteBatch)
         {
 
-            if (moving && movable == true)
+            if (Moving && Movable == true)
             {
                 spriteBatch.Draw(TextureRunning, Center, AnimationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
             }
-            else if (shooting )
+            else if (shooting)
             {
 
                 spriteBatch.Draw(TextureAttacking, Center, AnimationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
@@ -161,7 +161,7 @@ namespace GameProject
             TimeSinceLastAttack -= deltaTime;
 
 
-            Debug.WriteLine(InvincibleTimer);
+            
 
             UpdateHitbox();
             CheckInvincible(deltaTime);
@@ -215,7 +215,7 @@ namespace GameProject
         private void DecideAnimation()
         {
 
-            if (moving)
+            if (Moving)
             {
                 switch (facing)
                 {
@@ -299,7 +299,7 @@ namespace GameProject
         public new void Move()
         {
 
-            if (movable) movementManager.Move(this);
+            if (Movable) movementManager.Move(this);
 
         }
 
@@ -315,11 +315,11 @@ namespace GameProject
             if (Invincible)
             {
                 InvincibleTimer -= deltaTime;
-                movable = false;
+                Movable = false;
                 if(InvincibleTimer < 4f)
                 {
                     Hit = false;
-                    movable = true;
+                    Movable = true;
                 }
                 if (InvincibleTimer < 0)
                 {
@@ -331,7 +331,7 @@ namespace GameProject
         }
         public void UpdateAnimations(GameTime gameTime)
         {
-            if (moving)
+            if (Moving)
             {
                 AnimationRun.Update(gameTime);
             }
@@ -348,25 +348,29 @@ namespace GameProject
 
         public void DecideAction()
         {
-            
-                Direction = inputReader.ReadInput();
-                if (Direction.X > 0 || Direction.X < 0 || Direction.Y > 0 || Direction.Y < 0)
-                {
-                    moving = true;
-                    shooting = false;
-                    canShoot = false;
-                }
-                else
-                {
-                    moving = false;
-                    canShoot = true;
-                }
+           Direction = inputReader.ReadInput();
+           if (Direction.X > 0 || Direction.X < 0 || Direction.Y > 0 || Direction.Y < 0)
+           {
+               Moving = true;
+               shooting = false;
+               canShoot = false;
+           }
+           else
+           {
+               Moving = false;
+               canShoot = true;
+           }
 
-                if (Keyboard.GetState().IsKeyDown(Keys.Space) && canShoot)
-                {
-                    Shoot();
-                }
+           if (Keyboard.GetState().IsKeyDown(Keys.Space) && canShoot)
+           {
+               Shoot();
             }
+            else
+            {
+                shooting = false;
+            }
+           
+         }
 
         protected new void CheckCollision(List<ICollidable> collidables)
         {
@@ -417,7 +421,7 @@ namespace GameProject
             }
             else
             {
-                GainGold(2f);
+                GainGold(1f);
             }
             
         }

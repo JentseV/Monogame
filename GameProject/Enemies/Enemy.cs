@@ -25,8 +25,32 @@ namespace GameProject.Enemies
         public Vector2 HeroPos { get { return heroPos; } set { heroPos = value; } }
         public SpriteEffects Flip { get { return flip; } set { flip = value; } }
 
-        
 
+
+
+
+        public new void Draw(SpriteBatch spriteBatch)
+        {
+            if (Moving && Movable == true)
+            {
+
+                spriteBatch.Draw(TextureRunning, Center, AnimationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
+            }
+            else if (Attacking)
+            {
+
+                spriteBatch.Draw(TextureAttacking, Center, AnimationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
+            }
+
+            else if (Hit)
+            {
+
+                spriteBatch.Draw(TextureHit, Center, null, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
+            }
+
+            //spriteBatch.Draw(hitboxText, Center , Hitbox, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
+
+        }
 
 
         protected void DecideAnimation()
@@ -106,10 +130,7 @@ namespace GameProject.Enemies
             {
                 AnimationAttacking.Update(gameTime);
             }
-            else
-            {
-                AnimationIdle.Update(gameTime);
-            }
+          
         }
         public void OnDeath(List<ICollidable> collidables)
         {

@@ -27,12 +27,15 @@ namespace GameProject.Enemies
         private Texture2D BulletTexture;
         private bool heroInRange = false;
 
+        private float channelTime = 0f;
+
         private Texture2D hitboxText;
 
         public List<Bullet> fireBalls = new List<Bullet>();
 
         public Coyote(Vector2 speed, Vector2 position, Texture2D[] textures)
         {
+            Movable = true;
             this.Hitpoints = 3;
             this.Speed = speed;
             this.Position = position;
@@ -76,26 +79,28 @@ namespace GameProject.Enemies
 
         public new void Draw(SpriteBatch spriteBatch)
         {
-            if (Moving && Invincible == false)
+            if (Moving && Movable == true)
             {
-                spriteBatch.Draw(TextureRunning, Position, AnimationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 0.9f, flip, 0f);
+                
+                spriteBatch.Draw(TextureRunning, Center, AnimationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
             }
-            else if (Attacking && Invincible == false)
+            else if (Attacking)
             {
 
-                spriteBatch.Draw(TextureAttacking, Position, AnimationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 0.9f, flip, 0f);
+                spriteBatch.Draw(TextureAttacking, Center, AnimationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
             }
 
-            else if (Hit && Invincible == true)
+            else if (Hit)
             {
-                spriteBatch.Draw(TextureHit, Position, null, Color.White, 0f, new Vector2(0f, 0f), 0.9f, flip, 0f);
+
+                spriteBatch.Draw(TextureHit, Center, null, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
             }
             else
             {
-                spriteBatch.Draw(TextureIdling, Position, AnimationIdle.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 0.9f, flip, 0f);
+                spriteBatch.Draw(TextureIdling, Center, AnimationIdle.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
             }
 
-            
+
             //spriteBatch.Draw(hitboxText, Position , Hitbox, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
 
         }
@@ -114,17 +119,21 @@ namespace GameProject.Enemies
             {
                 Invincible = true;
                 Moving = false;
+                Movable = false;
                 Attacking = false;
                 InvincibleTimer += deltaTime;
                 if (InvincibleTimer > 1.5f)
                 {
                     Invincible = false;
                     Hit = false;
+                    Movable = true;
                     InvincibleTimer = 0f;
                 }
             }
 
-           
+ 
+
+
             HeroPos = hero.Position;
 
             
@@ -149,6 +158,7 @@ namespace GameProject.Enemies
             }
             else
             {
+                Moving = true;
                 Attacking = false;
                 heroInRange = false;
             }
@@ -167,12 +177,22 @@ namespace GameProject.Enemies
         }
         
 
-        private void Attack()
+        private new  void Attack()
         {
 
             if (TimeSinceLastAttack <= 0 && Invincible == false)
             {
                 Attacking = true;
+                //if (Attacking)
+                //{
+                //    channelTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                //    if (channelTime > 3f)
+                //    {
+                //        Debug.WriteLine("Spawn meteor at " + hero.Position);
+
+                //        channelTime = 0f;
+                //    }
+                //}
 
                 TimeSinceLastAttack = AttackCooldown;
                 

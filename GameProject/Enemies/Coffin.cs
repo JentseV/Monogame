@@ -29,15 +29,15 @@ namespace GameProject.Enemies
         public Coffin(Vector2 speed, Vector2 position, Texture2D[] textures)
         {
             this.Hitpoints = 3;
-            
-            
+
+            Movable = true;
             //SPRITESHEET 74x55
             this.Speed = speed;
             this.Position = position;
 
             this.Center = new Vector2(50 + Position.X, 55 + Position.Y);
             this.Hitbox = new Rectangle((int)Center.X, (int)Center.Y, 45, 45);
-            this.TextureIdle = textures[0];
+            this.TextureIdle = textures[1];
             this.TextureRunRight = textures[1];
             this.TextureUpRun = textures[2];
             this.TextureIdleFacingUp = textures[3];
@@ -71,34 +71,38 @@ namespace GameProject.Enemies
 
         public new void Draw(SpriteBatch spriteBatch)
         {
-            if (Moving && Invincible == false)
+            if (Moving && Movable == true)
             {
+                
                 spriteBatch.Draw(TextureRunning, Center, AnimationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
             }
-            else if(Attacking && Invincible == false)
+            else if (Attacking)
             {
 
                 spriteBatch.Draw(TextureAttacking, Center, AnimationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
             }
 
-            else if (Hit && Invincible == true)
+            else if (Hit)
             {
+                
                 spriteBatch.Draw(TextureHit, Center, null, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
             }
             else
             {
+                
                 spriteBatch.Draw(TextureIdling, Center, AnimationIdle.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
             }
+            //spriteBatch.Draw(hitboxText, Center , Hitbox, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
 
-             //spriteBatch.Draw(hitboxText, Center , Hitbox, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
-            
         }
 
         public void Update(GameTime gameTime, Hero hero, List<ICollidable> collidables)
         {
+
             this.Center = new Vector2((int)Position.X, (int)Position.Y);
             this.hitbox.X = (int)Center.X;
             this.hitbox.Y = (int)Center.Y;
+
             
 
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -108,15 +112,18 @@ namespace GameProject.Enemies
             {
                 Invincible = true;
                 Moving = false;
+                Movable = false;
                 Attacking = false;
                 InvincibleTimer += deltaTime;
                 if(InvincibleTimer > 1.5f)
                 {
                     Invincible = false;
                     Hit = false;
+                    Movable = true;
                     InvincibleTimer = 0f;
                 }
             }
+            
 
             if(Attacking == false)
             {
@@ -132,8 +139,8 @@ namespace GameProject.Enemies
             GetFacingDirection();
             DecideAnimation();
             UpdateAnimations(gameTime);
-            
-           
+
+
         }
 
         
