@@ -185,7 +185,6 @@ namespace GameProject
             // removing enemies and pickups 
             foreach (ICollidable x in collidables.ToList())
             {
-
                 if (x is Bullet)
                 {
                     Bullet t = x as Bullet;
@@ -225,7 +224,7 @@ namespace GameProject
                 }
             }
 
-
+            #region
             //updating enemies, this should happen in enemyfactory -> rewriting now
             //foreach(Coyote co in coyotes)
             //{
@@ -252,21 +251,22 @@ namespace GameProject
             //            b.Update(gameTime, collidables);
             //            if (collidables.Contains(b) == false) collidables.Add(b);
             //        }
-                    
+
             //    }
 
             //}
 
             //foreach(Coffin c in coffins)
             //{
-                
+
             //    if(c.Remove == false)
             //    {
             //        if(collidables.Contains(c) == false) collidables.Add(c);
             //        c.Update(gameTime, hero, collidables);
             //    }
-                
+
             //}
+            #endregion
 
             //pickup logic maybe this should belong in pickupfactory in the future?
             foreach (ICollidable c in collidables)
@@ -307,6 +307,7 @@ namespace GameProject
 
             enemyFactory.Draw(_spriteBatch);
 
+            #region 
             //foreach (Coyote co in coyotes)
             //{
             //    if (co.Remove == false)
@@ -344,7 +345,7 @@ namespace GameProject
 
             //}
 
-
+            #endregion
 
 
 

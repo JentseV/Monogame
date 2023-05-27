@@ -1,5 +1,4 @@
-﻿
-using GameProject.Animations;
+﻿using GameProject.Animations;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,16 +14,16 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
-namespace GameProject
+namespace GameProject.Characters
 {
-    internal abstract class Character : IGameComponent ,IMovable, ICollidable
+    internal abstract class Character : IGameComponent, IMovable, ICollidable
     {
 
         private float damage;
         public float Damage { get { return damage; } set { damage = value; } }
         private float invincibleTimer;
 
-        private bool moving, attacking, dead, hit , invincible, movable, remove;
+        private bool moving, attacking, dead, hit, invincible, movable, remove;
 
         public bool Remove { get { return remove; } set { remove = value; } }
         public bool Movable { get { return movable; } set { movable = value; } }
@@ -78,9 +77,19 @@ namespace GameProject
         private Texture2D _texture, _textureRunning, _textureIdling;
         private Texture2D _textureIdleFacingFront, _textureIdleFacingRight, _textureIdleFacingUp, _textureIdle;
         private Texture2D _textureRunRight, _textureUpRun, _textureDownRun;
+        private Texture2D _textureIdleFacingUpRight, _textureIdleFacingDownRight;
+        private Texture2D _textureAttackUpRight, _textureAttackDownRight;
+        private Texture2D _textureRunUpRight, _textureRunDownRight;
+
+        public Texture2D TextureIdleFacingUpRight { get { return _textureIdleFacingUpRight; } set { _textureIdleFacingUpRight = value; } }
+        public Texture2D TextureIdleFacingDownRight { get { return _textureIdleFacingDownRight; } set { _textureIdleFacingDownRight = value; } }
+        public Texture2D TextureAttackUpRight { get { return _textureAttackUpRight; } set { _textureAttackUpRight = value; } }
+        public Texture2D TextureAttackDownRight { get { return _textureAttackDownRight; } set { _textureAttackDownRight = value; } }
+        public Texture2D TextureRunUpRight { get { return _textureRunUpRight; } set { _textureRunUpRight = value; } }
+        public Texture2D TextureRunDownRight { get { return _textureRunDownRight; } set { _textureRunDownRight = value; } }
         public Texture2D TextureHit { get { return _textureHit; } set { _textureHit = value; } }
-        public Texture2D Texture{get { return _texture; }set { _texture = value; }}
-        public Texture2D TextureRunning { get { return _textureRunning; } set { _textureRunning = value;  } }
+        public Texture2D Texture { get { return _texture; } set { _texture = value; } }
+        public Texture2D TextureRunning { get { return _textureRunning; } set { _textureRunning = value; } }
         public Texture2D TextureIdling { get { return _textureIdling; } set { _textureIdling = value; } }
         public Texture2D TextureUpRun { get { return _textureUpRun; } set { _textureUpRun = value; } }
         public Texture2D TextureIdleFacingFront { get { return _textureIdleFacingFront; } set { _textureIdleFacingFront = value; } }
@@ -93,6 +102,7 @@ namespace GameProject
         public Texture2D TextureAttacking { get { return _textureAttacking; } set { _textureAttacking = value; } }
         public Texture2D TextureAttackUp { get { return _textureAttackUp; } set { _textureAttackUp = value; } }
         public Texture2D TextureAttackFront { get { return _textureAttackFront; } set { _textureAttackFront = value; } }
+
         #endregion
 
         #region
@@ -101,32 +111,32 @@ namespace GameProject
         private Vector2 position;
         private Vector2 direction;
         private Vector2 speed;
-        public Vector2 Position { get { return position;  } set { position = value; } }
+        public Vector2 Position { get { return position; } set { position = value; } }
         public Vector2 Direction { get { return direction; } set { direction = value; } }
         public Vector2 Speed { get { return speed; } set { speed = value; } }
-        public Vector2 Center { get ; set; }
-        public Rectangle Hitbox { get { return hitbox; } set { hitbox = value; }  }
+        public Vector2 Center { get; set; }
+        public Rectangle Hitbox { get { return hitbox; } set { hitbox = value; } }
 
         public IInputReader InputReader { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         #endregion
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            
+
         }
 
         public void Update(GameTime gameTime)
         {
-            
+
         }
 
         protected void TakeDamage(float amountOfDamage)
         {
-            if (this.Hitpoints > 0 && Invincible == false)
+            if (Hitpoints > 0 && Invincible == false)
             {
-                this.Invincible = true;
-                this.Hit = true;
-                this.Hitpoints -= amountOfDamage;
+                Invincible = true;
+                Hit = true;
+                Hitpoints -= amountOfDamage;
             }
             else
             {
@@ -137,8 +147,9 @@ namespace GameProject
 
         public void CheckCollision(List<ICollidable> collidables)
         {
-            
+
         }
+
 
         public void Move()
         {

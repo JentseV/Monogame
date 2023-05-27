@@ -1,4 +1,5 @@
 ﻿using GameProject.Animations;
+using GameProject.Characters;
 using GameProject.Enemies;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
@@ -26,10 +27,7 @@ namespace GameProject
         private float  ammo;
         public float Ammo { get { return ammo; } set { ammo = value; } }
 
-        private Texture2D  _textureShooting;
-        private Texture2D  _textureIdleFacingUpRight, _textureIdleFacingDownRight;
-        private Texture2D _textureShootUp, _textureShootFront, _textureShootRight, _textureShootUpRight, _textureShootDownRight;
-        private Texture2D _textureRunUpRight, _textureRunDownRight;
+
         private Texture2D hitboxText;
 
         public List<IGameComponent> bullets = new List<IGameComponent>();
@@ -38,9 +36,6 @@ namespace GameProject
         private bool moving = false, shooting = false, canShoot = false;
         private Vector2 facing;
         private SpriteEffects flip = SpriteEffects.None;
-        //private Animation _animation;
-        //private Animation _animationRun;
-        //private Animation _animationShooting;
 
         public static float gold;
 
@@ -78,23 +73,23 @@ namespace GameProject
             TextureIdle = textures[3];
             TextureUpRun = textures[0];
             TextureDownRun = textures[1];
-            _textureShootFront = textures[2];
+            TextureAttackFront = textures[2];
             TextureIdleFacingUp = textures[5];
             TextureIdleFacingRight = textures[4];
             TextureIdleFacingFront = textures[3];
             TextureRunRight = textures[6];
-            _textureShootRight = textures[7];
-            _textureShootUp = textures[8];
-            _textureRunDownRight = textures[11];
-            _textureRunUpRight = textures[12];
-            _textureShootDownRight = textures[13];
-            _textureShootUpRight = textures[14];
-            _textureIdleFacingUpRight = textures[15];
-            _textureIdleFacingDownRight = textures[16];
+            TextureAttackRight = textures[7];
+            TextureAttackUp = textures[8];
+            TextureRunDownRight = textures[11];
+            TextureRunUpRight = textures[12];
+            TextureAttackDownRight = textures[13];
+            TextureAttackUpRight = textures[14];
+            TextureIdleFacingUpRight = textures[15];
+            TextureIdleFacingDownRight = textures[16];
             bulletTexture = textures[17];
             TextureIdling = TextureIdle;
             TextureRunning = TextureRunRight;
-            TextureAttacking = _textureShootUp;
+            TextureAttacking = TextureAttackUp;
             TextureHit = textures[18];
 
             hitboxText = textures[10];
@@ -108,8 +103,6 @@ namespace GameProject
             TimeSinceLastAttack = AttackCooldown;
             Speed = new Vector2(3f, 3f);
 
-           
-
             AnimationIdle = new Animation();
             AnimationRun = new Animation();
             AnimationAttacking = new Animation();
@@ -119,7 +112,6 @@ namespace GameProject
             AnimationIdle.GetFramesFromTextureProperties(this.TextureIdle.Width, this.TextureIdle.Height, 6, 1);
             AnimationRun.GetFramesFromTextureProperties(this.TextureRunRight.Width, this.TextureRunRight.Height, 8, 1);
             AnimationAttacking.GetFramesFromTextureProperties(this.TextureAttacking.Width, this.TextureAttacking.Height, 6, 1);
-
 
             movementManager = new MovementManager();
             this.inputReader = inputReader;
@@ -159,9 +151,6 @@ namespace GameProject
             hitPoints2 = Hitpoints;
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             TimeSinceLastAttack -= deltaTime;
-
-
-            
 
             UpdateHitbox();
             CheckInvincible(deltaTime);
@@ -215,15 +204,14 @@ namespace GameProject
         private void DecideAnimation()
         {
 
-            if (Moving)
-            {
+            
                 switch (facing)
                 {
                     case Vector2(1f, 0f):
                         {
                             flip = SpriteEffects.None;
                             TextureIdling = TextureIdleFacingRight;
-                            TextureAttacking = _textureShootRight;
+                            TextureAttacking = TextureAttackRight;
                             TextureRunning = TextureRunRight;
                             break;
                         }
@@ -233,14 +221,14 @@ namespace GameProject
                             flip = SpriteEffects.FlipHorizontally;
                             TextureRunning = TextureRunRight;
                             TextureIdling = TextureIdleFacingRight;
-                            TextureAttacking = _textureShootRight;
+                            TextureAttacking = TextureAttackRight;
                             break;
                         }
                     case Vector2(0f, -1f):
                         {
                             flip = SpriteEffects.None;
                             TextureIdling = TextureIdleFacingUp;
-                            TextureAttacking = _textureShootUp;
+                            TextureAttacking = TextureAttackUp;
                             TextureRunning = TextureUpRun;
                             break;
                         }
@@ -248,7 +236,7 @@ namespace GameProject
                         {
                             flip = SpriteEffects.None;
                             TextureIdling = TextureIdleFacingFront;
-                            TextureAttacking = _textureShootFront;
+                            TextureAttacking = TextureAttackFront;
                             TextureRunning = TextureDownRun;
                             break;
                         }
@@ -256,40 +244,40 @@ namespace GameProject
                     case Vector2(1f, -1f):
                         {
                             flip = SpriteEffects.None;
-                            TextureRunning = _textureRunUpRight;
-                            TextureIdling = _textureIdleFacingUpRight;
-                            TextureAttacking = _textureShootUpRight;
+                            TextureRunning = TextureRunUpRight;
+                            TextureIdling = TextureIdleFacingUpRight;
+                            TextureAttacking = TextureAttackUpRight;
                             break;
                         }
 
                     case Vector2(-1f, -1f):
                         {
                             flip = SpriteEffects.FlipHorizontally;
-                            TextureRunning = _textureRunUpRight;
-                            TextureIdling = _textureIdleFacingUpRight;
-                            TextureAttacking = _textureShootUpRight;
+                            TextureRunning = TextureRunUpRight;
+                            TextureIdling = TextureIdleFacingUpRight;
+                            TextureAttacking = TextureAttackUpRight;
                             break;
                         }
 
                     case Vector2(1f, 1f):
                         {
                             flip = SpriteEffects.None;
-                            TextureRunning = _textureRunDownRight;
-                            TextureIdling = _textureIdleFacingDownRight;
-                            TextureAttacking = _textureShootDownRight;
+                            TextureRunning = TextureRunDownRight;
+                            TextureIdling = TextureIdleFacingDownRight;
+                            TextureAttacking = TextureAttackDownRight;
                             break;
                         }
 
                     case Vector2(-1f, 1f):
                         {
                             flip = SpriteEffects.FlipHorizontally;
-                            TextureRunning = _textureRunDownRight;
-                            TextureIdling = _textureIdleFacingDownRight;
-                            TextureAttacking = _textureShootDownRight;
+                            TextureRunning = TextureRunDownRight;
+                            TextureIdling = TextureIdleFacingDownRight;
+                            TextureAttacking = TextureAttackDownRight;
                             break;
                         }
                 }
-            }
+            
         }
         public void ChangeInput(IInputReader inputReader)
         {

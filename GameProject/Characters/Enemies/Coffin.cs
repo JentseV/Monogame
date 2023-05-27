@@ -24,12 +24,12 @@ namespace GameProject.Enemies
 
         private bool heroInRange = false;
         private Texture2D hitboxText;
-
+        private float range;
 
         public Coffin(Vector2 speed, Vector2 position, Texture2D[] textures)
         {
             this.Hitpoints = 3;
-
+            range = 32f;
             Movable = true;
             //SPRITESHEET 74x55
             this.Speed = speed;
@@ -69,86 +69,18 @@ namespace GameProject.Enemies
         }
 
 
-        public new void Draw(SpriteBatch spriteBatch)
+        public new  void Update(GameTime gameTime,Hero hero, List<ICollidable> collidables)
         {
-            if (Moving && Movable == true)
-            {
-                
-                spriteBatch.Draw(TextureRunning, Center, AnimationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
-            }
-            else if (Attacking)
-            {
-
-                spriteBatch.Draw(TextureAttacking, Center, AnimationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
-            }
-
-            else if (Hit)
-            {
-                
-                spriteBatch.Draw(TextureHit, Center, null, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
-            }
-            else
-            {
-                
-                spriteBatch.Draw(TextureIdling, Center, AnimationIdle.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
-            }
-            //spriteBatch.Draw(hitboxText, Center , Hitbox, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
-
-        }
-
-        public void Update(GameTime gameTime, Hero hero, List<ICollidable> collidables)
-        {
-
-            this.Center = new Vector2((int)Position.X, (int)Position.Y);
-            this.hitbox.X = (int)Center.X;
-            this.hitbox.Y = (int)Center.Y;
-
-            
-
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            TimeSinceLastAttack -= deltaTime;
-
-            if (Hit)
-            {
-                Invincible = true;
-                Moving = false;
-                Movable = false;
-                Attacking = false;
-                InvincibleTimer += deltaTime;
-                if(InvincibleTimer > 1.5f)
-                {
-                    Invincible = false;
-                    Hit = false;
-                    Movable = true;
-                    InvincibleTimer = 0f;
-                }
-            }
-            
-
-            if(Attacking == false)
-            {
-                this.hitbox.Width = 45;
-            }
-
-            HeroPos = hero.Position;
-
-
-            OnDeath(collidables);
-            CheckCollision(collidables);
+            base.Update(gameTime,hero,collidables);
             DecideAction();
-            GetFacingDirection();
-            DecideAnimation();
-            UpdateAnimations(gameTime);
-
-
         }
-
+        
         
 
-        public void DecideAction()
+        public new void DecideAction()
         {
 
-            if (Vector2.Distance(HeroPos, this.Position) < 32f)
+            if (Vector2.Distance(HeroPos, this.Position) < range)
             {
                 heroInRange = true;
             }

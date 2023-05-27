@@ -31,7 +31,8 @@ namespace GameProject.Enemies
         {
             foreach(Enemy enemy in enemies)
             {
-                
+
+
                 if (!enemy.Remove)
                 {
                     if (enemy is Coffin)
@@ -63,9 +64,8 @@ namespace GameProject.Enemies
                         e.Update(gameTime, hero, collidables);
                         if (!collidables.Contains(e)) collidables.Add(e);
                     }
-                    
                 }
-                
+
             }
 
             
@@ -82,6 +82,7 @@ namespace GameProject.Enemies
                     if (enemy is Cactus)
                     {
                         Cactus c = enemy as Cactus;
+               
                         foreach (Bullet b in c.cactusBullets)
                         {
                             if(!b.destroy) b.Draw(spriteBatch);

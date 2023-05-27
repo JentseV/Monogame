@@ -28,8 +28,6 @@ namespace GameProject.Pickups
         private int id;
         private string tag;
         private Vector2 position;
-
-
         public Animation Animation { get { return animation; } set { animation = value; } }
         public Texture2D HealthTexture { get { return healthTexture; } set { healthTexture = value; } }
         public Texture2D CoinTexture { get { return coinTexture; } set { coinTexture = value; } }
