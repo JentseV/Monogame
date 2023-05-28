@@ -70,7 +70,8 @@ namespace GameProject.Characters
 
         #region 
         //Textures
-
+        private Texture2D _hitboxText;
+        private Texture2D _textureRunLeft;
         private Texture2D _textureAttackRight, _textureAttackUp, _textureAttackFront;
         private Texture2D _textureAttacking;
         private Texture2D _textureHit;
@@ -81,6 +82,9 @@ namespace GameProject.Characters
         private Texture2D _textureAttackUpRight, _textureAttackDownRight;
         private Texture2D _textureRunUpRight, _textureRunDownRight;
 
+
+        public Texture2D TextureRunLeft { get { return _textureRunLeft; } set { _textureRunLeft = value; } }
+        public Texture2D HitboxText { get { return _hitboxText; } set { _hitboxText = value; } }
         public Texture2D TextureIdleFacingUpRight { get { return _textureIdleFacingUpRight; } set { _textureIdleFacingUpRight = value; } }
         public Texture2D TextureIdleFacingDownRight { get { return _textureIdleFacingDownRight; } set { _textureIdleFacingDownRight = value; } }
         public Texture2D TextureAttackUpRight { get { return _textureAttackUpRight; } set { _textureAttackUpRight = value; } }

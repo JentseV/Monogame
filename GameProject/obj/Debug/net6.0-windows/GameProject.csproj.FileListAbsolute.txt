@@ -150,3 +150,4 @@ D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Fonts\wFont
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Fonts\west.xnb
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Buttons\boots.xnb
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\heroText\Fixed\heroHitAnimation.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coyoteEn\coyoteRunLeft (2).xnb

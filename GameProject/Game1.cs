@@ -42,7 +42,7 @@ namespace GameProject
         private Texture2D[] coffinTextures = new Texture2D[11];
         private Texture2D[] heroTextures = new Texture2D[19];
         private Texture2D[] cactusTextures = new Texture2D[12];
-        private Texture2D[] coyoteTextures = new Texture2D[12];
+        private Texture2D[] coyoteTextures = new Texture2D[13];
 
         private IScreen screen;
 
@@ -65,20 +65,7 @@ namespace GameProject
             button = new Button(buttonText, new Vector2(500f, 300f), "Buy Movement Speed ", font,() => hero.Hitpoints+=3);
             hero = new Hero(heroTextures, new KeyboardReader());
             
-            for(int i = 0; i < 0; i++)
-            {
-                coffins.Add(new Coffin(new Vector2(1f, 1f), new Vector2(test[i+2], test[i+2]), coffinTextures));
-            }
-
-            for (int i = 0; i < 0; i++)
-            {
-                cacti.Add(new Cactus(new Vector2(1f, 1f), new Vector2(test[i+3], test[i+3]), cactusTextures));
-            }
-
-            for (int i = 0; i < 0; i++)
-            {
-                coyotes.Add(new Coyote(new Vector2(1f, 1f), new Vector2(test[i], test[i]), coyoteTextures));
-            }
+           
             enemyFactory = new EnemyFactory(coffinTextures,cactusTextures,coyoteTextures);
             upgradeUI = new UpgradeUI(font, buttonText, hero);
             hero.Position = new Vector2(600f, 600f);
@@ -148,6 +135,8 @@ namespace GameProject
             coyoteTextures[9] = Content.Load<Texture2D>("heroText/red_square");
             coyoteTextures[10] = Content.Load<Texture2D>("coyoteEn/coyoteHitAnimation");
             coyoteTextures[11] = Content.Load<Texture2D>("Projectiles/SpongeBullet");
+            coyoteTextures[12] = Content.Load<Texture2D>("coyoteEn/coyoteRunLeft (2)");
+
 
             healthTexture = Content.Load<Texture2D>("Pickups/Heart");
             coinTexture = Content.Load<Texture2D>("Pickups/Coin");

@@ -20,16 +20,11 @@ namespace GameProject.Enemies
 {
     internal class Coffin : Enemy , IEnemy
     {
-        
-
-        private bool heroInRange = false;
-        private Texture2D hitboxText;
-        private float range;
 
         public Coffin(Vector2 speed, Vector2 position, Texture2D[] textures)
         {
             this.Hitpoints = 3;
-            range = 32f;
+            Range = 32f;
             Movable = true;
             //SPRITESHEET 74x55
             this.Speed = speed;
@@ -41,7 +36,7 @@ namespace GameProject.Enemies
             this.TextureRunRight = textures[1];
             this.TextureUpRun = textures[2];
             this.TextureIdleFacingUp = textures[3];
-            this.hitboxText = textures[9];
+            this.HitboxText = textures[9];
             this.TextureIdleFacingRight = textures[4];
             this.TextureIdleFacingFront = textures[0];
             this.TextureDownRun = textures[5];
@@ -72,43 +67,17 @@ namespace GameProject.Enemies
         public new  void Update(GameTime gameTime,Hero hero, List<ICollidable> collidables)
         {
             base.Update(gameTime,hero,collidables);
-            DecideAction();
-        }
-        
-        
-
-        public new void DecideAction()
-        {
-
-            if (Vector2.Distance(HeroPos, this.Position) < range)
+            if (Attacking == true)
             {
-                heroInRange = true;
-            }
-            else
-            {
-                Attacking = false;
-                heroInRange = false;
-            }
-
-            if (!Attacking && Invincible == false && heroInRange == false)
-            {
-                Moving = true;
-                Attacking = false;
-                Move();
-            }
-            else
-            {
-                Moving = false;
                 Attack();
             }
         }
-        
+
         private void Attack()
         {
             
-            if (TimeSinceLastAttack <= 0 && Invincible == false)
+            if (TimeSinceLastAttack <= 0 && Invincible == false && Attacking == true)
             {
-                Attacking = true;
                 
                 TimeSinceLastAttack = AttackCooldown;
                 this.hitbox.Width = 55;

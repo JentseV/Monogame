@@ -31,8 +31,6 @@ namespace GameProject.Enemies
         {
             foreach(Enemy enemy in enemies)
             {
-
-
                 if (!enemy.Remove)
                 {
                     if (enemy is Coffin)
@@ -67,8 +65,6 @@ namespace GameProject.Enemies
                 }
 
             }
-
-            
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -77,6 +73,7 @@ namespace GameProject.Enemies
             {
                 if (!enemy.Remove)
                 {
+                   
                     enemy.Draw(spriteBatch);
 
                     if (enemy is Cactus)
@@ -101,10 +98,10 @@ namespace GameProject.Enemies
 
                 if(spawnerChance > 0 && spawnerChance < 50)
                 {
-                    enemies.Add(new Coffin(new Vector2(1f,1f),spawnLocations[r.Next(0,4)],coffinTextures));
+                    enemies.Add(new Coyote(new Vector2(1f,1f),spawnLocations[r.Next(0,4)], coyoteTextures));
                 }else if(spawnerChance > 50 && spawnerChance < 80)
                 {
-                    enemies.Add(new Cactus(new Vector2(1.5f, 1.5f),spawnLocations[r.Next(0, 4)],cactusTextures));
+                    enemies.Add(new Coyote(new Vector2(1.5f, 1.5f),spawnLocations[r.Next(0, 4)], coyoteTextures));
                 }
                 else
                 {

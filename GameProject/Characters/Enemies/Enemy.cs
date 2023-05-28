@@ -17,7 +17,7 @@ namespace GameProject.Enemies
 {
     internal abstract class Enemy : Character, ICollidable
     {
-
+        
         private SpriteEffects flip = SpriteEffects.None;
         private Vector2 heroPos, facing;
         private float range;
@@ -26,25 +26,26 @@ namespace GameProject.Enemies
         public Vector2 HeroPos { get { return heroPos; } set { heroPos = value; } }
         public SpriteEffects Flip { get { return flip; } set { flip = value; } }
 
+        public float Range { get { return range; } set { range = value; } }
+
         public new void Draw(SpriteBatch spriteBatch)
         {
+            
             if (Moving && Movable == true)
             {
-
-                spriteBatch.Draw(TextureRunning, Center, AnimationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
+                spriteBatch.Draw(TextureRunning, Center, AnimationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
             }
             else if (Attacking)
             {
-                spriteBatch.Draw(TextureAttacking, Center, AnimationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
+                spriteBatch.Draw(TextureAttacking, Center, AnimationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
             }
 
             else if (Hit)
             {
-
-                spriteBatch.Draw(TextureHit, Center, null, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
+                spriteBatch.Draw(TextureHit, Center, null, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
             }
 
-            //spriteBatch.Draw(hitboxText, Center , Hitbox, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
+            //spriteBatch.Draw(HitboxText, Center , Hitbox, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
 
         }
 
@@ -77,15 +78,40 @@ namespace GameProject.Enemies
 
             CheckCollision(collidables);
             OnDeath(collidables);
-            
             GetFacingDirection();
+            DecideAction();
             DecideAnimation();
             UpdateAnimations(gameTime);
 
         }
 
 
-       
+        public void DecideAction()
+        {
+
+            if (Vector2.Distance(HeroPos, this.Position) < Range)
+            {
+                heroInRange = true;
+            }
+            else
+            {
+                Attacking = false;
+                heroInRange = false;
+            }
+
+            if (!Attacking && Invincible == false && heroInRange == false)
+            {
+                Moving = true;
+                Attacking = false;
+                Move();
+            }
+            else
+            {
+                Moving = false;
+                Attacking = true;
+            }
+        }
+
         protected void DecideAnimation()
         {
 
@@ -93,7 +119,7 @@ namespace GameProject.Enemies
             {
                 case Vector2(1f, 0f):
                     {
-                        flip = SpriteEffects.None;
+                       
                         TextureIdling = TextureIdleFacingRight;
                         TextureRunning = TextureRunRight;
                         TextureAttacking = TextureAttackRight;
@@ -103,7 +129,7 @@ namespace GameProject.Enemies
 
                 case Vector2(-1f, 0f):
                     {
-                        flip = SpriteEffects.FlipHorizontally;
+                        
                         TextureRunning = TextureRunRight;
                         TextureIdling = TextureIdleFacingRight;
                         TextureAttacking = TextureAttackRight;
@@ -111,7 +137,7 @@ namespace GameProject.Enemies
                     }
                 case Vector2(0f, -1f):
                     {
-                        flip = SpriteEffects.None;
+                        
                         TextureIdling = TextureIdleFacingUp;
                         TextureRunning = TextureUpRun;
                         TextureAttacking = TextureAttackUp;
@@ -119,7 +145,7 @@ namespace GameProject.Enemies
                     }
                 case Vector2(0f, 1f):
                     {
-                        flip = SpriteEffects.None;
+                        
                         TextureIdling = TextureIdleFacingFront;
                         TextureRunning = TextureDownRun;
                         TextureAttacking = TextureAttackFront;
@@ -155,15 +181,19 @@ namespace GameProject.Enemies
 
         protected void UpdateAnimations(GameTime gameTime)
         {
+            //AnimationRun.Update(gameTime);
+            //AnimationAttacking.Update(gameTime);
             if (Moving)
             {
+                Debug.WriteLine("Updating moving anim");
                 AnimationRun.Update(gameTime);
             }
             else if (Attacking)
             {
+                Debug.WriteLine("Updating attackign anim");
                 AnimationAttacking.Update(gameTime);
             }
-          
+
         }
         public void OnDeath(List<ICollidable> collidables)
         {

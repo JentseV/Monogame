@@ -41,14 +41,15 @@ namespace GameProject.Enemies
             this.Hitpoints = 3;
             this.Speed = speed;
             this.Position = position;
-            range = 400f;
+            Range = 400f;
             this.Center = new Vector2(50 + Position.X, 55 + Position.Y);
             this.Hitbox = new Rectangle((int)Center.X, (int)Center.Y, 45, 45);
             this.TextureIdle = textures[0];
             this.TextureRunRight = textures[1];
             this.TextureUpRun = textures[2];
             this.TextureIdleFacingUp = textures[3];
-            this.hitboxText = textures[9];
+            this.HitboxText = textures[9];
+            this.TextureRunLeft = textures[12];
             this.TextureIdleFacingRight = textures[4];
             this.TextureIdleFacingFront = textures[0];
             this.TextureDownRun = textures[5];
@@ -84,34 +85,8 @@ namespace GameProject.Enemies
         public new void Update(GameTime gameTime, Hero hero, List<ICollidable> collidables)
         {
             base.Update(gameTime, hero, collidables);
-            DecideAction();
-        }
-
-
-
-        public new void DecideAction()
-        {
-
-            if (Vector2.Distance(HeroPos, this.Position) < range)
+            if(Attacking == true)
             {
-                heroInRange = true;
-            }
-            else
-            {
-                
-                Attacking = false;
-                heroInRange = false;
-            }
-
-            if (!Attacking && Invincible == false && heroInRange == false)
-            {
-                Moving = true;
-                Attacking = false;
-                Move();
-            }
-            else
-            {
-                Moving = false;
                 Attack();
             }
         }
@@ -120,9 +95,9 @@ namespace GameProject.Enemies
         private new  void Attack()
         {
 
-            if (TimeSinceLastAttack <= 0 && Invincible == false)
+            if (TimeSinceLastAttack <= 0 && Invincible == false && Attacking)
             {
-                Attacking = true;
+                
                 //if (Attacking)
                 //{
                 //    channelTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
