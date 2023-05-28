@@ -58,6 +58,7 @@ namespace GameProject.Enemies
             this.TextureAttackUp = textures[8];
             this.TextureAttackFront = textures[6];
             this.TextureHit = textures[10];
+            this.TextureAttackLeft = textures[13];
 
             BulletTexture = textures[11];
 

@@ -337,6 +337,18 @@
 /processorParam:TextureFormat=Color
 /build:coyoteEn/coyoteAttackFront.png
 
+#begin coyoteEn/coyoteAttackLeft.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:coyoteEn/coyoteAttackLeft.png
+
 #begin coyoteEn/coyoteAttackRight.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -421,7 +433,7 @@
 /processorParam:TextureFormat=Color
 /build:coyoteEn/coyoteRunDown.png
 
-#begin coyoteEn/coyoteRunLeft (2).png
+#begin coyoteEn/coyoteRunLeft.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -431,7 +443,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:coyoteEn/coyoteRunLeft (2).png
+/build:coyoteEn/coyoteRunLeft.png
 
 #begin coyoteEn/coyoteRunRight.png
 /importer:TextureImporter

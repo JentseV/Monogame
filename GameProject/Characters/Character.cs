@@ -81,8 +81,10 @@ namespace GameProject.Characters
         private Texture2D _textureIdleFacingUpRight, _textureIdleFacingDownRight;
         private Texture2D _textureAttackUpRight, _textureAttackDownRight;
         private Texture2D _textureRunUpRight, _textureRunDownRight;
+        private Texture2D _textureAttackLeft;
 
 
+        public Texture2D TextureAttackLeft { get { return _textureAttackLeft; } set { _textureAttackLeft = value; } }
         public Texture2D TextureRunLeft { get { return _textureRunLeft; } set { _textureRunLeft = value; } }
         public Texture2D HitboxText { get { return _hitboxText; } set { _hitboxText = value; } }
         public Texture2D TextureIdleFacingUpRight { get { return _textureIdleFacingUpRight; } set { _textureIdleFacingUpRight = value; } }

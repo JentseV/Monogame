@@ -42,7 +42,7 @@ namespace GameProject
         private Texture2D[] coffinTextures = new Texture2D[11];
         private Texture2D[] heroTextures = new Texture2D[19];
         private Texture2D[] cactusTextures = new Texture2D[12];
-        private Texture2D[] coyoteTextures = new Texture2D[13];
+        private Texture2D[] coyoteTextures = new Texture2D[14];
 
         private IScreen screen;
 
@@ -135,7 +135,8 @@ namespace GameProject
             coyoteTextures[9] = Content.Load<Texture2D>("heroText/red_square");
             coyoteTextures[10] = Content.Load<Texture2D>("coyoteEn/coyoteHitAnimation");
             coyoteTextures[11] = Content.Load<Texture2D>("Projectiles/SpongeBullet");
-            coyoteTextures[12] = Content.Load<Texture2D>("coyoteEn/coyoteRunLeft (2)");
+            coyoteTextures[12] = Content.Load<Texture2D>("coyoteEn/coyoteRunLeft");
+            coyoteTextures[13] = Content.Load<Texture2D>("coyoteEn/coyoteAttackLeft");
 
 
             healthTexture = Content.Load<Texture2D>("Pickups/Heart");

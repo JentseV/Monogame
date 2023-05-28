@@ -37,7 +37,7 @@ namespace GameProject.Enemies
             }
             else if (Attacking)
             {
-                spriteBatch.Draw(TextureAttacking, Center, AnimationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(TextureAttacking, Center, AnimationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
             }
 
             else if (Hit)
@@ -119,7 +119,7 @@ namespace GameProject.Enemies
             {
                 case Vector2(1f, 0f):
                     {
-                       
+                        Flip = SpriteEffects.None;
                         TextureIdling = TextureIdleFacingRight;
                         TextureRunning = TextureRunRight;
                         TextureAttacking = TextureAttackRight;
@@ -129,15 +129,15 @@ namespace GameProject.Enemies
 
                 case Vector2(-1f, 0f):
                     {
-                        
-                        TextureRunning = TextureRunRight;
+                        Flip = SpriteEffects.FlipHorizontally;
+                        TextureRunning = TextureRunLeft;
                         TextureIdling = TextureIdleFacingRight;
                         TextureAttacking = TextureAttackRight;
                         break;
                     }
                 case Vector2(0f, -1f):
                     {
-                        
+                        Flip = SpriteEffects.None;
                         TextureIdling = TextureIdleFacingUp;
                         TextureRunning = TextureUpRun;
                         TextureAttacking = TextureAttackUp;
@@ -145,7 +145,7 @@ namespace GameProject.Enemies
                     }
                 case Vector2(0f, 1f):
                     {
-                        
+                        Flip = SpriteEffects.None;
                         TextureIdling = TextureIdleFacingFront;
                         TextureRunning = TextureDownRun;
                         TextureAttacking = TextureAttackFront;
