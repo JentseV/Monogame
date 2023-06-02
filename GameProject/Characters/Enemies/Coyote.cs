@@ -91,14 +91,14 @@ namespace GameProject.Enemies
                 Attack();
             }
         }
-        
 
-        private new  void Attack()
+
+        protected override void Attack()
         {
 
-            if (TimeSinceLastAttack <= 0 && Invincible == false && Attacking)
+            if (TimeSinceLastAttack <= 0 && Invincible == false)
             {
-                
+                Attacking = true;
                 //if (Attacking)
                 //{
                 //    channelTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -113,34 +113,6 @@ namespace GameProject.Enemies
                 TimeSinceLastAttack = AttackCooldown;
                 
             }
-        }
-
-       
-        protected new void CheckCollision(List<ICollidable> collidables)
-        {
-            if(Dead == false)
-            {
-                foreach (ICollidable collidable in collidables)
-                {
-
-                    if (this.Hitbox.Intersects(collidable.Hitbox) && !(collidable is Coyote) && !(collidable is Pickup))
-                    {
-                        if (collidable is Bullet)
-                        {
-                            Bullet b = collidable as Bullet;
-                            if (b.Tag == "BulletHero" && Invincible == false)
-                            {
-                                TakeDamage(b.Damage);
-                            }
-
-                        }
-
-                    }
-
-                }
-            }
-            
-
         }
 
 

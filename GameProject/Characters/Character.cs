@@ -151,7 +151,7 @@ namespace GameProject.Characters
 
         }
 
-        public void CheckCollision(List<ICollidable> collidables)
+        public virtual void CheckCollision(List<ICollidable> collidables)
         {
 
         }

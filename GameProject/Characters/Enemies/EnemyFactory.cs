@@ -21,8 +21,8 @@ namespace GameProject.Enemies
             this.cactusTextures = cactusTextures;
             this.coyoteTextures = coyoteTextures;
 
-            spawnLocations.Add(new Vector2(200f, 200f));
-            spawnLocations.Add(new Vector2(100f, 100f));
+            spawnLocations.Add(new Vector2(900f, 200f));
+            spawnLocations.Add(new Vector2(700f, 100f));
             spawnLocations.Add(new Vector2(600f, 600f));
             spawnLocations.Add(new Vector2(800f, 800f));
         }
@@ -79,7 +79,6 @@ namespace GameProject.Enemies
                     if (enemy is Cactus)
                     {
                         Cactus c = enemy as Cactus;
-               
                         foreach (Bullet b in c.cactusBullets)
                         {
                             if(!b.destroy) b.Draw(spriteBatch);
@@ -91,21 +90,21 @@ namespace GameProject.Enemies
 
         public void SpawnEnemies(float amount)
         {
-            if(enemies.Count < amount)
+            while(enemies.Count < amount)
             {
                 Random r = new Random();
                 short spawnerChance = (short)r.Next(0, 100);
 
                 if(spawnerChance > 0 && spawnerChance < 50)
                 {
-                    enemies.Add(new Cactus(new Vector2(1f,1f),spawnLocations[r.Next(0,4)], cactusTextures));
+                    enemies.Add(new Coffin(new Vector2(1f,1f),spawnLocations[r.Next(0,4)], coffinTextures));
                 }else if(spawnerChance > 50 && spawnerChance < 80)
                 {
                     enemies.Add(new Cactus(new Vector2(1.5f, 1.5f),spawnLocations[r.Next(0, 4)], cactusTextures));
                 }
                 else
                 {
-                    enemies.Add(new Cactus(new Vector2(1f, 1f),spawnLocations[r.Next(0, 4)], cactusTextures));
+                    enemies.Add(new Coyote(new Vector2(1f, 1f),spawnLocations[r.Next(0, 4)], coyoteTextures));
                 }
             }
 

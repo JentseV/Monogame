@@ -25,6 +25,7 @@ namespace GameProject.Enemies
 
         public Cactus(Vector2 speed, Vector2 position, Texture2D[] textures)
         {
+            Movable = true;
             this.Damage = 1f;
             this.Hitpoints = 3;
             this.Speed = speed;
@@ -40,7 +41,6 @@ namespace GameProject.Enemies
             this.TextureIdleFacingRight = textures[4];
             this.TextureIdleFacingFront = textures[0];
             this.TextureDownRun = textures[5];
-
             this.TextureAttackRight = textures[7];
             this.TextureAttackUp = textures[8];
             this.TextureAttackFront = textures[6];
@@ -71,17 +71,14 @@ namespace GameProject.Enemies
         public new void Update(GameTime gameTime, Hero hero, List<ICollidable> collidables)
         {
             base.Update(gameTime, hero, collidables);
-            if(Attacking == true)
-            {
-                Attack();
-            }
+          
         }
-        private void Attack()
+        protected override void Attack()
         {
-
-            if (TimeSinceLastAttack <= 0 && Invincible == false && Attacking)
+            
+            if (TimeSinceLastAttack <= 0 && Invincible == false )
             {
-                
+                Attacking = true;
                 Bullet b = new Bullet(cactusBullets.Count, "CactusBullet", new Vector2(Center.X + 2f, Center.Y + 12f), Direction, new Vector2(1.5f, 1.5f), BulletTexture,Damage);
                 cactusBullets.Add(b);
 
@@ -89,26 +86,6 @@ namespace GameProject.Enemies
             }
         }
 
-        protected new void CheckCollision(List<ICollidable> collidables)
-        {
-
-            foreach (ICollidable collidable in collidables)
-            {
-                if (this.Hitbox.Intersects(collidable.Hitbox) && !(collidable is Cactus))
-                {
-                    if (collidable is Bullet)
-                    {
-                        Bullet b = collidable as Bullet;
-                        if (b.Tag == "BulletHero" && Invincible == false)
-                        {
-                            TakeDamage(b.Damage);
-                        }
-                    }
-                    
-                }
-
-            }
-
-        }
+        
     }
 }

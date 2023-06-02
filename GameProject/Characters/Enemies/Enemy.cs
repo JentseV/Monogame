@@ -1,6 +1,7 @@
 ﻿using GameProject.Animations;
 using GameProject.Characters;
 using GameProject.Pickups;
+using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -33,15 +34,18 @@ namespace GameProject.Enemies
             
             if (Moving && Movable == true)
             {
-                spriteBatch.Draw(TextureRunning, Center, AnimationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
+                Debug.WriteLine("draw walk");
+                spriteBatch.Draw(TextureRunning, Center, AnimationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
             }
             else if (Attacking)
             {
+                Debug.WriteLine("draw attack");
                 spriteBatch.Draw(TextureAttacking, Center, AnimationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
             }
 
             else if (Hit)
             {
+                Debug.WriteLine("draw hit");
                 spriteBatch.Draw(TextureHit, Center, null, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
             }
 
@@ -59,7 +63,7 @@ namespace GameProject.Enemies
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             TimeSinceLastAttack -= deltaTime;
 
-
+            Debug.WriteLine(Hit);
             if (Hit)
             {
                 Invincible = true; 
@@ -99,7 +103,7 @@ namespace GameProject.Enemies
                 heroInRange = false;
             }
 
-            if (!Attacking && Invincible == false && heroInRange == false)
+            if (!Attacking && Invincible == false && heroInRange == false )
             {
                 Moving = true;
                 Attacking = false;
@@ -108,9 +112,16 @@ namespace GameProject.Enemies
             else
             {
                 Moving = false;
-                Attacking = true;
+                
+                Attack();
             }
         }
+
+        protected virtual void Attack()
+        {
+            
+        }
+
 
         protected void DecideAnimation()
         {
@@ -123,14 +134,13 @@ namespace GameProject.Enemies
                         TextureIdling = TextureIdleFacingRight;
                         TextureRunning = TextureRunRight;
                         TextureAttacking = TextureAttackRight;
-
                         break;
                     }
 
                 case Vector2(-1f, 0f):
                     {
                         Flip = SpriteEffects.FlipHorizontally;
-                        TextureRunning = TextureRunLeft;
+                        TextureRunning = TextureRunRight;
                         TextureIdling = TextureIdleFacingRight;
                         TextureAttacking = TextureAttackRight;
                         break;
@@ -185,13 +195,17 @@ namespace GameProject.Enemies
             //AnimationAttacking.Update(gameTime);
             if (Moving)
             {
-                Debug.WriteLine("Updating moving anim");
+                
                 AnimationRun.Update(gameTime);
             }
             else if (Attacking)
             {
-                Debug.WriteLine("Updating attackign anim");
+                
                 AnimationAttacking.Update(gameTime);
+            }
+            else if (Hit)
+            {
+                AnimationHit.Update(gameTime);
             }
 
         }
@@ -209,6 +223,28 @@ namespace GameProject.Enemies
                 Remove = true;
                 
             }
+        }
+
+
+        public override void CheckCollision(List<ICollidable> collidables)
+        {
+            foreach (ICollidable collidable in collidables)
+            {
+                if (this.Hitbox.Intersects(collidable.Hitbox) && !(collidable is Cactus))
+                {
+                    if (collidable is Bullet)
+                    {
+                        Bullet b = collidable as Bullet;
+                        if (b.Tag == "BulletHero" && Invincible == false)
+                        {
+                            TakeDamage(b.Damage);
+                        }
+                    }
+
+                }
+
+            }
+
         }
 
 

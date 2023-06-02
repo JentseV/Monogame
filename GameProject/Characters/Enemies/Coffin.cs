@@ -64,52 +64,22 @@ namespace GameProject.Enemies
         }
 
 
-        public new  void Update(GameTime gameTime,Hero hero, List<ICollidable> collidables)
+        public new void Update(GameTime gameTime,Hero hero, List<ICollidable> collidables)
         {
             base.Update(gameTime,hero,collidables);
-            if (Attacking == true)
-            {
-                Attack();
-            }
+          
         }
 
-        private void Attack()
+        protected override void Attack()
         {
             
-            if (TimeSinceLastAttack <= 0 && Invincible == false && Attacking == true)
+            if (TimeSinceLastAttack <= 0 && Invincible == false )
             {
-                
+                Attacking = true;
                 TimeSinceLastAttack = AttackCooldown;
                 this.hitbox.Width = 55;
             }
         }
-
-       
-        protected new void CheckCollision(List<ICollidable> collidables)
-        {
-            
-            foreach (ICollidable collidable in collidables)
-            {
-                
-                if (this.Hitbox.Intersects(collidable.Hitbox) && !(collidable is Coffin) )
-                {
-                    if (collidable is Bullet)
-                    {
-                        Bullet b = collidable as Bullet;
-                        if(b.Tag == "BulletHero" && Invincible == false)
-                        {
-                                TakeDamage(b.Damage);
-                        }   
-                        
-                    }
-                    
-                    
-                }
-                
-            }
-            
-        }
-
-        
+  
     }
 }
