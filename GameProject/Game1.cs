@@ -1,5 +1,6 @@
 ﻿
 using GameProject.Enemies;
+using GameProject.GameObjects.Characters.Player;
 using GameProject.Pickups;
 using GameProject.Projectiles;
 using GameProject.Screens;

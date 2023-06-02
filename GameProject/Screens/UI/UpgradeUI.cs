@@ -1,5 +1,6 @@
 ﻿using GameProject.Animations;
 using GameProject.Enemies;
+using GameProject.GameObjects.Characters.Player;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

@@ -13,7 +13,7 @@ using System.Diagnostics;
 using System.Linq;
 namespace GameProject.Projectiles
 {
-    internal class Lightning
+    internal class Lightning : Projectile
     {
         Texture2D Texture2D;
 

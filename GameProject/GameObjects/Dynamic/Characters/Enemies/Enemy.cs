@@ -1,5 +1,6 @@
 ﻿using GameProject.Animations;
 using GameProject.Characters;
+using GameProject.GameObjects.Characters.Player;
 using GameProject.Pickups;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
@@ -34,18 +35,18 @@ namespace GameProject.Enemies
             
             if (Moving && Movable == true)
             {
-                Debug.WriteLine("draw walk");
+               
                 spriteBatch.Draw(TextureRunning, Center, AnimationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
             }
             else if (Attacking)
             {
-                Debug.WriteLine("draw attack");
+                
                 spriteBatch.Draw(TextureAttacking, Center, AnimationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
             }
 
             else if (Hit)
             {
-                Debug.WriteLine("draw hit");
+                
                 spriteBatch.Draw(TextureHit, Center, null, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
             }
 
@@ -63,7 +64,7 @@ namespace GameProject.Enemies
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             TimeSinceLastAttack -= deltaTime;
 
-            Debug.WriteLine(Hit);
+            
             if (Hit)
             {
                 Invincible = true; 

@@ -1,4 +1,6 @@
 ﻿using GameProject.Animations;
+using GameProject.GameObjects;
+using GameProject.GameObjects.Dynamic;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,7 +18,7 @@ using System.Windows.Forms;
 
 namespace GameProject.Characters
 {
-    internal abstract class Character : IGameComponent, IMovable, ICollidable
+    internal abstract class Character : DynamicGO, IGameComponent, IMovable, ICollidable
     {
 
         private float damage;
@@ -112,17 +114,7 @@ namespace GameProject.Characters
         #endregion
 
         #region
-        protected Rectangle hitbox;
-        // Movement en collision
-        private Vector2 position;
-        private Vector2 direction;
-        private Vector2 speed;
-        public Vector2 Position { get { return position; } set { position = value; } }
-        public Vector2 Direction { get { return direction; } set { direction = value; } }
-        public Vector2 Speed { get { return speed; } set { speed = value; } }
-        public Vector2 Center { get; set; }
-        public Rectangle Hitbox { get { return hitbox; } set { hitbox = value; } }
-
+        
         public IInputReader InputReader { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         #endregion
 

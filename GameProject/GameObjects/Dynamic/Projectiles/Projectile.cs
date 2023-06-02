@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameProject.GameObjects;
+using GameProject.GameObjects.Dynamic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GameProject.Projectiles
 {
-    internal abstract class Projectile : IMovable , IGameComponent
+    internal abstract class Projectile : DynamicGO, IMovable , IGameComponent
     {
         private string tag;
 
@@ -27,16 +29,11 @@ namespace GameProject.Projectiles
             set { _texture = value; }
         }
 
-        private Vector2 direction, position, speed;
+        private Vector2 direction, speed;
         public Vector2 Direction
         {
             get { return direction; }
             set { direction = value; }
-        }
-        public Vector2 Position
-        {
-            get { return position; }
-            set { position = value; }
         }
         public Vector2 Speed
         {
@@ -45,12 +42,6 @@ namespace GameProject.Projectiles
         }
         public IInputReader InputReader { get; set; }
 
-        protected Rectangle hitbox;
-        public Rectangle Hitbox
-        {
-            get { return hitbox; }
-            set { hitbox = value; }
-        }
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Texture, Position, Color.White);
@@ -58,7 +49,7 @@ namespace GameProject.Projectiles
 
         public void Move()
         {
-            this.position += Direction * Speed;
+            this.Position += Direction * Speed;
         }
 
         public void Update(GameTime gameTime)

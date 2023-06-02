@@ -1,5 +1,7 @@
 ﻿using GameProject.Animations;
 using GameProject.Enemies;
+using GameProject.GameObjects.Characters.Player;
+using GameProject.GameObjects.Static;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,31 +18,24 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 namespace GameProject.Pickups
 {
-    internal abstract class Pickup : ICollidable, IGameComponent
+    internal abstract class Pickup : StaticGO , ICollidable, IGameComponent
     {
 
-        private Texture2D texture;
         private Texture2D healthTexture, coinTexture;
-        private Rectangle hitbox;
         private bool despawn;
         private float timeTillDespawn;
         private Animation animation;
         private int id;
         private string tag;
-        private Vector2 position;
         public Animation Animation { get { return animation; } set { animation = value; } }
         public Texture2D HealthTexture { get { return healthTexture; } set { healthTexture = value; } }
         public Texture2D CoinTexture { get { return coinTexture; } set { coinTexture = value; } }
-        public Texture2D Texture { get { return texture; } set { texture = value; } }
         public float TimeTillDespawn { get { return timeTillDespawn; } set { timeTillDespawn = value; } }
 
         public bool Despawn { get { return despawn; } set { despawn = value; } }
 
-        public Rectangle Hitbox { get { return hitbox; } set { hitbox = value; } }
-
         public int ID { get { return id; } set { id = value; } }
         public string Tag { get { return tag; } set { tag = value; } }
-        public Vector2 Position { get { return position; } set { position = value; } }
 
         public Pickup(int idIn, string tagIn, Vector2 postionIn,float timeTillDespawnIn)
         {
@@ -102,7 +97,7 @@ namespace GameProject.Pickups
 
         public void Update(GameTime gameTime,List<ICollidable> collidables)
         {
-            this.animation.Update(gameTime);
+            this.Animation.Update(gameTime);
             CheckCollision(collidables);
         }
 
