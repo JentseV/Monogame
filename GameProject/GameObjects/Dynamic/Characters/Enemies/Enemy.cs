@@ -19,41 +19,16 @@ namespace GameProject.Enemies
 {
     internal abstract class Enemy : Character, ICollidable
     {
-        
-        private SpriteEffects flip = SpriteEffects.None;
+       
         private Vector2 heroPos, facing;
         private float range;
         private bool heroInRange = false;
         public Vector2 Facing { get { return facing; } set { facing = value; } }
         public Vector2 HeroPos { get { return heroPos; } set { heroPos = value; } }
-        public SpriteEffects Flip { get { return flip; } set { flip = value; } }
 
         public float Range { get { return range; } set { range = value; } }
 
-        public new void Draw(SpriteBatch spriteBatch)
-        {
-            
-            if (Moving && Movable == true)
-            {
-               
-                spriteBatch.Draw(TextureRunning, Center, AnimationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
-            }
-            else if (Attacking)
-            {
-                
-                spriteBatch.Draw(TextureAttacking, Center, AnimationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
-            }
-
-            else if (Hit)
-            {
-                
-                spriteBatch.Draw(TextureHit, Center, null, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
-            }
-
-            //spriteBatch.Draw(HitboxText, Center , Hitbox, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
-
-        }
-
+   
 
         public void Update(GameTime gameTime, Hero hero, List<ICollidable> collidables)
         {

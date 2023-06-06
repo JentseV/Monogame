@@ -80,6 +80,10 @@ namespace GameProject.Enemies
                 TimeSinceLastAttack = AttackCooldown;
                 this.hitbox.Width = 55;
             }
+            else
+            {
+                Attacking = false;
+            }
         }
   
     }

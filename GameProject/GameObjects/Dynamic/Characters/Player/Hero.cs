@@ -24,18 +24,13 @@ namespace GameProject.GameObjects.Characters.Player
 
         public static float hitPoints2;
 
-        private float ammo;
-        public float Ammo { get { return ammo; } set { ammo = value; } }
-
-
         private Texture2D hitboxText;
 
         public List<IGameComponent> bullets = new List<IGameComponent>();
 
         private Texture2D bulletTexture;
-        private bool moving = false, shooting = false, canShoot = false;
+        private bool moving = false, canShoot = false;
         private Vector2 facing;
-        private SpriteEffects flip = SpriteEffects.None;
 
         public static float gold;
 
@@ -118,34 +113,6 @@ namespace GameProject.GameObjects.Characters.Player
         }
 
 
-        public new void Draw(SpriteBatch spriteBatch)
-        {
-
-            if (Moving && Movable == true)
-            {
-                spriteBatch.Draw(TextureRunning, Center, AnimationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
-            }
-            else if (shooting)
-            {
-
-                spriteBatch.Draw(TextureAttacking, Center, AnimationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
-            }
-
-            else if (Hit)
-            {
-                spriteBatch.Draw(TextureHit, Center, null, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
-            }
-            else
-            {
-                spriteBatch.Draw(TextureIdling, Center, AnimationIdle.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, flip, 0f);
-            }
-
-            //spriteBatch.Draw(hitboxText, Center, Hitbox, Color.White, 0f , new Vector2(0f,0f), 1f,SpriteEffects.None,0f);
-
-
-        }
-
-
         public void Update(GameTime gameTime, List<ICollidable> collidables)
         {
             hitPoints2 = Hitpoints;
@@ -203,13 +170,11 @@ namespace GameProject.GameObjects.Characters.Player
 
         private void DecideAnimation()
         {
-
-
             switch (facing)
             {
                 case Vector2(1f, 0f):
                     {
-                        flip = SpriteEffects.None;
+                        Flip = SpriteEffects.None;
                         TextureIdling = TextureIdleFacingRight;
                         TextureAttacking = TextureAttackRight;
                         TextureRunning = TextureRunRight;
@@ -218,7 +183,7 @@ namespace GameProject.GameObjects.Characters.Player
 
                 case Vector2(-1f, 0f):
                     {
-                        flip = SpriteEffects.FlipHorizontally;
+                        Flip = SpriteEffects.FlipHorizontally;
                         TextureRunning = TextureRunRight;
                         TextureIdling = TextureIdleFacingRight;
                         TextureAttacking = TextureAttackRight;
@@ -226,7 +191,7 @@ namespace GameProject.GameObjects.Characters.Player
                     }
                 case Vector2(0f, -1f):
                     {
-                        flip = SpriteEffects.None;
+                        Flip = SpriteEffects.None;
                         TextureIdling = TextureIdleFacingUp;
                         TextureAttacking = TextureAttackUp;
                         TextureRunning = TextureUpRun;
@@ -234,7 +199,7 @@ namespace GameProject.GameObjects.Characters.Player
                     }
                 case Vector2(0f, 1f):
                     {
-                        flip = SpriteEffects.None;
+                        Flip = SpriteEffects.None;
                         TextureIdling = TextureIdleFacingFront;
                         TextureAttacking = TextureAttackFront;
                         TextureRunning = TextureDownRun;
@@ -243,7 +208,7 @@ namespace GameProject.GameObjects.Characters.Player
 
                 case Vector2(1f, -1f):
                     {
-                        flip = SpriteEffects.None;
+                        Flip = SpriteEffects.None;
                         TextureRunning = TextureRunUpRight;
                         TextureIdling = TextureIdleFacingUpRight;
                         TextureAttacking = TextureAttackUpRight;
@@ -252,7 +217,7 @@ namespace GameProject.GameObjects.Characters.Player
 
                 case Vector2(-1f, -1f):
                     {
-                        flip = SpriteEffects.FlipHorizontally;
+                        Flip = SpriteEffects.FlipHorizontally;
                         TextureRunning = TextureRunUpRight;
                         TextureIdling = TextureIdleFacingUpRight;
                         TextureAttacking = TextureAttackUpRight;
@@ -261,7 +226,7 @@ namespace GameProject.GameObjects.Characters.Player
 
                 case Vector2(1f, 1f):
                     {
-                        flip = SpriteEffects.None;
+                        Flip = SpriteEffects.None;
                         TextureRunning = TextureRunDownRight;
                         TextureIdling = TextureIdleFacingDownRight;
                         TextureAttacking = TextureAttackDownRight;
@@ -270,7 +235,7 @@ namespace GameProject.GameObjects.Characters.Player
 
                 case Vector2(-1f, 1f):
                     {
-                        flip = SpriteEffects.FlipHorizontally;
+                        Flip = SpriteEffects.FlipHorizontally;
                         TextureRunning = TextureRunDownRight;
                         TextureIdling = TextureIdleFacingDownRight;
                         TextureAttacking = TextureAttackDownRight;
@@ -323,7 +288,7 @@ namespace GameProject.GameObjects.Characters.Player
             {
                 AnimationRun.Update(gameTime);
             }
-            else if (shooting)
+            else if (Attacking)
             {
                 AnimationAttacking.Update(gameTime);
             }
@@ -340,7 +305,7 @@ namespace GameProject.GameObjects.Characters.Player
             if (Direction.X > 0 || Direction.X < 0 || Direction.Y > 0 || Direction.Y < 0)
             {
                 Moving = true;
-                shooting = false;
+                Attacking = false;
                 canShoot = false;
             }
             else
@@ -355,7 +320,7 @@ namespace GameProject.GameObjects.Characters.Player
             }
             else
             {
-                shooting = false;
+                Attacking = false;
             }
 
         }
@@ -389,7 +354,7 @@ namespace GameProject.GameObjects.Characters.Player
         {
             if (TimeSinceLastAttack <= 0)
             {
-                shooting = true;
+                Attacking = true;
                 Bullet bullet = new Bullet(bullets.Count, "BulletHero", new Vector2(Center.X + 2f, Center.Y + 12f), facing, new Vector2(2f, 2f), bulletTexture, Damage);
                 bullets.Add(bullet);
                 TimeSinceLastAttack = AttackCooldown;
@@ -420,16 +385,11 @@ namespace GameProject.GameObjects.Characters.Player
             Speed += amount;
         }
 
-        public void InceaseDamage(float amount)
+        public void IncreaseDamage(float amount)
         {
             Damage += amount;
         }
 
-
-        public void IncreaseAmmo(float amount)
-        {
-            Ammo += amount;
-        }
 
     }
 }

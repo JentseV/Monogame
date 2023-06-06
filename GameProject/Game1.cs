@@ -21,11 +21,11 @@ namespace GameProject
         public static Texture2D healthTexture,coinTexture;
         private static List<Pickup> s = new List<Pickup>();
 
-
+        private bool started = false;
         private UI ui;
         private ScoreUI scoreUI;
         private bool spawnEnemies = true;
-        
+        private float difficulty = 0;
         private Rectangle backgroundRect;
         private Texture2D background,buttonText;
         private GraphicsDeviceManager _graphics;
@@ -67,7 +67,7 @@ namespace GameProject
             hero = new Hero(heroTextures, new KeyboardReader());
             
            
-            enemyFactory = new EnemyFactory(coffinTextures,cactusTextures,coyoteTextures);
+            enemyFactory = new EnemyFactory(coffinTextures,cactusTextures,coyoteTextures,difficulty);
             upgradeUI = new UpgradeUI(font, buttonText, hero);
             hero.Position = new Vector2(600f, 600f);
             collidables.Add(hero);
@@ -169,7 +169,7 @@ namespace GameProject
 
             if (spawnEnemies)
             {
-                enemyFactory.SpawnEnemies(1);
+                enemyFactory.SpawnEnemies();
                 spawnEnemies = false;
             }
 

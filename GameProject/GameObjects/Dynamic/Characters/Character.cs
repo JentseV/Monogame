@@ -1,5 +1,6 @@
 ﻿using GameProject.Animations;
 using GameProject.GameObjects;
+using GameProject.GameObjects.Characters.Player;
 using GameProject.GameObjects.Dynamic;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
@@ -49,6 +50,9 @@ namespace GameProject.Characters
 
         private string tag;
 
+        private SpriteEffects flip = SpriteEffects.None;
+
+        public SpriteEffects Flip { get { return flip; } set { flip = value; } }
         public string Tag { get { return tag; } set { tag = value; } }
 
         private float hitpoints;
@@ -120,7 +124,26 @@ namespace GameProject.Characters
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            if (Moving && Movable == true)
+            {
+                spriteBatch.Draw(TextureRunning, Center, AnimationRun.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
+            }
+            else if (Attacking)
+            {
 
+                spriteBatch.Draw(TextureAttacking, Center, AnimationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
+            }
+
+            else if (Hit)
+            {
+                spriteBatch.Draw(TextureHit, Center, null, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
+            }
+            else if( this.GetType() == typeof(Hero))
+            {
+                spriteBatch.Draw(TextureIdling, Center, AnimationIdle.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
+            }
+
+            //spriteBatch.Draw(hitboxText, Center, Hitbox, Color.White, 0f , new Vector2(0f,0f), 1f,SpriteEffects.None,0f);
         }
 
         public void Update(GameTime gameTime)
@@ -148,7 +171,12 @@ namespace GameProject.Characters
 
         }
 
-
+        public void UpdateHitbox()
+        {
+            Center = new Vector2(Position.X + 10, Position.Y + 10);
+            hitbox.X = (int)Center.X;
+            hitbox.Y = (int)Center.Y;
+        }
         public void Move()
         {
             Moving = true;

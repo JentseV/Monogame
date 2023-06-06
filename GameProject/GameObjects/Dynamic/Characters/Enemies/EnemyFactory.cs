@@ -14,14 +14,15 @@ namespace GameProject.Enemies
     internal class EnemyFactory
     {
         List<Enemy> enemies = new List<Enemy>();
+        float difficulty;
         List<Vector2> spawnLocations = new List<Vector2>();
         private Texture2D[] coffinTextures, cactusTextures, coyoteTextures;
-        public EnemyFactory(Texture2D[] coffinTextures, Texture2D[] cactusTextures, Texture2D[] coyoteTextures)
+        public EnemyFactory(Texture2D[] coffinTextures, Texture2D[] cactusTextures, Texture2D[] coyoteTextures, float difficulty)
         {
             this.coffinTextures = coffinTextures;
             this.cactusTextures = cactusTextures;
             this.coyoteTextures = coyoteTextures;
-
+            this.difficulty = difficulty;
             spawnLocations.Add(new Vector2(900f, 200f));
             spawnLocations.Add(new Vector2(700f, 100f));
             spawnLocations.Add(new Vector2(600f, 600f));
@@ -89,9 +90,10 @@ namespace GameProject.Enemies
             }
         }
 
-        public void SpawnEnemies(float amount)
+        public void SpawnEnemies()
         {
-            while(enemies.Count < amount)
+            float enemiesToSpawn = 2 * 1.5f;
+            while(enemies.Count < enemiesToSpawn)
             {
                 Random r = new Random();
                 short spawnerChance = (short)r.Next(0, 100);
@@ -110,6 +112,8 @@ namespace GameProject.Enemies
             }
 
         }
+
+        public int GetEnemies() { return enemies.Count; }
 
         
     }

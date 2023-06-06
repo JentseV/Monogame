@@ -24,8 +24,8 @@ namespace GameProject.Screens.UI
         public UpgradeUI(SpriteFont fontIn, Texture2D textures, Hero h) : base(fontIn)
         {
             buttons.Add(new Button(textures, new Vector2(200f, 200f), "Upgrade Speed", font, actionIn: () => h.IncreaseSpeed(new Vector2(0.1f,0.1f))));
-            buttons.Add(new Button(textures, new Vector2(500f, 200f), "Upgrade Damage", font, actionIn: () => h.InceaseDamage(1f)));
-            buttons.Add(new Button(textures, new Vector2(800f, 200f), "Upgrade Ammo", font, actionIn: () => h.IncreaseAmmo(12)));
+            buttons.Add(new Button(textures, new Vector2(500f, 200f), "Upgrade Damage", font, actionIn: () => h.IncreaseDamage(1f)));
+            
         }
 
         public void Update(MouseState mouse)
