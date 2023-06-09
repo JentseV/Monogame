@@ -1,4 +1,5 @@
 ﻿
+using GameProject.Characters;
 using GameProject.Enemies;
 using GameProject.GameObjects.Characters.Player;
 using GameProject.Pickups;
@@ -18,7 +19,7 @@ namespace GameProject
 {
     public class Game1 : Game
     {
-        public static Texture2D healthTexture,coinTexture;
+        public static Texture2D healthTexture, coinTexture;
         private static List<Pickup> s = new List<Pickup>();
 
         private bool started = false;
@@ -27,7 +28,7 @@ namespace GameProject
         private bool spawnEnemies = true;
         private float difficulty = 0;
         private Rectangle backgroundRect;
-        private Texture2D background,buttonText;
+        private Texture2D background, buttonText;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Hero hero;
@@ -39,11 +40,79 @@ namespace GameProject
         private List<Coffin> coffins = new List<Coffin>();
         private List<Cactus> cacti = new List<Cactus>();
         private List<Coyote> coyotes = new List<Coyote>();
+
+        private List<Character> gameCharacters = new List<Character>();
         private List<ICollidable> collidables = new List<ICollidable>();
         private Texture2D[] coffinTextures = new Texture2D[11];
         private Texture2D[] heroTextures = new Texture2D[19];
         private Texture2D[] cactusTextures = new Texture2D[12];
         private Texture2D[] coyoteTextures = new Texture2D[14];
+
+        string[] heroTextureNames = {
+            "heroText/Fixed/runUp",
+            "heroText/Fixed/runDown",
+            "heroText/Fixed/shootFront",
+            "heroText/Fixed/idleFacingFront",
+            "heroText/Fixed/idleFacingRight",
+            "heroText/Fixed/idleFacingUp",
+            "heroText/Fixed/runRight",
+            "heroText/Fixed/shootRight",
+            "heroText/Fixed/shootUp",
+            "heroText/Fixed/runDown",
+            "heroText/red_square",
+            "heroText/Fixed/runDownRight",
+            "heroText/Fixed/runUpRight",
+            "heroText/Fixed/shootDownRight",
+            "heroText/Fixed/shootUpRight",
+            "heroText/Fixed/idleFacingUpRight",
+            "heroText/Fixed/idleFacingDownRight",
+            "Projectiles/SpongeBullet",
+            "heroText/Fixed/heroHitAnimation"
+        };
+        string[] cactusTextureNames = {
+            "cactusEn/cactusIdleFront",
+            "cactusEn/cactusRunRight",
+            "cactusEn/cactusRunUp",
+            "cactusEn/cactusIdleUp",
+            "cactusEn/cactusIdleRight",
+            "cactusEn/cactusRunDown",
+            "cactusEn/cactusAttackFront",
+            "cactusEn/cactusAttackRight",
+            "cactusEn/cactusAttackUp",
+            "heroText/red_square",
+            "cactusEn/cactusHitAnimation",
+            "Projectiles/SpongeBullet"
+        };
+        string[] coyoteTextureNames = {
+            "coyoteEn/coyoteIdleFront",
+            "coyoteEn/coyoteRunRight",
+            "coyoteEn/coyoteRunUp",
+            "coyoteEn/coyoteIdleUp",
+            "coyoteEn/coyoteIdleRight",
+            "coyoteEn/coyoteRunDown",
+            "coyoteEn/coyoteAttackFront",
+            "coyoteEn/coyoteAttackRight",
+            "coyoteEn/coyoteAttackUp",
+            "heroText/red_square",
+            "coyoteEn/coyoteHitAnimation",
+            "Projectiles/SpongeBullet",
+            "coyoteEn/coyoteRunLeft",
+            "coyoteEn/coyoteAttackLeft"
+        };
+        string[] coffinTextureNames = {
+            "coffinEn/coffinIdleFront",
+            "coffinEn/coffinWalkRight",
+            "coffinEn/coffinRunUp",
+            "coffinEn/coffinIdleUp",
+            "coffinEn/coffinIdleRight",
+            "coffinEn/coffinRunDown",
+            "coffinEn/coffinAttackFront",
+            "coffinEn/coffinAttackRight",
+            "coffinEn/coffinAttackUp",
+            "heroText/red_square",
+            "coffinEn/coffinHitAnimation"
+        };
+
 
         private IScreen screen;
 
@@ -62,12 +131,12 @@ namespace GameProject
             // TODO: Add your initialization logic here
             base.Initialize();
             scoreUI = new ScoreUI(font);
-            
-            button = new Button(buttonText, new Vector2(500f, 300f), "Buy Movement Speed ", font,() => hero.Hitpoints+=3);
+
+            button = new Button(buttonText, new Vector2(500f, 300f), "Buy Movement Speed ", font, () => hero.Hitpoints += 3);
             hero = new Hero(heroTextures, new KeyboardReader());
-            
-           
-            enemyFactory = new EnemyFactory(coffinTextures,cactusTextures,coyoteTextures,difficulty);
+
+
+            enemyFactory = new EnemyFactory(coffinTextures, cactusTextures, coyoteTextures, difficulty);
             upgradeUI = new UpgradeUI(font, buttonText, hero);
             hero.Position = new Vector2(600f, 600f);
             collidables.Add(hero);
@@ -78,68 +147,10 @@ namespace GameProject
 
         protected override void LoadContent()
         {
-            heroTextures[0] = Content.Load<Texture2D>("heroText/Fixed/runUp");
-            heroTextures[1] = Content.Load<Texture2D>("heroText/Fixed/runDown");
-            heroTextures[2] = Content.Load<Texture2D>("heroText/Fixed/shootFront");
-            heroTextures[3] = Content.Load<Texture2D>("heroText/Fixed/idleFacingFront");
-            heroTextures[4] = Content.Load<Texture2D>("heroText/Fixed/idleFacingRight");
-            heroTextures[5] = Content.Load<Texture2D>("heroText/Fixed/idleFacingUp");
-            heroTextures[6] = Content.Load<Texture2D>("heroText/Fixed/runRight");
-            heroTextures[7] = Content.Load<Texture2D>("heroText/Fixed/shootRight");
-            heroTextures[8] = Content.Load<Texture2D>("heroText/Fixed/shootUp");
-            heroTextures[9] = Content.Load<Texture2D>("heroText/Fixed/runDown");
-            heroTextures[10] = Content.Load<Texture2D>("heroText/red_square");
-            heroTextures[11] = Content.Load<Texture2D>("heroText/Fixed/runDownRight");
-            heroTextures[12] = Content.Load<Texture2D>("heroText/Fixed/runUpRight");
-            heroTextures[13] = Content.Load<Texture2D>("heroText/Fixed/shootDownRight");
-            heroTextures[14] = Content.Load<Texture2D>("heroText/Fixed/shootUpRight");
-            heroTextures[15] = Content.Load<Texture2D>("heroText/Fixed/idleFacingUpRight");
-            heroTextures[16] = Content.Load<Texture2D>("heroText/Fixed/idleFacingDownRight");
-
-            heroTextures[17] = Content.Load<Texture2D>("Projectiles/SpongeBullet");
-            heroTextures[18] = Content.Load<Texture2D>("heroText/Fixed/heroHitAnimation");
-
-            coffinTextures[0] = Content.Load<Texture2D>("coffinEn/coffinIdleFront");
-            coffinTextures[1] = Content.Load<Texture2D>("coffinEn/coffinWalkRight");
-            coffinTextures[2] = Content.Load<Texture2D>("coffinEn/coffinRunUp");
-            coffinTextures[3] = Content.Load<Texture2D>("coffinEn/coffinIdleUp");
-            coffinTextures[4] = Content.Load<Texture2D>("coffinEn/coffinIdleRight");
-            coffinTextures[5] = Content.Load<Texture2D>("coffinEn/coffinRunDown");
-            coffinTextures[6] = Content.Load<Texture2D>("coffinEn/coffinAttackFront");
-            coffinTextures[7] = Content.Load<Texture2D>("coffinEn/coffinAttackRight");
-            coffinTextures[8] = Content.Load<Texture2D>("coffinEn/coffinAttackUp");
-            coffinTextures[9] = Content.Load<Texture2D>("heroText/red_square");
-            coffinTextures[10] = Content.Load<Texture2D>("coffinEn/coffinHitAnimation");
-
-            cactusTextures[0] = Content.Load<Texture2D>("cactusEn/cactusIdleFront");
-            cactusTextures[1] = Content.Load<Texture2D>("cactusEn/cactusRunRight");
-            cactusTextures[2] = Content.Load<Texture2D>("cactusEn/cactusRunUp");
-            cactusTextures[3] = Content.Load<Texture2D>("cactusEn/cactusIdleUp");
-            cactusTextures[4] = Content.Load<Texture2D>("cactusEn/cactusIdleRight");
-            cactusTextures[5] = Content.Load<Texture2D>("cactusEn/cactusRunDown");
-            cactusTextures[6] = Content.Load<Texture2D>("cactusEn/cactusAttackFront");
-            cactusTextures[7] = Content.Load<Texture2D>("cactusEn/cactusAttackRight");
-            cactusTextures[8] = Content.Load<Texture2D>("cactusEn/cactusAttackUp");
-            cactusTextures[9] = Content.Load<Texture2D>("heroText/red_square");
-            cactusTextures[10] = Content.Load<Texture2D>("cactusEn/cactusHitAnimation");
-            cactusTextures[11] = Content.Load<Texture2D>("Projectiles/SpongeBullet");
-
-            coyoteTextures[0] = Content.Load<Texture2D>("coyoteEn/coyoteIdleFront");
-            coyoteTextures[1] = Content.Load<Texture2D>("coyoteEn/coyoteRunRight");
-            coyoteTextures[2] = Content.Load<Texture2D>("coyoteEn/coyoteRunUp");
-            coyoteTextures[3] = Content.Load<Texture2D>("coyoteEn/coyoteIdleUp");
-            coyoteTextures[4] = Content.Load<Texture2D>("coyoteEn/coyoteIdleRight");
-            coyoteTextures[5] = Content.Load<Texture2D>("coyoteEn/coyoteRunDown");
-            coyoteTextures[6] = Content.Load<Texture2D>("coyoteEn/coyoteAttackFront");
-            coyoteTextures[7] = Content.Load<Texture2D>("coyoteEn/coyoteAttackRight");
-            coyoteTextures[8] = Content.Load<Texture2D>("coyoteEn/coyoteAttackUp");
-            coyoteTextures[9] = Content.Load<Texture2D>("heroText/red_square");
-            coyoteTextures[10] = Content.Load<Texture2D>("coyoteEn/coyoteHitAnimation");
-            coyoteTextures[11] = Content.Load<Texture2D>("Projectiles/SpongeBullet");
-            coyoteTextures[12] = Content.Load<Texture2D>("coyoteEn/coyoteRunLeft");
-            coyoteTextures[13] = Content.Load<Texture2D>("coyoteEn/coyoteAttackLeft");
-
-
+            coyoteTextures = LoadTextures(coyoteTextureNames);
+            cactusTextures = LoadTextures(cactusTextureNames);
+            coffinTextures = LoadTextures(coffinTextureNames);
+            heroTextures = LoadTextures(heroTextureNames);
             healthTexture = Content.Load<Texture2D>("Pickups/Heart");
             coinTexture = Content.Load<Texture2D>("Pickups/Coin");
             background = Content.Load<Texture2D>("World/background");
@@ -159,7 +170,7 @@ namespace GameProject
             // TODO: Add your update logic here
 
 
-            upgradeUI.Update(Mouse.GetState()) ;
+            upgradeUI.Update(Mouse.GetState());
 
 
             hero.Update(gameTime, collidables);
@@ -215,49 +226,7 @@ namespace GameProject
                 }
             }
 
-            #region
-            //updating enemies, this should happen in enemyfactory -> rewriting now
-            //foreach(Coyote co in coyotes)
-            //{
-            //    if(co.Remove == false)
-            //    {
-            //        co.Update(gameTime, hero, collidables);
-            //        if (collidables.Contains(co) == false) collidables.Add(co);
-            //    }
-            //}
-
-            //foreach (Cactus c in cacti)
-            //{
-            //    if (c.Remove == false)
-            //    {
-            //        c.Update(gameTime, hero, collidables);
-            //        if (collidables.Contains(c) == false) collidables.Add(c);
-
-            //    }
-
-            //    foreach (Bullet b in c.cactusBullets)
-            //    {
-            //        if(b.destroy == false)
-            //        {
-            //            b.Update(gameTime, collidables);
-            //            if (collidables.Contains(b) == false) collidables.Add(b);
-            //        }
-
-            //    }
-
-            //}
-
-            //foreach(Coffin c in coffins)
-            //{
-
-            //    if(c.Remove == false)
-            //    {
-            //        if(collidables.Contains(c) == false) collidables.Add(c);
-            //        c.Update(gameTime, hero, collidables);
-            //    }
-
-            //}
-            #endregion
+            
 
             //pickup logic maybe this should belong in pickupfactory in the future?
             foreach (ICollidable c in collidables)
@@ -292,8 +261,8 @@ namespace GameProject
             _spriteBatch.Draw(background, Vector2.Zero, null, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
             hero.Draw(_spriteBatch);
 
-            
-            if(!button.Destroy) button.Draw(_spriteBatch);
+
+            if (!button.Destroy) button.Draw(_spriteBatch);
 
 
             enemyFactory.Draw(_spriteBatch);
@@ -349,28 +318,40 @@ namespace GameProject
 
             }
 
-            
+
 
             foreach (ICollidable c in collidables)
             {
-                if(c is Coin)
+                if (c is Coin)
                 {
                     Coin p = c as Coin;
                     p.Draw(_spriteBatch);
                 }
-                else if(c is Health)
+                else if (c is Health)
                 {
                     Health h = c as Health;
                     h.Draw(_spriteBatch);
                 }
             }
 
-            upgradeUI.Draw(_spriteBatch);
+            //upgradeUI.Draw(_spriteBatch);
             scoreUI.Draw(_spriteBatch);
 
             _spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        private Texture2D[] LoadTextures(string[] textureNames)
+        {
+            Texture2D[] textures = new Texture2D[textureNames.Length];
+
+            for (int i = 0; i < textureNames.Length; i++)
+            {
+                textures[i] = Content.Load<Texture2D>(textureNames[i]);
+            }
+
+            return textures;
         }
     }
 }

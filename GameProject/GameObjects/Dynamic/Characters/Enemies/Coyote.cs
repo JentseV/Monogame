@@ -23,7 +23,6 @@ namespace GameProject.Enemies
     internal class Coyote : Enemy,IEnemy
     {
         //SPRITESHEET 70x70
-        private SpriteEffects flip = SpriteEffects.None;
 
         private Texture2D BulletTexture;
         private bool heroInRange = false;

@@ -71,9 +71,6 @@ namespace GameProject.Characters
 
         public Animation AnimationHit { get { return _animationHit; } set { _animationHit = value; } }
 
-
-
-
         #region 
         //Textures
         private Texture2D _hitboxText;

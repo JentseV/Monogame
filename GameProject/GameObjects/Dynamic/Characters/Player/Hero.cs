@@ -24,12 +24,10 @@ namespace GameProject.GameObjects.Characters.Player
 
         public static float hitPoints2;
 
-        private Texture2D hitboxText;
-
         public List<IGameComponent> bullets = new List<IGameComponent>();
 
         private Texture2D bulletTexture;
-        private bool moving = false, canShoot = false;
+        private bool canShoot = false;
         private Vector2 facing;
 
         public static float gold;
@@ -87,7 +85,7 @@ namespace GameProject.GameObjects.Characters.Player
             TextureAttacking = TextureAttackUp;
             TextureHit = textures[18];
 
-            hitboxText = textures[10];
+            HitboxText = textures[10];
             Position = new Vector2(2f, 2f);
 
             Hitbox = new Rectangle((int)Position.X, (int)Position.Y, 32, 32);
