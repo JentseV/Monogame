@@ -1,6 +1,7 @@
 ﻿using GameProject.Animations;
 using GameProject.Enemies;
 using GameProject.GameObjects.Characters.Player;
+using GameProject.GameObjects.Dynamic.Characters.Enemies;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,7 +17,7 @@ using System.Windows.Forms;
 
 namespace GameProject.Enemies
 {
-    internal class Cactus : Enemy, IEnemy
+    internal class Cactus : Enemy, IEnemy, IRangedAttacker
     {
 
         private Texture2D BulletTexture;
@@ -84,6 +85,28 @@ namespace GameProject.Enemies
                 cactusBullets.Add(b);
 
                 TimeSinceLastAttack = AttackCooldown;
+            }
+        }
+
+
+        public void UpdateBullets(GameTime gameTime, List<ICollidable> collidables)
+        {
+            foreach (Bullet b in cactusBullets)
+            {
+                if (!b.destroy)
+                {
+                    b.Update(gameTime, collidables);
+                    if (!collidables.Contains(b))
+                        collidables.Add(b);
+                }
+            }
+        }
+
+        public void DrawBullets(SpriteBatch spriteBatch)
+        {
+            foreach (Bullet b in cactusBullets)
+            {
+                if (!b.destroy) b.Draw(spriteBatch);
             }
         }
 

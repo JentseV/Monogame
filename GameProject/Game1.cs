@@ -2,6 +2,7 @@
 using GameProject.Characters;
 using GameProject.Enemies;
 using GameProject.GameObjects.Characters.Player;
+using GameProject.GameObjects.Dynamic.Characters.Enemies;
 using GameProject.Pickups;
 using GameProject.Projectiles;
 using GameProject.Screens;
@@ -32,17 +33,14 @@ namespace GameProject
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Hero hero;
-        private EnemyFactory enemyFactory;
+        private EnemyManager enemyManager;
         private Button button;
         private SpriteFont font;
         private UpgradeUI upgradeUI;
-        private int[] test = { 10, 50, 100, 300, 200, 10, 50, 100, 300, 200 };
-        private List<Coffin> coffins = new List<Coffin>();
-        private List<Cactus> cacti = new List<Cactus>();
-        private List<Coyote> coyotes = new List<Coyote>();
 
         private List<Character> gameCharacters = new List<Character>();
         private List<ICollidable> collidables = new List<ICollidable>();
+        private List<Enemy> enemies = new List<Enemy>();
         private Texture2D[] coffinTextures = new Texture2D[11];
         private Texture2D[] heroTextures = new Texture2D[19];
         private Texture2D[] cactusTextures = new Texture2D[12];
@@ -131,12 +129,11 @@ namespace GameProject
             // TODO: Add your initialization logic here
             base.Initialize();
             scoreUI = new ScoreUI(font);
-
+            difficulty = 2;
             button = new Button(buttonText, new Vector2(500f, 300f), "Buy Movement Speed ", font, () => hero.Hitpoints += 3);
             hero = new Hero(heroTextures, new KeyboardReader());
-
-
-            enemyFactory = new EnemyFactory(coffinTextures, cactusTextures, coyoteTextures, difficulty);
+            enemies = EnemyFactory.SpawnEnemies(coffinTextures, cactusTextures, coyoteTextures, difficulty);
+            enemyManager = new EnemyManager(enemies);
             upgradeUI = new UpgradeUI(font, buttonText, hero);
             hero.Position = new Vector2(600f, 600f);
             collidables.Add(hero);
@@ -176,13 +173,9 @@ namespace GameProject
             hero.Update(gameTime, collidables);
 
 
-            enemyFactory.Update(gameTime, hero, collidables);
+            enemyManager.Update(gameTime, hero, collidables);
 
-            if (spawnEnemies)
-            {
-                enemyFactory.SpawnEnemies();
-                spawnEnemies = false;
-            }
+           
 
             // removing enemies and pickups 
             foreach (ICollidable x in collidables.ToList())
@@ -265,7 +258,7 @@ namespace GameProject
             if (!button.Destroy) button.Draw(_spriteBatch);
 
 
-            enemyFactory.Draw(_spriteBatch);
+            enemyManager.Draw(_spriteBatch);
 
             #region 
             //foreach (Coyote co in coyotes)
@@ -337,7 +330,7 @@ namespace GameProject
             //upgradeUI.Draw(_spriteBatch);
             scoreUI.Draw(_spriteBatch);
 
-            _spriteBatch.End();
+            _spriteBatch.End(); 
 
             base.Draw(gameTime);
         }

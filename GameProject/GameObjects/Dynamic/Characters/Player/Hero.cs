@@ -254,13 +254,6 @@ namespace GameProject.GameObjects.Characters.Player
 
         }
 
-
-        public void UpdateHitbox()
-        {
-            Center = new Vector2(Position.X + 10, Position.Y + 10);
-            hitbox.X = (int)Center.X;
-            hitbox.Y = (int)Center.Y;
-        }
         public void CheckInvincible(float deltaTime)
         {
             if (Invincible)
