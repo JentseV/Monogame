@@ -1,8 +1,10 @@
 ﻿
 using GameProject.Characters;
 using GameProject.Enemies;
+using GameProject.GameObjects;
 using GameProject.GameObjects.Characters.Player;
 using GameProject.GameObjects.Dynamic.Characters.Enemies;
+using GameProject.GameObjects.Dynamic.DynamicCollidables;
 using GameProject.Pickups;
 using GameProject.Projectiles;
 using GameProject.Screens;
@@ -23,6 +25,8 @@ namespace GameProject
         public static Texture2D healthTexture, coinTexture;
         private static List<Pickup> s = new List<Pickup>();
 
+
+
         private bool started = false;
         private UI ui;
         private ScoreUI scoreUI;
@@ -34,11 +38,12 @@ namespace GameProject
         private SpriteBatch _spriteBatch;
         private Hero hero;
         private EnemyManager enemyManager;
+        
         private Button button;
         private SpriteFont font;
         private UpgradeUI upgradeUI;
 
-        private List<Character> gameCharacters = new List<Character>();
+        private List<DynamicCollidable> dynamicCollidables = new List<DynamicCollidable>();
         private List<ICollidable> collidables = new List<ICollidable>();
         private List<Enemy> enemies = new List<Enemy>();
         private Texture2D[] coffinTextures = new Texture2D[11];
@@ -134,6 +139,12 @@ namespace GameProject
             hero = new Hero(heroTextures, new KeyboardReader());
             enemies = EnemyFactory.SpawnEnemies(coffinTextures, cactusTextures, coyoteTextures, difficulty);
             enemyManager = new EnemyManager(enemies);
+
+            dynamicCollidables.Add(hero);
+            foreach (Enemy enemy in enemies)
+            {
+                if (dynamicCollidables.Contains(enemy) == false) dynamicCollidables.Add(enemy);
+            }
             upgradeUI = new UpgradeUI(font, buttonText, hero);
             hero.Position = new Vector2(600f, 600f);
             collidables.Add(hero);
@@ -175,7 +186,9 @@ namespace GameProject
 
             enemyManager.Update(gameTime, hero, collidables);
 
-           
+
+
+            CollisionManager.CheckCollisions(dynamicCollidables);
 
             // removing enemies and pickups 
             foreach (ICollidable x in collidables.ToList())
@@ -183,7 +196,7 @@ namespace GameProject
                 if (x is Bullet)
                 {
                     Bullet t = x as Bullet;
-                    if (t.destroy == true)
+                    if (t.Destroy == true)
                     {
                         collidables.Remove(t);
                     }
@@ -212,10 +225,14 @@ namespace GameProject
             foreach (Bullet b in hero.bullets)
             {
 
-                if (b.destroy == false)
+                if (b.Destroy == false)
                 {
-                    b.Update(gameTime, collidables);
-                    if (collidables.Contains(b) == false) collidables.Add(b);
+                    b.Update(gameTime);
+                    if (dynamicCollidables.Contains(b) == false) dynamicCollidables.Add(b);
+                }
+                else
+                {
+                    dynamicCollidables.Remove(b);
                 }
             }
 
@@ -227,12 +244,12 @@ namespace GameProject
                 if (c is Coin)
                 {
                     Coin p = c as Coin;
-                    p.Update(gameTime, collidables);
+                    p.Update(gameTime);
                 }
                 else if (c is Health)
                 {
                     Health h = c as Health;
-                    h.Update(gameTime, collidables);
+                    h.Update(gameTime);
                 }
             }
 
@@ -260,58 +277,15 @@ namespace GameProject
 
             enemyManager.Draw(_spriteBatch);
 
-            #region 
-            //foreach (Coyote co in coyotes)
-            //{
-            //    if (co.Remove == false)
-            //    {
-            //        co.Draw(_spriteBatch);
-            //    }
-            //}
-
-
-            //foreach (Cactus c in cacti)
-            //{
-            //    if (c.Remove == false)
-            //    {
-            //        c.Draw(_spriteBatch);
-
-            //    }
-
-            //    foreach (Bullet b in c.cactusBullets)
-            //    {
-            //        if (b.destroy == false)
-            //        {
-            //            b.Draw(_spriteBatch);
-            //        }
-
-            //    }
-
-            //}
-
-            //foreach (Coffin c in coffins)
-            //{
-            //    if (c.Remove == false)
-            //    {
-            //        c.Draw(_spriteBatch);
-            //    }
-
-            //}
-
-            #endregion
-
-
-
             foreach (Bullet b in hero.bullets)
             {
-                if (b.destroy == false)
+                
+                if (b.Destroy == false)
                 {
                     b.Draw(_spriteBatch);
                 }
 
             }
-
-
 
             foreach (ICollidable c in collidables)
             {

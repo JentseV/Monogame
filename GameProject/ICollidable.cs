@@ -1,5 +1,6 @@
 ﻿using GameProject.Animations;
 using GameProject.Enemies;
+using GameProject.GameObjects;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -21,6 +22,6 @@ namespace GameProject
     {
         Rectangle Hitbox { get; set; }
 
-        void CheckCollision(List<ICollidable> collidables);
+        void CheckCollision(ICollidable collidables);
     }
 }
