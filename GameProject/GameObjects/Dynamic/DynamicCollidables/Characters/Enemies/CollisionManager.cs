@@ -36,7 +36,7 @@ namespace GameProject.GameObjects.Dynamic.Characters.Enemies
                             {
                                 pickup.OnPickup(hero);
                                 NotifyObservers(pickupObservers, pickup);
-                                break; // Only handle one collision per pickup
+                                break;
                             }
                         }
                     }

@@ -411,9 +411,16 @@ namespace GameProject.GameObjects.Characters.Player
             
         }
 
-        public void OnPickup(Pickup pickup)
+        public void OnPickup(Pickup pickup) // hardcoded values, change later
         {
-            throw new NotImplementedException();
+            if(pickup is Health)
+            {
+                
+                GainHealth(1f);
+            }else if(pickup is Coin)
+            {
+                GainGold(1f);
+            }
         }
     }
 }

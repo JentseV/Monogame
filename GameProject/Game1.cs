@@ -5,6 +5,7 @@ using GameProject.GameObjects;
 using GameProject.GameObjects.Characters.Player;
 using GameProject.GameObjects.Dynamic.Characters.Enemies;
 using GameProject.GameObjects.Dynamic.DynamicCollidables;
+using GameProject.GameObjects.Static.StaticCollidable.Pickups;
 using GameProject.Pickups;
 using GameProject.Projectiles;
 using GameProject.Screens;
@@ -25,8 +26,8 @@ namespace GameProject
         public static Texture2D healthTexture, coinTexture;
         private static List<Pickup> s = new List<Pickup>();
 
-
-
+        
+        private List<IPickupObserver> pickupObservers = new();
         private bool started = false;
         private UI ui;
         private ScoreUI scoreUI;
@@ -147,6 +148,7 @@ namespace GameProject
             }
             upgradeUI = new UpgradeUI(font, buttonText, hero);
             hero.Position = new Vector2(1000f, 600f);
+            pickupObservers.Add(hero);
             collidables.Add(hero);
             backgroundRect = new Rectangle(0, 0, 32, 47);
             screen = new SplashScreen();
@@ -185,14 +187,14 @@ namespace GameProject
 
 
             enemyManager.Update(gameTime, hero, collidables);
-
+            PickupManager.Update(gameTime);
 
            
             dynamicCollidables.AddRange(collidables.OfType<DynamicCollidable>().Where(c => !c.Remove && !dynamicCollidables.Contains(c)));
 
             dynamicCollidables.RemoveAll(d => d.Remove);
 
-            CollisionManager.CheckCollisions(dynamicCollidables);
+            CollisionManager.CheckCollisions(dynamicCollidables, pickupObservers);
 
 
 
@@ -234,6 +236,7 @@ namespace GameProject
 
             hero.DrawBullets(_spriteBatch);
             enemyManager.Draw(_spriteBatch);
+            PickupManager.Draw(_spriteBatch); 
 
             foreach (ICollidable c in collidables)
             {

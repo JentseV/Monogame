@@ -23,7 +23,6 @@ namespace GameProject.Pickups
     {
 
         private Texture2D healthTexture, coinTexture;
-        private bool despawn;
         private float timeTillDespawn;
         private Animation animation;
         private int id;
@@ -33,7 +32,7 @@ namespace GameProject.Pickups
         public Texture2D CoinTexture { get { return coinTexture; } set { coinTexture = value; } }
         public float TimeTillDespawn { get { return timeTillDespawn; } set { timeTillDespawn = value; } }
 
-        public bool Despawn { get { return despawn; } set { despawn = value; } }
+
 
         public int ID { get { return id; } set { id = value; } }
         public string Tag { get { return tag; } set { tag = value; } }
@@ -44,7 +43,7 @@ namespace GameProject.Pickups
             Tag = tagIn;
             Position = postionIn;
             Hitbox = new Rectangle((int)Position.X,(int)Position.Y,25,25);
-            Despawn = false;
+            Remove = false;
             TimeTillDespawn = timeTillDespawnIn;
             this.Animation = new Animation();
         }
@@ -73,24 +72,10 @@ namespace GameProject.Pickups
             {
                 h.GainHealth(1f);
             }
-            this.Despawn = true;
+            this.Remove = true;
         }
 
-        public static Pickup SpawnPickup(int id,string tag, Vector2 position,float timeDespawn)
-        {
-            Random r = new Random();
-            int rn = r.Next(0, 11);
-            {
-                if(rn < 3)
-                {
-                    return new Health(id,tag,position,timeDespawn);
-                }
-                else
-                {
-                    return new Coin(id, tag, position, timeDespawn);
-                }
-            }
-        }
+        
 
         public void Update(GameTime gameTime)
         {

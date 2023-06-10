@@ -3,6 +3,7 @@ using GameProject.Characters;
 using GameProject.GameObjects;
 using GameProject.GameObjects.Characters.Player;
 using GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Cactus;
+using GameProject.GameObjects.Static.StaticCollidable.Pickups;
 using GameProject.Pickups;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
@@ -21,7 +22,8 @@ namespace GameProject.Enemies
 {
     internal abstract class Enemy : Character, ICollidable
     {
-       
+
+        
         private Vector2 heroPos, facing;
         private float range;
         private bool heroInRange = false;
@@ -190,12 +192,10 @@ namespace GameProject.Enemies
         {
             if (Dead)
             {
-
                 Moving = false;
                 Attacking = false;
-                Random r = new Random();
-                //Pickup p = Pickup.SpawnPickup(r.Next(),"Pickup",this.Position,5f); // move login to PickupManager
-                //collidables.Add(p);
+                Debug.WriteLine("Should spanw");
+                SpawnPickup();
                 Remove = true;
             }
         }
@@ -215,6 +215,13 @@ namespace GameProject.Enemies
                     }
 
                 }
+        }
+
+        public void SpawnPickup()
+        {
+            Pickup pickup = PickupFactory.SpawnPickup(PickupManager.CountPickups(), "Pickup", this.Center, 5f);
+            PickupManager.AddPickup(pickup);
+            
         }
 
     }

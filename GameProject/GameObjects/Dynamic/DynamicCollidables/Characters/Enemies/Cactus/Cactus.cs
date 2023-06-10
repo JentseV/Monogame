@@ -71,9 +71,10 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
         }
 
 
-        public new void Update(GameTime gameTime, Hero hero, List<ICollidable> collidables)
+        public new void Update(GameTime gameTime, Hero hero, List<ICollidable> collidables) // for some reason when cactus dies and we walk where he died we get hit? phantom bullet maybe
         {
             base.Update(gameTime, hero, collidables);
+
 
         }
         protected override void Attack()
