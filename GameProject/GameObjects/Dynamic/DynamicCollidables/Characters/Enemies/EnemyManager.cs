@@ -15,7 +15,7 @@ namespace GameProject.GameObjects.Dynamic.Characters.Enemies
 {
     internal class EnemyManager
     {
-        List<Enemy> enemies = new List<Enemy>();
+        public List<Enemy> enemies = new List<Enemy>();
 
         public EnemyManager(List<Enemy> enemies)
         {

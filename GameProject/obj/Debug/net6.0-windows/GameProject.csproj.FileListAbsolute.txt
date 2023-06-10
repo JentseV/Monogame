@@ -152,3 +152,7 @@ D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Buttons\boo
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\heroText\Fixed\heroHitAnimation.xnb
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coyoteEn\coyoteRunLeft.xnb
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coyoteEn\coyoteAttackLeft.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Buttons\buttonMed.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Buttons\easyButton.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Buttons\hardButton.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\World\startScreen.xnb

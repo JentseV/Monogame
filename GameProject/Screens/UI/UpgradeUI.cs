@@ -23,8 +23,8 @@ namespace GameProject.Screens.UI
         private List<Button> buttons = new List<Button>();
         public UpgradeUI(SpriteFont fontIn, Texture2D textures, Hero h) : base(fontIn)
         {
-            buttons.Add(new Button(textures, new Vector2(200f, 200f), "Upgrade Speed", font, actionIn: () => h.IncreaseSpeed(new Vector2(0.1f,0.1f))));
-            buttons.Add(new Button(textures, new Vector2(500f, 200f), "Upgrade Damage", font, actionIn: () => h.IncreaseDamage(1f)));
+            buttons.Add(new Button(textures, new Vector2(200f, 200f),  () => h.IncreaseSpeed(new Vector2(0.1f,0.1f))));
+            buttons.Add(new Button(textures, new Vector2(500f, 200f),  () => h.IncreaseDamage(1f)));
             
         }
 
@@ -48,7 +48,7 @@ namespace GameProject.Screens.UI
         {
             foreach (Button b in buttons)
             {
-                b.Destroy = false;
+                b.Remove = false;
             }
         }
     }

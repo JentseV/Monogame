@@ -80,12 +80,16 @@ namespace GameProject.GameObjects.Characters.Player
             TextureIdleFacingUpRight = textures[15];
             TextureIdleFacingDownRight = textures[16];
             bulletTexture = textures[17];
+            TextureHit = textures[18];
+            HitboxText = textures[10];
+
+
             TextureIdling = TextureIdle;
             TextureRunning = TextureRunRight;
             TextureAttacking = TextureAttackUp;
-            TextureHit = textures[18];
+            
 
-            HitboxText = textures[10];
+            
             Position = new Vector2(2f, 2f);
 
             Hitbox = new Rectangle((int)Position.X, (int)Position.Y, 32, 32);
@@ -294,7 +298,7 @@ namespace GameProject.GameObjects.Characters.Player
             {
                 AnimationIdle.Update(gameTime);
             }
-
+            
         }
 
         public void DecideAction()

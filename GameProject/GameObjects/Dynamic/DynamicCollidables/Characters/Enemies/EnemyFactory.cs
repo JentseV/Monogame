@@ -20,6 +20,7 @@ namespace GameProject.Enemies
 
         public static List<Enemy> SpawnEnemies(Texture2D[] coffinTextures, Texture2D[] cactusTextures, Texture2D[] coyoteTextures, float difficulty)
         {
+            
             List<Enemy> enemies = new List<Enemy>();
 
             spawnLocations.Add(new Vector2(900f, 200f));
@@ -27,9 +28,10 @@ namespace GameProject.Enemies
             spawnLocations.Add(new Vector2(600f, 600f));
             spawnLocations.Add(new Vector2(800f, 800f));
 
-            float enemiesToSpawn = 1 * 1f;
+            float enemiesToSpawn = difficulty * 1f;
             while (enemies.Count < enemiesToSpawn)
             {
+                
                 Random r = new Random();
                 short spawnerChance = (short)r.Next(0, 100);
 

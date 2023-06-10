@@ -22,8 +22,6 @@ namespace GameProject.Enemies
 {
     internal abstract class Enemy : Character, ICollidable
     {
-
-        
         private Vector2 heroPos, facing;
         private float range;
         private bool heroInRange = false;

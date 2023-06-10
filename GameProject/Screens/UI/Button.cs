@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameProject.GameObjects;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -10,60 +11,32 @@ using System.Threading.Tasks;
 
 namespace GameProject.Screens.UI
 {
-    internal class Button
+    internal class Button : GameObject
     {
         private Texture2D texture;
-        private Vector2 position;
-        private string text;
-        private SpriteFont font;
-        private Rectangle hitbox;
-        private bool destroy;
         private Action action;
 
-        public Action Action { get { return action; } set { action = value; } }
-        public bool Destroy { get { return destroy; } set { destroy = value; } }
-        public Button(Texture2D textureIn, Vector2 positionIn, string textIn, SpriteFont fontIn,Action actionIn)
+        public Button(Texture2D texture, Vector2 position, Action action)
         {
-            this.texture = textureIn;
-            this.position = positionIn;
-            this.text = textIn;
-            this.font = fontIn;
-            this.Action = actionIn;
-            this.Destroy = false;
-            hitbox = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
+            this.texture = texture;
+            this.hitbox = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
+            this.action = action;
         }
 
-
-        public bool OnClick(MouseState mouse)
+        public bool IsClicked(MouseState mouse)
         {
-            if (hitbox.Contains(mouse.Position) && mouse.LeftButton == ButtonState.Pressed)
-            {
-                
-                return true;
-            }
-
-            return false;
+            return hitbox.Contains(mouse.Position) && mouse.LeftButton == ButtonState.Pressed;
         }
 
         public void Update(MouseState mouseState)
         {
-            if (OnClick(mouseState) && !Destroy)
-            {
-                    Action?.Invoke();
-                    Destroy = true;
-            }
+            if (IsClicked(mouseState))
+                action?.Invoke();
         }
-
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (!Destroy)
-            {
-                spriteBatch.Draw(texture, position, null, Color.White, 0f, new Vector2(0f, 0f), 0.1f, SpriteEffects.None, 0f);
-                Vector2 textPosition = position + new Vector2(0f, 70f);
-                spriteBatch.DrawString(font, text, textPosition, Color.Red);
-            }
-           
+            spriteBatch.Draw(texture, hitbox, Color.White);
         }
     }
 }
