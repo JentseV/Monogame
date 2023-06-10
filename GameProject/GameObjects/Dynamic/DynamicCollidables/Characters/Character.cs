@@ -20,7 +20,7 @@ using System.Windows.Forms;
 
 namespace GameProject.Characters
 {
-    internal abstract class Character : DynamicCollidable, IGameComponent, IMovable, ICollidable
+    internal abstract class Character : DynamicCollidable, IGameComponent, IMovable, ICollidable , IDynamicCollidable
     {
 
         private float damage;
@@ -164,7 +164,7 @@ namespace GameProject.Characters
 
         }
 
-        public virtual void CheckCollision(ICollidable collidables)
+        public override void CheckCollision(ICollidable collidables)
         {
 
         }

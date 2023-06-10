@@ -43,12 +43,12 @@ namespace GameProject
         private StartScreen startScreen;
         private Button button;
         private SpriteFont font;
-        
+        private DefeatScreen defeatScreen;
+
         private UpgradeUI upgradeUI;
 
         private List<DynamicCollidable> dynamicCollidables = new List<DynamicCollidable>();
-        private List<ICollidable> collidables = new List<ICollidable>();
-        private List<Enemy> enemies = new List<Enemy>();
+        private List<Enemy> enemies;
 
         private Texture2D[] buttonTextures = new Texture2D[3];
         private Texture2D[] coffinTextures = new Texture2D[11];
@@ -151,14 +151,10 @@ namespace GameProject
             enemyManager = new EnemyManager(enemies);
             startScreen = new StartScreen(buttonTextures, font);
             dynamicCollidables.Add(hero);
-            foreach (Enemy enemy in enemies)
-            {
-                if (dynamicCollidables.Contains(enemy) == false) dynamicCollidables.Add(enemy);
-            }
+           
             upgradeUI = new UpgradeUI(font, buttonText, hero);
             hero.Position = new Vector2(1000f, 600f);
             pickupObservers.Add(hero);
-            collidables.Add(hero);
             backgroundRect = new Rectangle(0, 0, 32, 47);
 
         }
@@ -185,46 +181,41 @@ namespace GameProject
 
         protected override void Update(GameTime gameTime)
         {
-            if (GameStarted)
+            if (GameStarted && hero.Dead == false)
             {
                 if (spawnEnemies)
                 {
                     enemies = EnemyFactory.SpawnEnemies(coffinTextures, cactusTextures, coyoteTextures, Difficulty);
                     enemyManager.enemies = enemies;
+                    dynamicCollidables.AddRange(enemies);
                 }
-                if(enemies.Count != 0)
+                if(enemies.Count != 0 && spawnEnemies == true)
                 {
                     spawnEnemies = false;
                 }
-                else
+                if(enemies.Count == 0)
                 {
+                    Debug.WriteLine("Spawn new enemies");
                     spawnEnemies = true;
                     Difficulty += 1;
                 }
-
-                
+                Debug.WriteLine(enemies.Count);
                 FirstUpdate = true;
-                hero.Update(gameTime, collidables);
+                hero.Update(gameTime, dynamicCollidables);
                 
                 if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                     Exit();
 
-                // TODO: Add your update logic here
-
-
                 //upgradeUI.Update(Mouse.GetState());
 
-                enemyManager.Update(gameTime, hero, collidables);
+                enemyManager.Update(gameTime, hero, dynamicCollidables);
                 PickupManager.Update(gameTime);
 
-
-                dynamicCollidables.AddRange(collidables.OfType<DynamicCollidable>().Where(c => !c.Remove && !dynamicCollidables.Contains(c)));
-                dynamicCollidables.RemoveAll(d => d.Remove);
 
                 CollisionManager.CheckCollisions(dynamicCollidables, pickupObservers);
 
                 //pickup logic maybe this should belong in pickupfactory in the future?
-                foreach (ICollidable c in collidables)
+                foreach (ICollidable c in dynamicCollidables)
                 {
                     if (c is Coin)
                     {
@@ -238,6 +229,10 @@ namespace GameProject
                     }
                 }
                 scoreUI.Update(gameTime);
+            }
+            else if(hero.Dead == true)
+            {
+                //defeatScreen.Update(Mouse.GetState());
             }
             else
             {
@@ -255,7 +250,7 @@ namespace GameProject
 
             _spriteBatch.Begin();
 
-            if (GameStarted && FirstUpdate)
+            if (GameStarted && FirstUpdate && hero.Dead == false)
             {
                 if (spawnEnemies)
                 {
@@ -271,7 +266,7 @@ namespace GameProject
                 hero.DrawBullets(_spriteBatch);
                 enemyManager.Draw(_spriteBatch);
                 PickupManager.Draw(_spriteBatch);
-                foreach (ICollidable c in collidables)
+                foreach (ICollidable c in dynamicCollidables)
                 {
                     if (c is Coin)
                     {

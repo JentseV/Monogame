@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Screens
+namespace GameProject.GameObjects.Dynamic.DynamicCollidables
 {
-    internal class EndScreen
+    internal interface IDynamicCollidable
     {
-
     }
 }

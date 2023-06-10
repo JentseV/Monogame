@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GameProject.Characters;
 using GameProject.Enemies;
+using GameProject.GameObjects.Dynamic.DynamicCollidables;
 
 namespace GameProject.GameObjects.Dynamic.Characters.Enemies
 {
@@ -22,7 +23,7 @@ namespace GameProject.GameObjects.Dynamic.Characters.Enemies
             this.enemies = enemies;
         }
 
-        public void Update(GameTime gameTime, Hero hero, List<ICollidable> collidables)
+        public void Update(GameTime gameTime, Hero hero, List<DynamicCollidable> collidables)
         {
             foreach (Enemy enemy in enemies)
             {
@@ -34,7 +35,10 @@ namespace GameProject.GameObjects.Dynamic.Characters.Enemies
                     if (enemy is IRangedAttacker rangedEnemy)
                         rangedEnemy.UpdateBullets(gameTime, collidables);
                 }
+                
             }
+
+            enemies.RemoveAll(d => d.Remove);
         }
 
         public void Draw(SpriteBatch spriteBatch)

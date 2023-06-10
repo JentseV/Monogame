@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameProject.GameObjects.Dynamic.DynamicCollidables;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace GameProject.GameObjects.Dynamic.Characters.Enemies
 {
     internal interface IRangedAttacker
     {
-        public void UpdateBullets(GameTime gameTime, List<ICollidable> collidables);
+        public void UpdateBullets(GameTime gameTime, List<DynamicCollidable> collidables);
         public void DrawBullets(SpriteBatch spriteBatch);
     }
 }

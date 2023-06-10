@@ -1,7 +1,10 @@
 ﻿using GameProject.Animations;
 using GameProject.Characters;
+using GameProject.Enemies;
 using GameProject.GameObjects.Dynamic.Characters.Enemies;
+using GameProject.GameObjects.Dynamic.DynamicCollidables;
 using GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Coffin;
+using GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Coyote;
 using GameProject.Pickups;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
@@ -115,7 +118,7 @@ namespace GameProject.GameObjects.Characters.Player
         }
 
 
-        public void Update(GameTime gameTime, List<ICollidable> collidables)
+        public void Update(GameTime gameTime, List<DynamicCollidable> collidables)
         {
             hitPoints2 = Hitpoints;
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -333,7 +336,7 @@ namespace GameProject.GameObjects.Characters.Player
                 if (Hitbox.Intersects(collidable.Hitbox) && !(collidable is Hero))
                 {
 
-                    if (collidable is Coffin)
+                    if (collidable is Enemy)
                     {
                         TakeDamage(1);
                     }
@@ -341,7 +344,7 @@ namespace GameProject.GameObjects.Characters.Player
                     if (collidable is Bullet)
                     {
                         Bullet b = collidable as Bullet;
-                        if (b.Tag == "CactusBullet" && Invincible == false)
+                        if (b.Tag == "CactusBullet" && !Invincible && !b.Remove)
                         {
                             TakeDamage(b.Damage);
                         }
@@ -391,7 +394,7 @@ namespace GameProject.GameObjects.Characters.Player
             Damage += amount;
         }
 
-        public void UpdateBullets(GameTime gameTime, List<ICollidable> collidables)
+        public void UpdateBullets(GameTime gameTime, List<DynamicCollidable> collidables)
         {
             foreach (Bullet b in bullets)
             {

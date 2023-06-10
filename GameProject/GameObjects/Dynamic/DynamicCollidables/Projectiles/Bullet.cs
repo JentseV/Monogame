@@ -154,12 +154,11 @@ namespace GameProject.Projectiles
                     {
                         if(collidable is Hero)
                         {
-                            
                             Hero h = collidable as Hero;
                             if (!h.Invincible)
                             {
 
-                                Remove = true;
+                                this.Remove = true;
                             }
                         }
                     }

@@ -71,12 +71,7 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
         }
 
 
-        public new void Update(GameTime gameTime, Hero hero, List<ICollidable> collidables) // for some reason when cactus dies and we walk where he died we get hit? phantom bullet maybe
-        {
-            base.Update(gameTime, hero, collidables);
-
-
-        }
+       
         protected override void Attack()
         {
 
@@ -91,9 +86,9 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
         }
 
 
-        public void UpdateBullets(GameTime gameTime, List<ICollidable> collidables)
+        public void UpdateBullets(GameTime gameTime, List<DynamicCollidable> collidables)
         {
-            foreach (Bullet b in cactusBullets)
+            foreach (Bullet b in cactusBullets.ToList())
             {
                 if (!b.Remove)
                 {
@@ -101,6 +96,15 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
                     if (!collidables.Contains(b))
                         collidables.Add(b);
                 }
+                else
+                {
+                    cactusBullets.Remove(b);
+                    collidables.Remove(b);
+                }
+            }
+            if (this.Remove)
+            {
+                cactusBullets.Clear();
             }
         }
 
@@ -112,6 +116,6 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
             }
         }
 
-
+        
     }
 }

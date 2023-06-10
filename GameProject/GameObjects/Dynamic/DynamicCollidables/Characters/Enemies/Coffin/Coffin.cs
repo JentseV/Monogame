@@ -64,13 +64,6 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
             AnimationAttacking.GetFramesFromTextureProperties(TextureAttacking.Width, TextureAttacking.Height, 18, 1);
         }
 
-
-        public new void Update(GameTime gameTime, Hero hero, List<ICollidable> collidables)
-        {
-            base.Update(gameTime, hero, collidables);
-
-        }
-
         protected override void Attack()
         {
 

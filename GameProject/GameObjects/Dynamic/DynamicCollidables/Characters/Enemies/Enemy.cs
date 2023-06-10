@@ -2,6 +2,7 @@
 using GameProject.Characters;
 using GameProject.GameObjects;
 using GameProject.GameObjects.Characters.Player;
+using GameProject.GameObjects.Dynamic.DynamicCollidables;
 using GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Cactus;
 using GameProject.GameObjects.Static.StaticCollidable.Pickups;
 using GameProject.Pickups;
@@ -32,7 +33,7 @@ namespace GameProject.Enemies
 
    
 
-        public void Update(GameTime gameTime, Hero hero, List<ICollidable> collidables)
+        public void Update(GameTime gameTime, Hero hero, List<DynamicCollidable> collidables)
         {
             this.Center = new Vector2((int)Position.X, (int)Position.Y);
             this.hitbox.X = (int)Center.X;

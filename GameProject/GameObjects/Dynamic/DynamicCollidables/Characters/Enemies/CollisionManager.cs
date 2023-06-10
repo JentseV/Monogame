@@ -42,6 +42,7 @@ namespace GameProject.GameObjects.Dynamic.Characters.Enemies
                     }
                 }
             }
+            gameObjects.RemoveAll(c => c.Remove);
         }
 
         private static void NotifyObservers(List<IPickupObserver> pickupObservers, Pickup pickup)

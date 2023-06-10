@@ -22,19 +22,9 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
 {
     internal class Coyote : Enemy, IEnemy
     {
-        //SPRITESHEET 70x70
-
-        private Texture2D BulletTexture;
-        private bool heroInRange = false;
-
-        private float channelTime = 0f;
-
-        private float range;
-
-        private Texture2D hitboxText;
-
-        public List<Bullet> fireBalls = new List<Bullet>();
-
+       
+        private int TeleportCount = 0;
+        
         public Coyote(Vector2 speed, Vector2 position, Texture2D[] textures)
         {
 
@@ -61,13 +51,12 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
             TextureHit = textures[10];
             TextureAttackLeft = textures[13];
 
-            BulletTexture = textures[11];
 
             TextureIdling = TextureIdle;
             TextureRunning = TextureRunRight;
             TextureAttacking = TextureAttackFront;
 
-            AttackCooldown = 0.5f;
+            AttackCooldown = 2f;
 
             TimeSinceLastAttack = AttackCooldown;
 
@@ -84,12 +73,6 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
 
 
 
-        public new void Update(GameTime gameTime, Hero hero, List<ICollidable> collidables)
-        {
-            base.Update(gameTime, hero, collidables);
-        }
-
-
         protected override void Attack()
         {
 
@@ -97,8 +80,73 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
             {
                 Attacking = true;
 
+                
+                Vector2 teleportPosition = CalculateTeleportPosition();
+
+                
+                Position = teleportPosition;
+
+                
+                TeleportCount++;
+
                 TimeSinceLastAttack = AttackCooldown;
             }
+        }
+
+
+        private Vector2 CalculateTeleportPosition()
+        {
+            
+            Vector2 playerPosition = HeroPos;
+
+            
+            float teleportAngle = RandomAngle();
+
+            
+            float initialTeleportDistance = 200f; 
+            float teleportDistance = initialTeleportDistance * (1f / (TeleportCount + 1));
+
+            
+            Vector2 teleportOffset = new Vector2(
+                (float)Math.Cos(teleportAngle) * teleportDistance,
+                (float)Math.Sin(teleportAngle) * teleportDistance
+            );
+            Vector2 teleportPosition = playerPosition + teleportOffset;
+
+            
+            Vector2 direction = Vector2.Normalize(teleportPosition - playerPosition);
+            teleportPosition += direction * 100f;
+
+            
+            teleportPosition = ClampToGameBoundaries(teleportPosition);
+
+            return teleportPosition;
+        }
+
+
+
+
+        private Random random = new Random();
+
+        private float RandomAngle()
+        {
+            float angle = (float)(random.NextDouble() * Math.PI * 2);
+            return angle;
+        }
+
+        private Vector2 ClampToGameBoundaries(Vector2 position)
+        {
+            
+            float minX = 0;
+            float minY = 0;
+            float maxX = 1200;
+            float maxY = 800;
+
+          
+            float clampedX = MathHelper.Clamp(position.X, minX, maxX);
+            float clampedY = MathHelper.Clamp(position.Y, minY, maxY);
+
+            return new Vector2(clampedX, clampedY);
         }
 
 
