@@ -146,7 +146,7 @@ namespace GameProject
                 if (dynamicCollidables.Contains(enemy) == false) dynamicCollidables.Add(enemy);
             }
             upgradeUI = new UpgradeUI(font, buttonText, hero);
-            hero.Position = new Vector2(600f, 600f);
+            hero.Position = new Vector2(1000f, 600f);
             collidables.Add(hero);
             backgroundRect = new Rectangle(0, 0, 32, 47);
             screen = new SplashScreen();
@@ -187,56 +187,14 @@ namespace GameProject
             enemyManager.Update(gameTime, hero, collidables);
 
 
+           
+            dynamicCollidables.AddRange(collidables.OfType<DynamicCollidable>().Where(c => !c.Remove && !dynamicCollidables.Contains(c)));
+
+            dynamicCollidables.RemoveAll(d => d.Remove);
 
             CollisionManager.CheckCollisions(dynamicCollidables);
 
-            // removing enemies and pickups 
-            foreach (ICollidable x in collidables.ToList())
-            {
-                if (x is Bullet)
-                {
-                    Bullet t = x as Bullet;
-                    if (t.Destroy == true)
-                    {
-                        collidables.Remove(t);
-                    }
-                }
 
-                else if (x is Enemy)
-                {
-                    Enemy t = x as Enemy;
-                    if (t.Remove == true)
-                    {
-                        collidables.Remove(t);
-                    }
-                }
-
-                else if (x is Pickup)
-                {
-                    Pickup t = x as Pickup;
-                    if (t.Despawn == true)
-                    {
-                        collidables.Remove(t);
-                    }
-                }
-            }
-
-            //updating bullet heroes
-            foreach (Bullet b in hero.bullets)
-            {
-
-                if (b.Destroy == false)
-                {
-                    b.Update(gameTime);
-                    if (dynamicCollidables.Contains(b) == false) dynamicCollidables.Add(b);
-                }
-                else
-                {
-                    dynamicCollidables.Remove(b);
-                }
-            }
-
-            
 
             //pickup logic maybe this should belong in pickupfactory in the future?
             foreach (ICollidable c in collidables)
@@ -272,20 +230,10 @@ namespace GameProject
             hero.Draw(_spriteBatch);
 
 
-            if (!button.Destroy) button.Draw(_spriteBatch);
+            button.Draw(_spriteBatch);
 
-
+            hero.DrawBullets(_spriteBatch);
             enemyManager.Draw(_spriteBatch);
-
-            foreach (Bullet b in hero.bullets)
-            {
-                
-                if (b.Destroy == false)
-                {
-                    b.Draw(_spriteBatch);
-                }
-
-            }
 
             foreach (ICollidable c in collidables)
             {

@@ -26,6 +26,7 @@ namespace GameProject.GameObjects.Dynamic.Characters.Enemies
         {
             foreach (Enemy enemy in enemies)
             {
+                
                 if (!enemy.Remove)
                 {
                     enemy.Update(gameTime, hero, collidables);

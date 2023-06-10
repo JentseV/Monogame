@@ -1,12 +1,12 @@
 ﻿using GameProject.Animations;
 using GameProject.Characters;
-using GameProject.Enemies;
+using GameProject.GameObjects.Dynamic.Characters.Enemies;
+using GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Coffin;
+using GameProject.Pickups;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using SharpDX.DirectWrite;
-using SharpDX.Mathematics.Interop;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,7 +19,7 @@ using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace GameProject.GameObjects.Characters.Player
 {
-    internal class Hero : Character, IMovable, IGameComponent, ICollidable
+    internal class Hero : Character, IMovable, IGameComponent, ICollidable, IRangedAttacker, IPickupObserver
     {
 
         public static float hitPoints2;
@@ -126,7 +126,7 @@ namespace GameProject.GameObjects.Characters.Player
             UpdateHitbox();
             CheckInvincible(deltaTime);
             DecideAction();
-            
+            UpdateBullets(gameTime,collidables);
             Move();
             GetFacingDirection();
             DecideAnimation();
@@ -387,6 +387,33 @@ namespace GameProject.GameObjects.Characters.Player
             Damage += amount;
         }
 
+        public void UpdateBullets(GameTime gameTime, List<ICollidable> collidables)
+        {
+            foreach (Bullet b in bullets)
+            {
+                if (!b.Remove)
+                {
+                    b.Update(gameTime);
+                    if (!collidables.Contains(b))
+                        collidables.Add(b);
+                }
+               
+            }
+        }
 
+        public void DrawBullets(SpriteBatch spriteBatch)
+        {
+            
+            foreach (Bullet b in bullets)
+            {
+                if (!b.Remove) b.Draw(spriteBatch);
+            }
+            
+        }
+
+        public void OnPickup(Pickup pickup)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -2,6 +2,7 @@
 using GameProject.Characters;
 using GameProject.GameObjects;
 using GameProject.GameObjects.Characters.Player;
+using GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Cactus;
 using GameProject.Pickups;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;

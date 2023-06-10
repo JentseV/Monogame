@@ -18,9 +18,13 @@ namespace GameProject.GameObjects
 {
     internal class GameObject
     {
+
+        protected bool remove;
         protected Rectangle hitbox;
         private Vector2 position;
         private Vector2 center;
+
+        public bool Remove { get { return remove; } set { remove = value; } }
         public Vector2 Center { get { return center; } set { center = value; } }
         public Rectangle Hitbox { get { return hitbox; } set { hitbox = value; } }
 

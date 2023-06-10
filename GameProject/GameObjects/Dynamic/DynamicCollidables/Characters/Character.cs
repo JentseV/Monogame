@@ -27,9 +27,8 @@ namespace GameProject.Characters
         public float Damage { get { return damage; } set { damage = value; } }
         private float invincibleTimer;
 
-        private bool moving, attacking, dead, hit, invincible, movable, remove;
+        private bool moving, attacking, dead, hit, invincible, movable;
 
-        public bool Remove { get { return remove; } set { remove = value; } }
         public bool Movable { get { return movable; } set { movable = value; } }
         public bool Invincible { get { return invincible; } set { invincible = value; } }
         public bool Hit { get { return hit; } set { hit = value; } }
@@ -131,6 +130,7 @@ namespace GameProject.Characters
 
                 spriteBatch.Draw(TextureAttacking, Center, AnimationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
             }
+
             else if (Hit)
             {
                 spriteBatch.Draw(TextureHit, Center, null, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
@@ -156,9 +156,10 @@ namespace GameProject.Characters
                 Hitpoints -= amountOfDamage;
                 
             }
-            else if(Hitpoints < 0)
+            else if(Hitpoints < 1)
             {
                 Dead = true;
+                Remove = true;
             }
 
         }

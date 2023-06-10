@@ -18,9 +18,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
-namespace GameProject.Enemies
+namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Coyote
 {
-    internal class Coyote : Enemy,IEnemy
+    internal class Coyote : Enemy, IEnemy
     {
         //SPRITESHEET 70x70
 
@@ -37,35 +37,35 @@ namespace GameProject.Enemies
 
         public Coyote(Vector2 speed, Vector2 position, Texture2D[] textures)
         {
-            
-            Movable = true;
-            this.Hitpoints = 3;
-            this.Speed = speed;
-            this.Position = position;
-            Range = 400f;
-            this.Center = new Vector2(50 + Position.X, 55 + Position.Y);
-            this.Hitbox = new Rectangle((int)Center.X, (int)Center.Y, 45, 45);
-            this.TextureIdle = textures[0];
-            this.TextureRunRight = textures[1];
-            this.TextureUpRun = textures[2];
-            this.TextureIdleFacingUp = textures[3];
-            this.HitboxText = textures[9];
-            this.TextureRunLeft = textures[12];
-            this.TextureIdleFacingRight = textures[4];
-            this.TextureIdleFacingFront = textures[0];
-            this.TextureDownRun = textures[5];
 
-            this.TextureAttackRight = textures[7];
-            this.TextureAttackUp = textures[8];
-            this.TextureAttackFront = textures[6];
-            this.TextureHit = textures[10];
-            this.TextureAttackLeft = textures[13];
+            Movable = true;
+            Hitpoints = 3;
+            Speed = speed;
+            Position = position;
+            Range = 400f;
+            Center = new Vector2(50 + Position.X, 55 + Position.Y);
+            Hitbox = new Rectangle((int)Center.X, (int)Center.Y, 45, 45);
+            TextureIdle = textures[0];
+            TextureRunRight = textures[1];
+            TextureUpRun = textures[2];
+            TextureIdleFacingUp = textures[3];
+            HitboxText = textures[9];
+            TextureRunLeft = textures[12];
+            TextureIdleFacingRight = textures[4];
+            TextureIdleFacingFront = textures[0];
+            TextureDownRun = textures[5];
+
+            TextureAttackRight = textures[7];
+            TextureAttackUp = textures[8];
+            TextureAttackFront = textures[6];
+            TextureHit = textures[10];
+            TextureAttackLeft = textures[13];
 
             BulletTexture = textures[11];
 
-            this.TextureIdling = TextureIdle;
-            this.TextureRunning = TextureRunRight;
-            this.TextureAttacking = TextureAttackFront;
+            TextureIdling = TextureIdle;
+            TextureRunning = TextureRunRight;
+            TextureAttacking = TextureAttackFront;
 
             AttackCooldown = 0.5f;
 
@@ -76,10 +76,10 @@ namespace GameProject.Enemies
             AnimationAttacking = new Animation();
             AnimationHit = new Animation();
 
-            AnimationHit.GetFramesFromTextureProperties(this.TextureHit.Width, this.TextureHit.Height, 1, 1);
-            AnimationIdle.GetFramesFromTextureProperties(this.TextureIdle.Width, this.TextureIdle.Height, 7, 1);
-            AnimationRun.GetFramesFromTextureProperties(this.TextureRunRight.Width, this.TextureRunRight.Height, 14, 1);
-            AnimationAttacking.GetFramesFromTextureProperties(this.TextureAttacking.Width, this.TextureAttacking.Height, 24, 1);
+            AnimationHit.GetFramesFromTextureProperties(TextureHit.Width, TextureHit.Height, 1, 1);
+            AnimationIdle.GetFramesFromTextureProperties(TextureIdle.Width, TextureIdle.Height, 7, 1);
+            AnimationRun.GetFramesFromTextureProperties(TextureRunRight.Width, TextureRunRight.Height, 14, 1);
+            AnimationAttacking.GetFramesFromTextureProperties(TextureAttacking.Width, TextureAttacking.Height, 24, 1);
         }
 
 
@@ -96,7 +96,7 @@ namespace GameProject.Enemies
             if (TimeSinceLastAttack <= 0 && Invincible == false)
             {
                 Attacking = true;
-               
+
                 TimeSinceLastAttack = AttackCooldown;
             }
         }

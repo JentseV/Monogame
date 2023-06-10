@@ -1,4 +1,7 @@
 ﻿using GameProject.GameObjects.Characters.Player;
+using GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Cactus;
+using GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Coffin;
+using GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Coyote;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -24,7 +27,7 @@ namespace GameProject.Enemies
             spawnLocations.Add(new Vector2(600f, 600f));
             spawnLocations.Add(new Vector2(800f, 800f));
 
-            float enemiesToSpawn = difficulty * 1.5f;
+            float enemiesToSpawn = 1 * 1f;
             while (enemies.Count < enemiesToSpawn)
             {
                 Random r = new Random();

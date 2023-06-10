@@ -2,6 +2,7 @@
 using GameProject.Enemies;
 using GameProject.GameObjects.Characters.Player;
 using GameProject.GameObjects.Static;
+using GameProject.GameObjects.Static.StaticCollidable;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,7 +19,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 namespace GameProject.Pickups
 {
-    internal abstract class Pickup : StaticGO , ICollidable, IGameComponent
+    internal abstract class Pickup : StaticCollidable , ICollidable, IGameComponent
     {
 
         private Texture2D healthTexture, coinTexture;
@@ -48,9 +49,8 @@ namespace GameProject.Pickups
             this.Animation = new Animation();
         }
 
-        public void CheckCollision(ICollidable collidable)
+        public override void CheckCollision(ICollidable collidable)
         {
-            
                 if(this.Hitbox.Intersects(collidable.Hitbox) && !(collidable is Pickup) && !(collidable is Bullet))
                 {
                     if(collidable is Hero)
@@ -60,7 +60,6 @@ namespace GameProject.Pickups
                         OnPickup(h);
                     }
                 }
-            
         }
 
         public void OnPickup(Hero h)
@@ -79,7 +78,6 @@ namespace GameProject.Pickups
 
         public static Pickup SpawnPickup(int id,string tag, Vector2 position,float timeDespawn)
         {
-            
             Random r = new Random();
             int rn = r.Next(0, 11);
             {
@@ -97,10 +95,7 @@ namespace GameProject.Pickups
         public void Update(GameTime gameTime)
         {
             this.Animation.Update(gameTime);
-            
         }
-
-        
 
         public void Draw(SpriteBatch spriteBatch)
         {

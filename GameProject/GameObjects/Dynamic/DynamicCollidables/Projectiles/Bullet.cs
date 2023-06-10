@@ -1,5 +1,7 @@
-﻿using GameProject.Enemies;
-using GameProject.GameObjects.Characters.Player;
+﻿using GameProject.GameObjects.Characters.Player;
+using GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Cactus;
+using GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Coffin;
+using GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Coyote;
 using GameProject.Pickups;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
@@ -29,7 +31,7 @@ namespace GameProject.Projectiles
 
         public Bullet(int ID,string tag,Vector2 position, Vector2 direction, Vector2 speed, Texture2D texture,float damage) 
         {
-            this.Destroy = false;
+            this.Remove = false;
             this.ID = ID;
             this.Tag = tag;
             this.Position = position;
@@ -51,7 +53,7 @@ namespace GameProject.Projectiles
         {
             
             
-            if (Destroy == false)
+            if (Remove == false)
             {
                 Move();
                 this.hitbox.X = (int)Position.X;
@@ -60,7 +62,7 @@ namespace GameProject.Projectiles
                 created += deltaTime;
                 if (created >= timeToLive)
                 {
-                    Destroy = true;
+                    Remove = true;
                 }
                 Rotate();
                 
@@ -130,8 +132,8 @@ namespace GameProject.Projectiles
                             Coffin c = collidable as Coffin;
                         if (!c.Invincible)
                         {
-                            Debug.WriteLine("Coffin was not invincible so we make bullet destroy true");
-                            Destroy = true;
+                            Debug.WriteLine("Coffin was not invincible so we make bullet Remove true");
+                            Remove = true;
                         }
                             
                         }
@@ -139,13 +141,13 @@ namespace GameProject.Projectiles
                         if (collidable is Cactus)
                         {
                             Cactus c = collidable as Cactus;
-                            if (!c.Invincible) Destroy = true;
+                            if (!c.Invincible) Remove = true;
                         }
 
                         if (collidable is Coyote)
                         {
                             Coyote c = collidable as Coyote;
-                            if(!c.Invincible) Destroy = true;
+                            if(!c.Invincible) Remove = true;
                         }
                     }
                     if(this.Tag == "CactusBullet")
@@ -157,7 +159,7 @@ namespace GameProject.Projectiles
                             if (!h.Invincible)
                             {
 
-                                Destroy = true;
+                                Remove = true;
                             }
                         }
                     }

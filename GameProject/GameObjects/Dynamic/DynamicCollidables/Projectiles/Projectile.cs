@@ -18,9 +18,7 @@ namespace GameProject.Projectiles
         private int id;
         private float damage;
 
-        private bool destroy;
 
-        public bool Destroy { get { return destroy; } set { destroy = value; } }
         public float Damage { get { return damage; } set { damage = value; } }
         public int ID { get { return id; } set { id = value; } }
         public string Tag { get { return tag; } set { tag = value; } }
