@@ -88,24 +88,33 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
 
         public void UpdateBullets(GameTime gameTime, List<DynamicCollidable> collidables)
         {
-            foreach (Bullet b in cactusBullets.ToList())
-            {
-                if (!b.Remove)
-                {
-                    b.Update(gameTime);
-                    if (!collidables.Contains(b))
-                        collidables.Add(b);
-                }
-                else
-                {
-                    cactusBullets.Remove(b);
-                    collidables.Remove(b);
-                }
-            }
             if (this.Remove)
             {
+                foreach (Bullet b in cactusBullets)
+                {
+                    collidables.Remove(b);
+                }
                 cactusBullets.Clear();
             }
+            else
+            {
+                for (int i = cactusBullets.Count - 1; i >= 0; i--)
+                {
+                    Bullet b = cactusBullets[i];
+                    if (!b.Remove)
+                    {
+                        b.Update(gameTime);
+                        if (!collidables.Contains(b))
+                            collidables.Add(b);
+                    }
+                    else
+                    {
+                        cactusBullets.RemoveAt(i);
+                        collidables.Remove(b);
+                    }
+                }
+            }
+
         }
 
         public void DrawBullets(SpriteBatch spriteBatch)

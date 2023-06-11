@@ -123,13 +123,9 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
             return teleportPosition;
         }
 
-
-
-
-        private Random random = new Random();
-
         private float RandomAngle()
         {
+            Random random = new Random();
             float angle = (float)(random.NextDouble() * Math.PI * 2);
             return angle;
         }

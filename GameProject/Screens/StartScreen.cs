@@ -1,4 +1,5 @@
-﻿using GameProject.Screens.UI;
+﻿using GameProject.GameObjects.Characters.Player;
+using GameProject.Screens.UI;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SharpDX.Direct3D9;
@@ -10,24 +11,25 @@ using System.Threading.Tasks;
 
 namespace GameProject.Screens
 {
-    internal class StartScreen
+    internal class StartScreen : GameScreen, IScreen
     {
         private Button easyButton, mediumButton, hardButton;
-        private List<Button> buttons;
+        
 
-        public StartScreen(Texture2D[] buttonText, SpriteFont font)
+        public StartScreen(Texture2D[] buttonText, SpriteFont font, Hero  hero)
         {
-            buttons = new List<Button>();
+            Buttons = new List<Button>();
             easyButton = new Button(buttonText[0], new Microsoft.Xna.Framework.Vector2(266f, 568f),  () =>
             {
                 Game1.Difficulty = 1;
                 Game1.GameStarted = true;
-
+                hero.Hitpoints = 3;
             });
             mediumButton = new Button(buttonText[1], new Microsoft.Xna.Framework.Vector2(425f, 568f), () =>
             {
                 Game1.Difficulty = 3;
                 Game1.GameStarted = true;
+                hero.Hitpoints = 3;
 
             });
 
@@ -35,30 +37,14 @@ namespace GameProject.Screens
             {
                 Game1.Difficulty = 5;
                 Game1.GameStarted = true;
+                hero.Hitpoints = 3;
 
             });
 
-            buttons.Add(easyButton);
-            buttons.Add(mediumButton);
-            buttons.Add(hardButton);
+            Buttons.Add(easyButton);
+            Buttons.Add(mediumButton);
+            Buttons.Add(hardButton);
 
-        }
-
-        public void Update(MouseState mouseState)
-        {
-            foreach (var button in buttons)
-            {
-                button.Update(mouseState);
-            }
-        }
-
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            foreach (var button in buttons)
-            {
-                button.Draw(spriteBatch);
-            }
         }
 
     }

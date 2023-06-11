@@ -156,3 +156,6 @@ D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Buttons\but
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Buttons\easyButton.xnb
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Buttons\hardButton.xnb
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\World\startScreen.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\World\defeatScreen.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Buttons\exitButton.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Buttons\restartButton.xnb

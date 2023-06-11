@@ -1,2 +1,3 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"D:/Monogame/GameProject/GameProject/Content/World/startScreen.png","D:/Monogame/GameProject/GameProject/Content/bin/Windows/World/startScreen.xnb","TextureProcessor","Texture2DContent",79255,3932245,0,1919407
+"D:/Monogame/GameProject/GameProject/Content/Buttons/exitButton.png","D:/Monogame/GameProject/GameProject/Content/bin/Windows/Buttons/exitButton.xnb","TextureProcessor","Texture2DContent",1731,15221,0,0996518
+"D:/Monogame/GameProject/GameProject/Content/Buttons/restartButton.png","D:/Monogame/GameProject/GameProject/Content/bin/Windows/Buttons/restartButton.xnb","TextureProcessor","Texture2DContent",2334,15221,0,0031497

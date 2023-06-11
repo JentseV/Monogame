@@ -159,7 +159,6 @@ namespace GameProject.Characters
             else if(Hitpoints < 1)
             {
                 Dead = true;
-
             }
 
         }

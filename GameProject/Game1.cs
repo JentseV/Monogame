@@ -33,9 +33,8 @@ namespace GameProject
         private UI ui;
         private ScoreUI scoreUI;
         private bool spawnEnemies = true;
-        private float difficulty = 0;
         private Rectangle backgroundRect;
-        private Texture2D background, buttonText, backGroundStart;
+        private Texture2D background, buttonText, backGroundStart, backGroundDefeat;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Hero hero;
@@ -50,6 +49,7 @@ namespace GameProject
         private List<DynamicCollidable> dynamicCollidables = new List<DynamicCollidable>();
         private List<Enemy> enemies;
 
+        private Texture2D[] defeatButtonTextures = new Texture2D[2];
         private Texture2D[] buttonTextures = new Texture2D[3];
         private Texture2D[] coffinTextures = new Texture2D[11];
         private Texture2D[] heroTextures = new Texture2D[19];
@@ -126,9 +126,11 @@ namespace GameProject
             "Buttons/buttonMed",
             "Buttons/hardButton"
         };
-
-
-        
+        string[] defeatButtonTexturesNames =
+        {
+             "Buttons/restartButton",
+             "Buttons/exitButton"
+        };
 
         public Game1()
         {
@@ -147,9 +149,9 @@ namespace GameProject
             scoreUI = new ScoreUI(font);
             button = new Button(buttonText, new Vector2(500f, 300f), () => hero.Hitpoints += 3);
             hero = new Hero(heroTextures, new KeyboardReader());
-            
+            defeatScreen = new DefeatScreen(defeatButtonTextures,font, hero);
             enemyManager = new EnemyManager(enemies);
-            startScreen = new StartScreen(buttonTextures, font);
+            startScreen = new StartScreen(buttonTextures, font,hero) ;
             dynamicCollidables.Add(hero);
            
             upgradeUI = new UpgradeUI(font, buttonText, hero);
@@ -166,12 +168,13 @@ namespace GameProject
             coffinTextures = LoadTextures(coffinTextureNames);
             heroTextures = LoadTextures(heroTextureNames);
             buttonTextures = LoadTextures(buttonTexturesNames);
+            defeatButtonTextures = LoadTextures(defeatButtonTexturesNames);
 
             healthTexture = Content.Load<Texture2D>("Pickups/Heart");
             coinTexture = Content.Load<Texture2D>("Pickups/Coin");
             background = Content.Load<Texture2D>("World/background");
             backGroundStart = Content.Load<Texture2D>("World/startScreen");
-
+            backGroundDefeat = Content.Load<Texture2D>("World/defeatScreen");
             font = Content.Load<SpriteFont>("Fonts/west");
             buttonText = Content.Load<Texture2D>("Buttons/boots");
             _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -181,31 +184,23 @@ namespace GameProject
 
         protected override void Update(GameTime gameTime)
         {
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                Exit();
             if (GameStarted && hero.Dead == false)
             {
+
+                FirstUpdate = true;
+                hero.Update(gameTime, dynamicCollidables);
+
                 if (spawnEnemies)
                 {
                     enemies = EnemyFactory.SpawnEnemies(coffinTextures, cactusTextures, coyoteTextures, Difficulty);
                     enemyManager.enemies = enemies;
                     dynamicCollidables.AddRange(enemies);
                 }
-                if(enemies.Count != 0 && spawnEnemies == true)
-                {
-                    spawnEnemies = false;
-                }
-                if(enemies.Count == 0)
-                {
-                    Debug.WriteLine("Spawn new enemies");
-                    spawnEnemies = true;
-                    Difficulty += 1;
-                }
-                Debug.WriteLine(enemies.Count);
-                FirstUpdate = true;
-                hero.Update(gameTime, dynamicCollidables);
-                
-                if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                    Exit();
 
+                UpdateSpawnEnemies();
+               
                 //upgradeUI.Update(Mouse.GetState());
 
                 enemyManager.Update(gameTime, hero, dynamicCollidables);
@@ -213,28 +208,18 @@ namespace GameProject
 
 
                 CollisionManager.CheckCollisions(dynamicCollidables, pickupObservers);
-
-                //pickup logic maybe this should belong in pickupfactory in the future?
-                foreach (ICollidable c in dynamicCollidables)
-                {
-                    if (c is Coin)
-                    {
-                        Coin p = c as Coin;
-                        p.Update(gameTime);
-                    }
-                    else if (c is Health)
-                    {
-                        Health h = c as Health;
-                        h.Update(gameTime);
-                    }
-                }
+                
                 scoreUI.Update(gameTime);
             }
             else if(hero.Dead == true)
             {
-                //defeatScreen.Update(Mouse.GetState());
+                enemies.Clear();
+                dynamicCollidables.Clear();
+                dynamicCollidables.Add(hero);
+                defeatScreen.Update(Mouse.GetState());
+                
             }
-            else
+            else if(GameStarted == false && FirstUpdate == false)
             {
                 startScreen.Update(Mouse.GetState());
             }
@@ -242,58 +227,41 @@ namespace GameProject
             base.Update(gameTime);
         }
 
+        int desiredWidth, desiredHeight;
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-
             _spriteBatch.Begin();
 
             if (GameStarted && FirstUpdate && hero.Dead == false)
             {
-                if (spawnEnemies)
-                {
-                    
-                }
-                _graphics.PreferredBackBufferHeight = 800;
-                _graphics.PreferredBackBufferWidth = 1200;
-                _graphics.ApplyChanges();
+                desiredWidth = 1200;
+                desiredHeight = 800;
                 _spriteBatch.Draw(background, Vector2.Zero, null, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
-                
                 hero.Draw(_spriteBatch);
-                //button.Draw(_spriteBatch);
                 hero.DrawBullets(_spriteBatch);
                 enemyManager.Draw(_spriteBatch);
                 PickupManager.Draw(_spriteBatch);
-                foreach (ICollidable c in dynamicCollidables)
-                {
-                    if (c is Coin)
-                    {
-                        Coin p = c as Coin;
-                        p.Draw(_spriteBatch);
-                    }
-                    else if (c is Health)
-                    {
-                        Health h = c as Health;
-                        h.Draw(_spriteBatch);
-                    }
-                }
-
                 //upgradeUI.Draw(_spriteBatch);
                 scoreUI.Draw(_spriteBatch);
             }
-            else
+            else if (hero.Dead)
             {
-                
-                _graphics.PreferredBackBufferHeight = 1024;
-                _graphics.PreferredBackBufferWidth = 960;
-                _graphics.ApplyChanges();
+                desiredWidth = 960;
+                desiredHeight = 1024;
+                _spriteBatch.Draw(backGroundDefeat, Vector2.Zero, null, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
+                defeatScreen.Draw(_spriteBatch);
+            }
+            else if(GameStarted == false && FirstUpdate == false)
+            {
+                desiredWidth = 960;
+                desiredHeight = 1024;
                 _spriteBatch.Draw(backGroundStart, Vector2.Zero, null, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
                 startScreen.Draw(_spriteBatch);
             }
-            
-
+            _graphics.PreferredBackBufferWidth = desiredWidth;
+            _graphics.PreferredBackBufferHeight = desiredHeight;
+            _graphics.ApplyChanges();
             _spriteBatch.End(); 
 
             base.Draw(gameTime);
@@ -309,6 +277,20 @@ namespace GameProject
             }
 
             return textures;
+        }
+
+        private void UpdateSpawnEnemies()
+        {
+            if (enemies.Count != 0 && spawnEnemies)
+            {
+                spawnEnemies = false;
+            }
+
+            if (enemies.Count == 0)
+            {
+                spawnEnemies = true;
+                Difficulty += 1;
+            }
         }
     }
 }
