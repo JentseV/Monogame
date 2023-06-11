@@ -165,7 +165,6 @@ namespace GameProject
             InitializeBuildings();
             
             upgradeUI = new UpgradeUI(font, buttonText, hero);
-            hero.Position = new Vector2(1000f, 600f);
             pickupObservers.Add(hero);
             backgroundRect = new Rectangle(0, 0, 32, 47);
 
@@ -227,6 +226,7 @@ namespace GameProject
                 collidables.Clear();
                 collidables.Add(hero);
                 collidables.Add(building);
+                InitializeBuildings();
                 defeatScreen.Update(Mouse.GetState());
                 
             }
@@ -309,15 +309,18 @@ namespace GameProject
         {
 
             buildingParams.Add("Building1", new int[] { 140, 109, 90, 120 });
-            buildingParams.Add("Building2", new int[] { 49, 148, 38, 75 });
+            buildingParams.Add("Building2", new int[] { 49, 168, 38, 50 });
             buildingParams.Add("Building3", new int[] { 223, 273, 118, 38 });
-            buildingParams.Add("Building4", new int[] { 441, 123, 180, 110 });// sherrif house
-            buildingParams.Add("Building5", new int[] { 691, 138, 40, 55 }); // tree
-            buildingParams.Add("Building6", new int[] { 907, 164, 125, 100 }); // hotel
-            buildingParams.Add("Building7", new int[] { 1039, 320, 80, 95 }); // hut
-            buildingParams.Add("Building8", new int[] { 636, 610, 561, 9 }); // right fence
-            buildingParams.Add("Building9", new int[] { 0, 606, 564, 7 });
-            buildingParams.Add("Building10", new int[] { 0, 606, 564, 7 });
+            buildingParams.Add("Building4", new int[] { 441, 123, 180, 110 });
+            buildingParams.Add("Building5", new int[] { 691, 138, 40, 55 }); 
+            buildingParams.Add("Building6", new int[] { 907, 164, 125, 100 }); 
+            buildingParams.Add("Building7", new int[] { 1039, 320, 80, 95 }); 
+            buildingParams.Add("Building8", new int[] { 636, 600, 561, 20 }); 
+            buildingParams.Add("Building9", new int[] { 0, 586, 564, 20 });
+            buildingParams.Add("Building10", new int[] { 0, 107, 1254, 20 }); 
+            buildingParams.Add("Building11", new int[] { -30, 147, 17, 681 }); 
+            buildingParams.Add("Building12", new int[] { 1198, 147, 19, 689 }); 
+            buildingParams.Add("Building13", new int[] { -20, 786, 1201, 14 }); 
 
 
             foreach ( var k in buildingParams)

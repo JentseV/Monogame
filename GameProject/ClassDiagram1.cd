@@ -98,13 +98,6 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="GameProject.Projectiles.PowerUp" Collapsed="true">
-    <Position X="28.25" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GameObjects\Dynamic\DynamicCollidables\Projectiles\PowerUp.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="GameProject.Projectiles.Projectile" Collapsed="true">
     <Position X="6" Y="6.75" Width="1.5" />
     <TypeIdentifier>

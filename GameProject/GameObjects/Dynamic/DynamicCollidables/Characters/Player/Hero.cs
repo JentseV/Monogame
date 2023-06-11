@@ -95,7 +95,7 @@ namespace GameProject.GameObjects.Characters.Player
             
 
             
-            Position = new Vector2(2f, 2f);
+            Position = new Vector2(589f, 703f);
 
             Hitbox = new Rectangle((int)Position.X, (int)Position.Y, 32, 32);
 
@@ -376,6 +376,7 @@ namespace GameProject.GameObjects.Characters.Player
                             float displacementY = depthY * signY;
                             Position = new Vector2(Position.X, Position.Y + displacementY);
                         }
+
                         UpdateHitbox();
                     }
                 }

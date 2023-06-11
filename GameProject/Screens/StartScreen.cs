@@ -14,8 +14,6 @@ namespace GameProject.Screens
     internal class StartScreen : GameScreen, IScreen
     {
         private Button easyButton, mediumButton, hardButton;
-        
-
         public StartScreen(Texture2D[] buttonText, SpriteFont font, Hero  hero)
         {
             Buttons = new List<Button>();

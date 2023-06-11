@@ -23,10 +23,10 @@ namespace GameProject.Enemies
             
             List<Enemy> enemies = new List<Enemy>();
 
-            spawnLocations.Add(new Vector2(900f, 200f));
-            spawnLocations.Add(new Vector2(700f, 100f));
-            spawnLocations.Add(new Vector2(600f, 600f));
-            spawnLocations.Add(new Vector2(800f, 800f));
+            spawnLocations.Add(new Vector2(114F, 280f));
+            spawnLocations.Add(new Vector2(1082f, 450f));
+            spawnLocations.Add(new Vector2(537f, 288f));
+            spawnLocations.Add(new Vector2(188f, 257f));
 
             float enemiesToSpawn = difficulty * 1f;
             while (enemies.Count < enemiesToSpawn)
