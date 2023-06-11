@@ -5,6 +5,8 @@ using GameProject.GameObjects;
 using GameProject.GameObjects.Characters.Player;
 using GameProject.GameObjects.Dynamic.Characters.Enemies;
 using GameProject.GameObjects.Dynamic.DynamicCollidables;
+using GameProject.GameObjects.Static.StaticCollidable;
+using GameProject.GameObjects.Static.StaticCollidable.Buildings;
 using GameProject.GameObjects.Static.StaticCollidable.Pickups;
 using GameProject.Pickups;
 using GameProject.Projectiles;
@@ -29,6 +31,8 @@ namespace GameProject
         public static bool FirstUpdate { get; set; } = false;
         public static int Difficulty { get; set; } = 0;
 
+        private List<Building> buildings = new List<Building>();
+
         private List<IPickupObserver> pickupObservers = new();
         private UI ui;
         private ScoreUI scoreUI;
@@ -44,10 +48,13 @@ namespace GameProject
         private SpriteFont font;
         private DefeatScreen defeatScreen;
 
+        private Dictionary<string, int[]> buildingParams = new Dictionary<string, int[]>();
         private UpgradeUI upgradeUI;
 
         private List<DynamicCollidable> dynamicCollidables = new List<DynamicCollidable>();
+        private List<StaticCollidable> staticCollidables = new List<StaticCollidable>();
         private List<Enemy> enemies;
+        List<ICollidable> collidables = new List<ICollidable>();
 
         private Texture2D[] defeatButtonTextures = new Texture2D[2];
         private Texture2D[] buttonTextures = new Texture2D[3];
@@ -55,7 +62,7 @@ namespace GameProject
         private Texture2D[] heroTextures = new Texture2D[19];
         private Texture2D[] cactusTextures = new Texture2D[12];
         private Texture2D[] coyoteTextures = new Texture2D[14];
-
+        Building building,building2,building3;
         string[] heroTextureNames = {
             "heroText/Fixed/runUp",
             "heroText/Fixed/runDown",
@@ -144,6 +151,7 @@ namespace GameProject
 
         protected override void Initialize()
         {
+            
             // TODO: Add your initialization logic here
             base.Initialize();
             scoreUI = new ScoreUI(font);
@@ -152,8 +160,10 @@ namespace GameProject
             defeatScreen = new DefeatScreen(defeatButtonTextures,font, hero);
             enemyManager = new EnemyManager(enemies);
             startScreen = new StartScreen(buttonTextures, font,hero) ;
-            dynamicCollidables.Add(hero);
-           
+            collidables.Add(hero);
+
+            InitializeBuildings();
+            
             upgradeUI = new UpgradeUI(font, buttonText, hero);
             hero.Position = new Vector2(1000f, 600f);
             pickupObservers.Add(hero);
@@ -188,34 +198,35 @@ namespace GameProject
                 Exit();
             if (GameStarted && hero.Dead == false)
             {
-
+                Debug.WriteLine(Mouse.GetState().Position);
                 FirstUpdate = true;
-                hero.Update(gameTime, dynamicCollidables);
+                hero.Update(gameTime, collidables);
 
                 if (spawnEnemies)
                 {
                     enemies = EnemyFactory.SpawnEnemies(coffinTextures, cactusTextures, coyoteTextures, Difficulty);
                     enemyManager.enemies = enemies;
-                    dynamicCollidables.AddRange(enemies);
+                    collidables.AddRange(enemies);
                 }
 
                 UpdateSpawnEnemies();
                
                 //upgradeUI.Update(Mouse.GetState());
 
-                enemyManager.Update(gameTime, hero, dynamicCollidables);
+                enemyManager.Update(gameTime, hero, collidables);
                 PickupManager.Update(gameTime);
 
 
-                CollisionManager.CheckCollisions(dynamicCollidables, pickupObservers);
+                CollisionManager.CheckCollisions(collidables, pickupObservers);
                 
                 scoreUI.Update(gameTime);
             }
             else if(hero.Dead == true)
             {
                 enemies.Clear();
-                dynamicCollidables.Clear();
-                dynamicCollidables.Add(hero);
+                collidables.Clear();
+                collidables.Add(hero);
+                collidables.Add(building);
                 defeatScreen.Update(Mouse.GetState());
                 
             }
@@ -239,6 +250,7 @@ namespace GameProject
                 desiredHeight = 800;
                 _spriteBatch.Draw(background, Vector2.Zero, null, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
                 hero.Draw(_spriteBatch);
+               
                 hero.DrawBullets(_spriteBatch);
                 enemyManager.Draw(_spriteBatch);
                 PickupManager.Draw(_spriteBatch);
@@ -290,6 +302,28 @@ namespace GameProject
             {
                 spawnEnemies = true;
                 Difficulty += 1;
+            }
+        }
+
+        private void InitializeBuildings()
+        {
+
+            buildingParams.Add("Building1", new int[] { 140, 109, 90, 120 });
+            buildingParams.Add("Building2", new int[] { 49, 148, 38, 75 });
+            buildingParams.Add("Building3", new int[] { 223, 273, 118, 38 });
+            buildingParams.Add("Building4", new int[] { 441, 123, 180, 110 });// sherrif house
+            buildingParams.Add("Building5", new int[] { 691, 138, 40, 55 }); // tree
+            buildingParams.Add("Building6", new int[] { 907, 164, 125, 100 }); // hotel
+            buildingParams.Add("Building7", new int[] { 1039, 320, 80, 95 }); // hut
+            buildingParams.Add("Building8", new int[] { 636, 610, 561, 9 }); // right fence
+            buildingParams.Add("Building9", new int[] { 0, 606, 564, 7 });
+            buildingParams.Add("Building10", new int[] { 0, 606, 564, 7 });
+
+
+            foreach ( var k in buildingParams)
+            {
+                building = new Building(null, new Vector2(k.Value[0], k.Value[1]), new Rectangle((int)k.Value[0], (int)k.Value[1], k.Value[2], k.Value[3]));
+                collidables.Add(building);
             }
         }
     }

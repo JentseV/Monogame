@@ -5,6 +5,8 @@ using GameProject.GameObjects.Dynamic.Characters.Enemies;
 using GameProject.GameObjects.Dynamic.DynamicCollidables;
 using GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Coffin;
 using GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Coyote;
+using GameProject.GameObjects.Static.StaticCollidable;
+using GameProject.GameObjects.Static.StaticCollidable.Buildings;
 using GameProject.Pickups;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
@@ -34,7 +36,7 @@ namespace GameProject.GameObjects.Characters.Player
         private Vector2 facing;
 
         public static float gold;
-
+        private Vector2 previousPosition;
         public float Gold { get { return gold; } set { gold = value; } }
 
         private IInputReader inputReader;
@@ -118,11 +120,12 @@ namespace GameProject.GameObjects.Characters.Player
         }
 
 
-        public void Update(GameTime gameTime, List<DynamicCollidable> collidables)
+        public void Update(GameTime gameTime, List<ICollidable> collidables)
         {
             hitPoints2 = Hitpoints;
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             TimeSinceLastAttack -= deltaTime;
+            previousPosition = Position;
 
             if (Hit)
             {
@@ -349,6 +352,32 @@ namespace GameProject.GameObjects.Characters.Player
                             TakeDamage(b.Damage);
                         }
                     }
+
+                    if(collidable is Building)
+                    {
+                        Rectangle intersection = Rectangle.Intersect(Hitbox, collidable.Hitbox);
+
+                        
+                        float depthX = intersection.Width;
+                        float depthY = intersection.Height;
+
+                        
+                        float signX = Math.Sign(Position.X - collidable.Position.X);
+                        float signY = Math.Sign(Position.Y - collidable.Position.Y);
+
+                        if (depthX < depthY)
+                        {
+                            
+                            float displacementX = depthX * signX;
+                            Position = new Vector2(Position.X + displacementX, Position.Y);
+                        }
+                        else
+                        {
+                            float displacementY = depthY * signY;
+                            Position = new Vector2(Position.X, Position.Y + displacementY);
+                        }
+                        UpdateHitbox();
+                    }
                 }
 
             
@@ -394,7 +423,7 @@ namespace GameProject.GameObjects.Characters.Player
             Damage += amount;
         }
 
-        public void UpdateBullets(GameTime gameTime, List<DynamicCollidable> collidables)
+        public void UpdateBullets(GameTime gameTime, List<ICollidable> collidables)
         {
             foreach (Bullet b in bullets)
             {

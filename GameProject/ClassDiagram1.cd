@@ -1,0 +1,321 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="GameProject.Animations.Animation" Collapsed="true">
+    <Position X="8.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AASEAAAAACAAAAAAAAACAAAAAAAAAAEAAAAAAQAAAAA=</HashCode>
+      <FileName>Animations\Animation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameProject.Animations.AnimationFrame" Collapsed="true">
+    <Position X="10" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Animations\AnimationFrame.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameProject.GameObjects.Dynamic.DyanmicNonCollidable.DynamicNonCollidable" Collapsed="true">
+    <Position X="3.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Dynamic\DyanmicNonCollidable\DynamicNonCollidable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Cactus.Cactus" Collapsed="true">
+    <Position X="8.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAACAAAAAAAAAAAAAIAAAAAAAQAAAAAAAAI=</HashCode>
+      <FileName>GameObjects\Dynamic\DynamicCollidables\Characters\Enemies\Cactus\Cactus.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Coffin.Coffin" Collapsed="true">
+    <Position X="10.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Dynamic\DynamicCollidables\Characters\Enemies\Coffin\Coffin.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Coyote.Coyote" Collapsed="true">
+    <Position X="12.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAABAAAAAAAAABIAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>GameObjects\Dynamic\DynamicCollidables\Characters\Enemies\Coyote\Coyote.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="GameProject.GameObjects.Dynamic.Characters.Enemies.CollisionManager" Collapsed="true">
+    <Position X="26.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAgAAA=</HashCode>
+      <FileName>GameObjects\Dynamic\DynamicCollidables\Characters\Enemies\CollisionManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameProject.GameObjects.Dynamic.Characters.Enemies.EnemyManager" Collapsed="true">
+    <Position X="30" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Dynamic\DynamicCollidables\Characters\Enemies\EnemyManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameProject.Enemies.Enemy" Collapsed="true">
+    <Position X="10.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQQABAIAAAQCQAAAAAAAYAAAIAAAACAAAAAgAAAgIA=</HashCode>
+      <FileName>GameObjects\Dynamic\DynamicCollidables\Characters\Enemies\Enemy.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="GameProject.Enemies.EnemyFactory" Collapsed="true">
+    <Position X="28.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAQAAAA=</HashCode>
+      <FileName>GameObjects\Dynamic\DynamicCollidables\Characters\Enemies\EnemyFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameProject.GameObjects.Characters.Player.Hero" Collapsed="true">
+    <Position X="15" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAQUERAAAIAGBAQACAAAASAIEAACCACAAQAAAggAgIE=</HashCode>
+      <FileName>GameObjects\Dynamic\DynamicCollidables\Characters\Player\Hero.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="GameProject.Characters.Character" Collapsed="true">
+    <Position X="11.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACUkAjLXhagi0gAIG4YQACcikJRjCMiMJhKByFjBMwA=</HashCode>
+      <FileName>GameObjects\Dynamic\DynamicCollidables\Characters\Character.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="GameProject.Projectiles.Bullet" Collapsed="true">
+    <Position X="6" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAABAAAAAAgAAAACAAAAAFAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Dynamic\DynamicCollidables\Projectiles\Bullet.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="GameProject.Projectiles.PowerUp" Collapsed="true">
+    <Position X="28.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Dynamic\DynamicCollidables\Projectiles\PowerUp.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameProject.Projectiles.Projectile" Collapsed="true">
+    <Position X="6" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAACCAAYAgggAAAAAAAAAAAAAACAAAAAIAAAAAAgA=</HashCode>
+      <FileName>GameObjects\Dynamic\DynamicCollidables\Projectiles\Projectile.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="GameProject.GameObjects.Dynamic.DynamicCollidables.DynamicCollidable" Collapsed="true">
+    <Position X="10.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Dynamic\DynamicCollidables\DynamicCollidable.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="GameProject.GameObjects.Dynamic.DynamicGO" Collapsed="true">
+    <Position X="9.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAACAAAAABAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Dynamic\DynamicGO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameProject.Pickups.Coin" Collapsed="true">
+    <Position X="17.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Static\StaticCollidable\Pickups\Coin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameProject.Pickups.Health" Collapsed="true">
+    <Position X="19.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Static\StaticCollidable\Pickups\Health.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameProject.Pickups.Pickup" Collapsed="true">
+    <Position X="18.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQEACAAAAAgggAAgCAAAIAhAAAAARCAAAAQAAAAAgA=</HashCode>
+      <FileName>GameObjects\Static\StaticCollidable\Pickups\Pickup.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="GameProject.GameObjects.Static.StaticCollidable.Pickups.PickupFactory" Collapsed="true">
+    <Position X="31.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Static\StaticCollidable\Pickups\PickupFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameProject.GameObjects.Static.StaticCollidable.Pickups.PickupManager" Collapsed="true">
+    <Position X="26.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAiEAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Static\StaticCollidable\Pickups\PickupManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameProject.GameObjects.Static.StaticCollidable.StaticCollidable" Collapsed="true">
+    <Position X="18.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Static\StaticCollidable\StaticCollidable.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="GameProject.GameObjects.Static.StaticNonCollidable.StaticNonCollidable" Collapsed="true">
+    <Position X="21.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Static\StaticNonCollidable\StaticNonCollidable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameProject.GameObjects.Static.StaticGO" Collapsed="true">
+    <Position X="19.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAIAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Static\StaticGO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameProject.GameObjects.GameObject" Collapsed="true">
+    <Position X="13.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAQAAAAEAAAkAAAAJAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>GameObjects\GameObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameProject.Screens.UI.Button" Collapsed="true">
+    <Position X="24" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQABAAACAAAAgAAAAAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Screens\UI\Button.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameProject.Screens.UI.ScoreUI" Collapsed="true">
+    <Position X="2.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Screens\UI\ScoreUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameProject.Screens.UI.UI" Collapsed="true">
+    <Position X="4" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Screens\UI\UI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameProject.Screens.UI.UpgradeUI" Collapsed="true">
+    <Position X="5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAIAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Screens\UI\UpgradeUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameProject.Screens.DefeatScreen" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Screens\DefeatScreen.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="GameProject.Screens.GameScreen" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAgAgAAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Screens\GameScreen.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="GameProject.Screens.StartScreen" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAgAAAAAAAAAAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>Screens\StartScreen.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="GameProject.KeyboardReader" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="31.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Input\KeyboardReader.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="GameProject.MouseReader" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="28.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Input\MouseReader.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="GameProject.MovementManager" Collapsed="true">
+    <Position X="30" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Input\MovementManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameProject.Map.Map" Collapsed="true">
+    <Position X="26.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Map\Map.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="GameProject.GameObjects.Dynamic.Characters.Enemies.IRangedAttacker" Collapsed="true">
+    <Position X="26.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Dynamic\DynamicCollidables\Characters\Enemies\IRangedAttacker.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="GameProject.Enemies.IEnemy" Collapsed="true">
+    <Position X="28.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Dynamic\DynamicCollidables\Characters\Enemies\IEnemy.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="GameProject.GameObjects.Dynamic.DynamicCollidables.IDynamicCollidable" Collapsed="true">
+    <Position X="26.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Dynamic\DynamicCollidables\IDynamicCollidable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="GameProject.Screens.IScreen" Collapsed="true">
+    <Position X="28.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Screens\IScreen.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="GameProject.IInputReader" Collapsed="true">
+    <Position X="30" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Input\IInputReader.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="GameProject.IMovable" Collapsed="true">
+    <Position X="31.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAgAAAAAAABAAAACAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Input\IMovable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

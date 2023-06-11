@@ -18,8 +18,10 @@ using System.Windows.Forms;
 
 namespace GameProject
 {
-    internal interface ICollidable
+    internal interface ICollidable 
     {
+        Vector2 Position { get; set; }
+        bool Remove { get; set; }
         Rectangle Hitbox { get; set; }
 
         void CheckCollision(ICollidable collidables);

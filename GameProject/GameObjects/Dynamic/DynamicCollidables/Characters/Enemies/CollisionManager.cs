@@ -14,7 +14,7 @@ namespace GameProject.GameObjects.Dynamic.Characters.Enemies
 {
     internal static class CollisionManager
     {
-        public static void CheckCollisions(List<DynamicCollidable> gameObjects, List<IPickupObserver> pickupObservers)
+        public static void CheckCollisions(List<ICollidable> gameObjects, List<IPickupObserver> pickupObservers)
         {
             foreach (var collidable in gameObjects.OfType<ICollidable>())
             {

@@ -17,10 +17,11 @@ using System.Windows.Forms;
 
 namespace GameProject.GameObjects.Static
 {
-    internal class StaticGO : GameObject
+    internal abstract class StaticGO : GameObject
     {
 
         private Texture2D texture;
         public Texture2D Texture { get { return texture; } set { texture = value; } }
+
     }
 }

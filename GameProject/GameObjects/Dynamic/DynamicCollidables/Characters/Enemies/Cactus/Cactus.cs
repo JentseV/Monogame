@@ -86,7 +86,7 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
         }
 
 
-        public void UpdateBullets(GameTime gameTime, List<DynamicCollidable> collidables)
+        public void UpdateBullets(GameTime gameTime, List<ICollidable> collidables)
         {
             if (this.Remove)
             {

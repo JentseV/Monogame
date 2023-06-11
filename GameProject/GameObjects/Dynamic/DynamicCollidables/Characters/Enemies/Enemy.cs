@@ -33,7 +33,7 @@ namespace GameProject.Enemies
 
    
 
-        public void Update(GameTime gameTime, Hero hero, List<DynamicCollidable> collidables)
+        public void Update(GameTime gameTime, Hero hero, List<ICollidable> collidables)
         {
             this.Center = new Vector2((int)Position.X, (int)Position.Y);
             this.hitbox.X = (int)Center.X;

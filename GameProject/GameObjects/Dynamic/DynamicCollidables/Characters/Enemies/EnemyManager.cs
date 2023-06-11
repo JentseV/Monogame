@@ -23,7 +23,7 @@ namespace GameProject.GameObjects.Dynamic.Characters.Enemies
             this.enemies = enemies;
         }
 
-        public void Update(GameTime gameTime, Hero hero, List<DynamicCollidable> collidables)
+        public void Update(GameTime gameTime, Hero hero, List<ICollidable> collidables)
         {
             foreach (Enemy enemy in enemies)
             {
