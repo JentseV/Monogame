@@ -10,12 +10,14 @@ using GameProject.GameObjects.Static.StaticCollidable.Buildings;
 using GameProject.Pickups;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Media;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +28,8 @@ namespace GameProject.GameObjects.Characters.Player
 {
     internal class Hero : Character, IMovable, IGameComponent, ICollidable, IRangedAttacker, IPickupObserver
     {
+
+        private List<SoundEffect> soundEffects;
 
         public static float hitPoints2;
 
@@ -58,9 +62,10 @@ namespace GameProject.GameObjects.Characters.Player
         }
 
         private MovementManager movementManager;
-        public Hero(Texture2D[] textures, IInputReader inputReader)
+        public Hero(Texture2D[] textures, IInputReader inputReader, List<SoundEffect> sounds)
         {
 
+            this.soundEffects = sounds;
             Movable = true;
             Hitpoints = 3f;
 
@@ -132,7 +137,7 @@ namespace GameProject.GameObjects.Characters.Player
                 Invincible = true;
                 CheckInvincible(deltaTime);
             }
-
+            
             UpdateHitbox();
             CheckInvincible(deltaTime);
             DecideAction();
@@ -309,6 +314,16 @@ namespace GameProject.GameObjects.Characters.Player
 
         public void DecideAction()
         {
+
+            if (Keyboard.GetState().IsKeyDown(Keys.K))
+            {
+                this.Speed = new Vector2(6f, 6f);
+            }
+            else
+            {
+                this.Speed = new Vector2(3f, 3f);
+            }
+
             Direction = inputReader.ReadInput();
             if (Direction.X > 0 || Direction.X < 0 || Direction.Y > 0 || Direction.Y < 0)
             {
@@ -383,7 +398,7 @@ namespace GameProject.GameObjects.Characters.Player
 
             
         }
-
+        private Random random = new Random();
         public void Shoot()
         {
             if (TimeSinceLastAttack <= 0)
@@ -392,7 +407,17 @@ namespace GameProject.GameObjects.Characters.Player
                 Bullet bullet = new Bullet(bullets.Count, "BulletHero", new Vector2(Center.X + 2f, Center.Y + 12f), facing, new Vector2(2f, 2f), bulletTexture, Damage);
                 bullets.Add(bullet);
                 TimeSinceLastAttack = AttackCooldown;
+
+                int randomIndex = random.Next(0, 2); 
+                PlaySound(soundEffects[randomIndex]);
             }
+        }
+
+        private void PlaySound(SoundEffect soundEffect)
+        {
+            SoundEffectInstance instance = soundEffect.CreateInstance();
+            instance.Stop();
+            instance.Play();
         }
 
         public void GainGold(float amount)
@@ -450,11 +475,10 @@ namespace GameProject.GameObjects.Characters.Player
 
         public void OnPickup(Pickup pickup) // hardcoded values, change later
         {
-            if(pickup is Health)
+            if(pickup is Health && !pickup.Remove)
             {
-                
                 GainHealth(1f);
-            }else if(pickup is Coin)
+            }else if(pickup is Coin && !pickup.Remove)
             {
                 GainGold(1f);
             }

@@ -884,6 +884,24 @@
 /processorParam:TextureFormat=Color
 /build:Projectiles/SpongeBullet.png
 
+#begin Sounds/Hero/Gun/revolver_shot_2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Hero/Gun/revolver_shot_2.wav
+
+#begin Sounds/Hero/Gun/revolver_shot_3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Hero/Gun/revolver_shot_3.wav
+
+#begin Sounds/Hero/Gun/revolver_shot_4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Hero/Gun/revolver_shot_4.wav
+
 #begin testTree.png
 /importer:TextureImporter
 /processor:TextureProcessor

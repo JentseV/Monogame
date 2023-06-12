@@ -22,6 +22,8 @@ namespace GameProject.Pickups
     internal abstract class Pickup : StaticCollidable , ICollidable, IGameComponent
     {
 
+        private List<IPickupObserver> observers = new List<IPickupObserver>();
+
         private Texture2D healthTexture, coinTexture;
         private float timeTillDespawn;
         private Animation animation;
@@ -63,19 +65,31 @@ namespace GameProject.Pickups
 
         public void OnPickup(Hero h)
         {
-            if(this is Coin)
-            {
-                h.GainGold(5f);
-            }
-
-            if(this is Health)
-            {
-                h.GainHealth(1f);
-            }
+            
+            NotifyObservers();
             this.Remove = true;
         }
 
-        
+
+        public void AttachObserver(IPickupObserver observer)
+        {
+            observers.Add(observer);
+        }
+
+        public void DetachObserver(IPickupObserver observer)
+        {
+            observers.Remove(observer);
+        }
+
+        protected virtual void NotifyObservers()
+        {
+            Debug.WriteLine("Notify observer");
+            foreach (var observer in observers)
+            {
+                observer.OnPickup(this);
+            }
+        }
+
 
         public void Update(GameTime gameTime)
         {

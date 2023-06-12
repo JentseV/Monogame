@@ -1,3 +1,4 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"D:/Monogame/GameProject/GameProject/Content/Buttons/exitButton.png","D:/Monogame/GameProject/GameProject/Content/bin/Windows/Buttons/exitButton.xnb","TextureProcessor","Texture2DContent",1731,15221,0,0996518
-"D:/Monogame/GameProject/GameProject/Content/Buttons/restartButton.png","D:/Monogame/GameProject/GameProject/Content/bin/Windows/Buttons/restartButton.xnb","TextureProcessor","Texture2DContent",2334,15221,0,0031497
+"D:/Monogame/GameProject/GameProject/Content/Sounds/Hero/Gun/revolver_shot_2.wav","D:/Monogame/GameProject/GameProject/Content/bin/Windows/Sounds/Hero/Gun/revolver_shot_2.xnb","SoundEffectProcessor","SoundEffectContent",356134,236749,0,3510974
+"D:/Monogame/GameProject/GameProject/Content/Sounds/Hero/Gun/revolver_shot_3.wav","D:/Monogame/GameProject/GameProject/Content/bin/Windows/Sounds/Hero/Gun/revolver_shot_3.xnb","SoundEffectProcessor","SoundEffectContent",384430,255613,0,1025964
+"D:/Monogame/GameProject/GameProject/Content/Sounds/Hero/Gun/revolver_shot_4.wav","D:/Monogame/GameProject/GameProject/Content/bin/Windows/Sounds/Hero/Gun/revolver_shot_4.xnb","SoundEffectProcessor","SoundEffectContent",876652,583761,0,1085231

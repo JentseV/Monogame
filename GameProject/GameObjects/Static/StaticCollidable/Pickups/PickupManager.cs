@@ -14,14 +14,23 @@ namespace GameProject.GameObjects.Static.StaticCollidable.Pickups
     {
         public static List<Pickup> pickups = new List<Pickup>();
 
-        public static  void Update(GameTime gameTime)
+        public static  void Update(GameTime gameTime , IList<ICollidable> collidables)
         {
            
-            foreach(Pickup pickup in pickups)
+            foreach(Pickup pickup in pickups.ToList())
             {
-                if(!pickup.Remove)
+                if (!pickup.Remove)
+                {
+                    if (collidables.Contains(pickup) == false) collidables.Add(pickup);
                     pickup.Update(gameTime);
+                }
+                else
+                {
+                    collidables.Remove(pickup);
+                }
             }
+
+            pickups.RemoveAll(p => p.Remove);
         }
 
         public static void Draw(SpriteBatch spriteBatch)

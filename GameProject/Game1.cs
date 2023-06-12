@@ -13,6 +13,8 @@ using GameProject.Projectiles;
 using GameProject.Screens;
 using GameProject.Screens.UI;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
@@ -48,6 +50,7 @@ namespace GameProject
         private SpriteFont font;
         private DefeatScreen defeatScreen;
 
+        private List<SoundEffect> heroSounds = new List<SoundEffect>();
         private Dictionary<string, int[]> buildingParams = new Dictionary<string, int[]>();
         private UpgradeUI upgradeUI;
 
@@ -62,7 +65,7 @@ namespace GameProject
         private Texture2D[] heroTextures = new Texture2D[19];
         private Texture2D[] cactusTextures = new Texture2D[12];
         private Texture2D[] coyoteTextures = new Texture2D[14];
-        Building building,building2,building3;
+
         string[] heroTextureNames = {
             "heroText/Fixed/runUp",
             "heroText/Fixed/runDown",
@@ -156,7 +159,7 @@ namespace GameProject
             base.Initialize();
             scoreUI = new ScoreUI(font);
             button = new Button(buttonText, new Vector2(500f, 300f), () => hero.Hitpoints += 3);
-            hero = new Hero(heroTextures, new KeyboardReader());
+            hero = new Hero(heroTextures, new KeyboardReader(),heroSounds);
             defeatScreen = new DefeatScreen(defeatButtonTextures,font, hero);
             enemyManager = new EnemyManager(enemies);
             startScreen = new StartScreen(buttonTextures, font,hero) ;
@@ -172,6 +175,14 @@ namespace GameProject
 
         protected override void LoadContent()
         {
+            SoundEffect gunshot0 = Content.Load<SoundEffect>("Sounds/Hero/Gun/revolver_shot_2");
+            SoundEffect gunshot1 = Content.Load<SoundEffect>("Sounds/Hero/Gun/revolver_shot_3");
+            SoundEffect gunshot2 = Content.Load<SoundEffect>("Sounds/Hero/Gun/revolver_shot_4");
+
+            heroSounds.Add(gunshot0);
+            heroSounds.Add(gunshot1);
+            heroSounds.Add(gunshot2);
+
             coyoteTextures = LoadTextures(coyoteTextureNames);
             cactusTextures = LoadTextures(cactusTextureNames);
             coffinTextures = LoadTextures(coffinTextureNames);
@@ -197,7 +208,6 @@ namespace GameProject
                 Exit();
             if (GameStarted && hero.Dead == false)
             {
-                Debug.WriteLine(Mouse.GetState().Position);
                 FirstUpdate = true;
                 hero.Update(gameTime, collidables);
 
@@ -213,8 +223,8 @@ namespace GameProject
                 //upgradeUI.Update(Mouse.GetState());
 
                 enemyManager.Update(gameTime, hero, collidables);
-                PickupManager.Update(gameTime);
-
+                PickupManager.Update(gameTime, collidables);
+ 
 
                 CollisionManager.CheckCollisions(collidables, pickupObservers);
                 
@@ -225,7 +235,6 @@ namespace GameProject
                 enemies.Clear();
                 collidables.Clear();
                 collidables.Add(hero);
-                collidables.Add(building);
                 InitializeBuildings();
                 defeatScreen.Update(Mouse.GetState());
                 
@@ -307,7 +316,7 @@ namespace GameProject
 
         private void InitializeBuildings()
         {
-
+            buildingParams.Clear();
             buildingParams.Add("Building1", new int[] { 140, 109, 90, 120 });
             buildingParams.Add("Building2", new int[] { 49, 168, 38, 50 });
             buildingParams.Add("Building3", new int[] { 223, 273, 118, 38 });
@@ -325,7 +334,7 @@ namespace GameProject
 
             foreach ( var k in buildingParams)
             {
-                building = new Building(null, new Vector2(k.Value[0], k.Value[1]), new Rectangle((int)k.Value[0], (int)k.Value[1], k.Value[2], k.Value[3]));
+                Building building = new Building(null, new Vector2(k.Value[0], k.Value[1]), new Rectangle((int)k.Value[0], (int)k.Value[1], k.Value[2], k.Value[3]));
                 collidables.Add(building);
             }
         }

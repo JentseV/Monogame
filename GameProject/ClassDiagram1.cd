@@ -62,7 +62,7 @@
   <Class Name="GameProject.Enemies.Enemy" Collapsed="true">
     <Position X="10.5" Y="8.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAQQABAIAAAQCQAAAAAAAYAAAIAAAACAAAAAgAAAgIA=</HashCode>
+      <HashCode>IAQQABAIAEAQCQAAAAAAAYAAAIAAAACAAAAAgAAAgIA=</HashCode>
       <FileName>GameObjects\Dynamic\DynamicCollidables\Characters\Enemies\Enemy.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -138,7 +138,7 @@
   <Class Name="GameProject.Pickups.Pickup" Collapsed="true">
     <Position X="18.25" Y="6.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQEACAAAAAgggAAgCAAAIAhAAAAARCAAAAQAAAAAgA=</HashCode>
+      <HashCode>AAQMACAAAAAgggAAgCAAAMAhAAAAARCAAAAQAAAgAgA=</HashCode>
       <FileName>GameObjects\Static\StaticCollidable\Pickups\Pickup.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />

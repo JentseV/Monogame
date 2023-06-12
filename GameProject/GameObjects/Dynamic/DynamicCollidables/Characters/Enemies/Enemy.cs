@@ -23,6 +23,7 @@ namespace GameProject.Enemies
 {
     internal abstract class Enemy : Character, ICollidable
     {
+        private Hero heroL;
         private Vector2 heroPos, facing;
         private float range;
         private bool heroInRange = false;
@@ -35,6 +36,7 @@ namespace GameProject.Enemies
 
         public void Update(GameTime gameTime, Hero hero, List<ICollidable> collidables)
         {
+            heroL = hero;
             this.Center = new Vector2((int)Position.X, (int)Position.Y);
             this.hitbox.X = (int)Center.X;
             this.hitbox.Y = (int)Center.Y;
@@ -218,9 +220,8 @@ namespace GameProject.Enemies
 
         public void SpawnPickup()
         {
-            Pickup pickup = PickupFactory.SpawnPickup(PickupManager.CountPickups(), "Pickup", this.Center, 5f);
-            PickupManager.AddPickup(pickup);
-            
+            Pickup pickup = PickupFactory.SpawnPickup(PickupManager.CountPickups(), "Pickup", this.Center, 5f, heroL);
+            PickupManager.AddPickup(pickup);  
         }
 
     }

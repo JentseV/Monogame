@@ -159,3 +159,6 @@ D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\World\start
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\World\defeatScreen.xnb
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Buttons\exitButton.xnb
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Buttons\restartButton.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Sounds\Hero\Gun\revolver_shot_2.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Sounds\Hero\Gun\revolver_shot_3.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Sounds\Hero\Gun\revolver_shot_4.xnb

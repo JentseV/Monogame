@@ -1,4 +1,5 @@
-﻿using GameProject.Pickups;
+﻿using GameProject.GameObjects.Characters.Player;
+using GameProject.Pickups;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -11,21 +12,26 @@ namespace GameProject.GameObjects.Static.StaticCollidable.Pickups
 {
     internal class PickupFactory
     {
-        public static Pickup SpawnPickup(int id, string tag, Vector2 position, float timeDespawn)
+        public static Pickup SpawnPickup(int id, string tag, Vector2 position, float timeDespawn, Hero hero)
         {
-            Debug.WriteLine("Triggered pickup spawn");
             Random r = new Random();
             int rn = r.Next(0, 11);
+
+            Pickup pickup;
+
+            if (rn < 3)
             {
-                if (rn < 3)
-                {
-                    return new Health(id, tag, position, timeDespawn);
-                }
-                else
-                {
-                    return new Coin(id, tag, position, timeDespawn);
-                }
+                pickup = new Health(id, tag, position, timeDespawn);
             }
+            else
+            {
+                pickup = new Coin(id, tag, position, timeDespawn);
+            }
+
+            // Add the hero as an observer for the pickup
+            pickup.AttachObserver(hero);
+
+            return pickup;
         }
     }
 }
