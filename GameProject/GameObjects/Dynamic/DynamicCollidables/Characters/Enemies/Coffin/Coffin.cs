@@ -31,7 +31,7 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
             //SPRITESHEET 74x55
             Speed = speed;
             Position = position;
-            AttackCooldown = 2f;
+            AttackCooldown = 3f;
             Center = new Vector2(50 + Position.X, 55 + Position.Y);
             Hitbox = new Rectangle((int)Center.X, (int)Center.Y, 45, 45);
             TextureIdle = textures[1];
@@ -72,7 +72,7 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
             {
                 Attacking = true;
                 TimeSinceLastAttack = AttackCooldown;
-                hitbox.Width = 55;
+                
             }
            
         }

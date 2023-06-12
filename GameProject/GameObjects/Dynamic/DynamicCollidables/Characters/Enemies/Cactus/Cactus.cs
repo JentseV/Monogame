@@ -23,8 +23,8 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
 
         private Texture2D BulletTexture;
 
-
-        public List<Bullet> cactusBullets = new List<Bullet>();
+        private List<Bullet> bullets = new List<Bullet>();
+        public List<Bullet> Bullets { get { return bullets; } set { bullets = value; } }
 
         public Cactus(Vector2 speed, Vector2 position, Texture2D[] textures)
         {
@@ -78,8 +78,8 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
             if (TimeSinceLastAttack <= 0 && Invincible == false)
             {
                 Attacking = true;
-                Bullet b = new Bullet(cactusBullets.Count, "CactusBullet", new Vector2(Center.X + 2f, Center.Y + 12f), Direction, new Vector2(1.5f, 1.5f), BulletTexture, Damage);
-                cactusBullets.Add(b);
+                Bullet b = new Bullet(Bullets.Count, "CactusBullet", new Vector2(Center.X + 2f, Center.Y + 12f), Direction, new Vector2(1.5f, 1.5f), BulletTexture, Damage);
+                Bullets.Add(b);
 
                 TimeSinceLastAttack = AttackCooldown;
             }
@@ -90,17 +90,17 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
         {
             if (this.Remove)
             {
-                foreach (Bullet b in cactusBullets)
+                foreach (Bullet b in Bullets)
                 {
                     collidables.Remove(b);
                 }
-                cactusBullets.Clear();
+                Bullets.Clear();
             }
             else
             {
-                for (int i = cactusBullets.Count - 1; i >= 0; i--)
+                for (int i = Bullets.Count - 1; i >= 0; i--)
                 {
-                    Bullet b = cactusBullets[i];
+                    Bullet b = Bullets[i];
                     if (!b.Remove)
                     {
                         b.Update(gameTime);
@@ -109,7 +109,7 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
                     }
                     else
                     {
-                        cactusBullets.RemoveAt(i);
+                        Bullets.RemoveAt(i);
                         collidables.Remove(b);
                     }
                 }
@@ -119,7 +119,7 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
 
         public void DrawBullets(SpriteBatch spriteBatch)
         {
-            foreach (Bullet b in cactusBullets)
+            foreach (Bullet b in Bullets)
             {
                 if (!b.Remove) b.Draw(spriteBatch);
             }

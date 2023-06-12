@@ -93,14 +93,13 @@ namespace GameProject.Enemies
             else
             {
                 Moving = false;
-                
                 Attack();
             }
         }
 
         public override void Attack()
         {
-            
+            Attacking = true;
         }
 
 
@@ -170,33 +169,14 @@ namespace GameProject.Enemies
 
         }
 
-        protected void UpdateAnimations(GameTime gameTime)
-        {
-            //AnimationRun.Update(gameTime);
-            //AnimationAttacking.Update(gameTime);
-            if (Moving)
-            {
-                
-                AnimationRun.Update(gameTime);
-            }
-            else if (Attacking)
-            {
-                
-                AnimationAttacking.Update(gameTime);
-            }
-            else if (Hit)
-            {
-                AnimationHit.Update(gameTime);
-            }
-
-        }
+        
         public void OnDeath()
         {
             if (Dead)
             {
                 Moving = false;
                 Attacking = false;
-                Debug.WriteLine("Should spanw");
+
                 SpawnPickup();
                 Remove = true;
             }

@@ -35,8 +35,8 @@ namespace GameProject.GameObjects.Characters.Player
         private List<SoundEffect> soundEffects;
 
         public static float hitPoints2;
-
-        public List<IGameComponent> bullets = new List<IGameComponent>();
+        private List<Bullet> bullets = new List<Bullet>();
+        public List<Bullet> Bullets { get { return bullets; } set { bullets = value; } }
 
         private Texture2D bulletTexture;
         private bool canShoot = false;
@@ -298,22 +298,7 @@ namespace GameProject.GameObjects.Characters.Player
                 }
             }
         }
-        public void UpdateAnimations(GameTime gameTime)
-        {
-            if (Moving)
-            {
-                AnimationRun.Update(gameTime);
-            }
-            else if (Attacking)
-            {
-                AnimationAttacking.Update(gameTime);
-            }
-            else
-            {
-                AnimationIdle.Update(gameTime);
-            }
-            
-        }
+
 
         public void DecideAction()
         {
@@ -354,11 +339,12 @@ namespace GameProject.GameObjects.Characters.Player
         public override void CheckCollision(ICollidable collidable)
         {
             
-                if (Hitbox.Intersects(collidable.Hitbox) && !(collidable is Hero))
+                if (Hitbox.Intersects(collidable.Hitbox) && !(collidable is Hero) && !Invincible)
                 {
 
                     if (collidable is Enemy)
                     {
+                        
                         TakeDamage(1);
                     }
 
@@ -454,7 +440,7 @@ namespace GameProject.GameObjects.Characters.Player
 
         public void UpdateBullets(GameTime gameTime, List<ICollidable> collidables)
         {
-            foreach (Bullet b in bullets)
+            foreach (Bullet b in Bullets)
             {
                 if (!b.Remove)
                 {

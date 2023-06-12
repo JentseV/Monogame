@@ -137,12 +137,10 @@ namespace GameProject.Characters
             {
                 spriteBatch.Draw(TextureHit, Center, null, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
             }
-            else if( this.GetType() == typeof(Hero))
+            else
             {
                 spriteBatch.Draw(TextureIdling, Center, AnimationIdle.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
             }
-
-            //spriteBatch.Draw(hitboxText, Center, Hitbox, Color.White, 0f , new Vector2(0f,0f), 1f,SpriteEffects.None,0f);
         }
 
         public override void Update(GameTime gameTime)
@@ -174,6 +172,27 @@ namespace GameProject.Characters
 
         public override void CheckCollision(ICollidable collidables)
         {
+
+        }
+
+        protected void UpdateAnimations(GameTime gameTime)
+        {
+            if (Moving)
+            {
+                AnimationRun.Update(gameTime);
+            }
+            else if (Attacking)
+            {
+                AnimationAttacking.Update(gameTime);
+            }
+            else if (Hit)
+            {
+                AnimationHit.Update(gameTime);
+            }
+            else
+            {
+                AnimationIdle.Update(gameTime);
+            }
 
         }
 
