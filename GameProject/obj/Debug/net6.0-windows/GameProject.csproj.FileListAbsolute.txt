@@ -281,3 +281,5 @@ D:\Monogame\Monogame\GameProject\obj\Debug\net6.0-windows\GameProject.pdb
 D:\Monogame\Monogame\GameProject\obj\Debug\net6.0-windows\GameProject.genruntimeconfig.cache
 D:\Monogame\Monogame\GameProject\obj\Debug\net6.0-windows\ref\GameProject.dll
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\World\victoryScreen.xnb
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Sounds\soundTrack.wma
+D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Sounds\soundTrack.xnb

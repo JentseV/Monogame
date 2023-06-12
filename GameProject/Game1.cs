@@ -19,6 +19,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -31,6 +32,7 @@ namespace GameProject
     {
         public static Texture2D healthTexture, coinTexture;
         private static List<Pickup> s = new List<Pickup>();
+         
 
         public static bool Victory { get; set; } = false;
         public static bool GameStarted { get; set; } = false;
@@ -53,7 +55,7 @@ namespace GameProject
         private SpriteFont font;
         private DefeatScreen defeatScreen;
         private VictoryScreen victoryScreen;
-
+        private Song backGroundMusic;
         private List<SoundEffect> heroSounds = new List<SoundEffect>();
         private Dictionary<string, int[]> buildingParams = new Dictionary<string, int[]>();
 
@@ -156,9 +158,11 @@ namespace GameProject
 
         protected override void Initialize()
         {
+
             
-           
             base.Initialize();
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Volume = 0.4f;
             scoreUI = new ScoreUI(font);
             button = new Button(buttonText, new Vector2(500f, 300f), () => hero.Hitpoints += 3);
             hero = new Hero(heroTextures, new KeyboardReader(),heroSounds);
@@ -180,7 +184,7 @@ namespace GameProject
             SoundEffect gunshot0 = Content.Load<SoundEffect>("Sounds/Hero/Gun/revolver_shot_2");
             SoundEffect gunshot1 = Content.Load<SoundEffect>("Sounds/Hero/Gun/revolver_shot_3");
             SoundEffect gunshot2 = Content.Load<SoundEffect>("Sounds/Hero/Gun/revolver_shot_4");
-
+            backGroundMusic = Content.Load<Song>("Sounds/soundTrack");
             heroSounds.Add(gunshot0);
             heroSounds.Add(gunshot1);
             heroSounds.Add(gunshot2);
@@ -206,6 +210,10 @@ namespace GameProject
 
         protected override void Update(GameTime gameTime)
         {
+            if (MediaPlayer.State != MediaState.Playing)
+            {
+                MediaPlayer.Play(backGroundMusic);
+            }
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             if (GameStarted && hero.Dead == false && !Victory)

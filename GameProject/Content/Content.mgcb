@@ -890,6 +890,12 @@
 /processorParam:Quality=Best
 /build:Sounds/Hero/Gun/revolver_shot_4.wav
 
+#begin Sounds/soundTrack.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sounds/soundTrack.mp3
+
 #begin testTree.png
 /importer:TextureImporter
 /processor:TextureProcessor
