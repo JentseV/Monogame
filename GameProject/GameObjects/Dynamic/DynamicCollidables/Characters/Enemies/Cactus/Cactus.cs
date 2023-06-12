@@ -26,51 +26,27 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
         private List<Bullet> bullets = new List<Bullet>();
         public List<Bullet> Bullets { get { return bullets; } set { bullets = value; } }
 
-        public Cactus(Vector2 speed, Vector2 position, Texture2D[] textures)
+        public Cactus(Vector2 speed, Vector2 position, Texture2D[] textures) : base(speed,position,textures)
         {
             Movable = true;
             Damage = 1f;
-            Hitpoints = 3;
-            Speed = speed;
-            Position = position;
+            Hitpoints = 2;
+
             Range = 200f;
             Center = new Vector2(50 + Position.X, 55 + Position.Y);
             Hitbox = new Rectangle((int)Center.X + 5, (int)Center.Y, 30, 40);
-            TextureIdle = textures[0];
-            TextureRunRight = textures[1];
-            TextureUpRun = textures[2];
-            TextureIdleFacingUp = textures[3];
-            HitboxText = textures[9];
-            TextureIdleFacingRight = textures[4];
-            TextureIdleFacingFront = textures[0];
-            TextureDownRun = textures[5];
-            TextureAttackRight = textures[7];
-            TextureAttackUp = textures[8];
-            TextureAttackFront = textures[6];
-            TextureHit = textures[10];
-
+            
+            
             BulletTexture = textures[11];
-
-            TextureIdling = TextureIdle;
-            TextureRunning = TextureRunRight;
-            TextureAttacking = TextureAttackFront;
 
             AttackCooldown = 0.5f;
 
             TimeSinceLastAttack = AttackCooldown;
-
-            AnimationIdle = new Animation();
-            AnimationRun = new Animation();
-            AnimationAttacking = new Animation();
-            AnimationHit = new Animation();
-
             AnimationHit.GetFramesFromTextureProperties(TextureHit.Width, TextureHit.Height, 1, 1);
             AnimationIdle.GetFramesFromTextureProperties(TextureIdle.Width, TextureIdle.Height, 4, 1);
             AnimationRun.GetFramesFromTextureProperties(TextureRunRight.Width, TextureRunRight.Height, 10, 1);
             AnimationAttacking.GetFramesFromTextureProperties(TextureAttacking.Width, TextureAttacking.Height, 11, 1);
         }
-
-
        
         public override void Attack()
         {

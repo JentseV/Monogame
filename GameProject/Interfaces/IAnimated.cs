@@ -10,5 +10,6 @@ namespace GameProject.Interfaces
     internal interface IAnimated
     {
         public void InitializeTextures(Texture2D[] textures);
+        public void InitializeAnimations();
     }
 }

@@ -65,7 +65,7 @@ namespace GameProject.GameObjects.Characters.Player
         }
 
         private MovementManager movementManager;
-        public Hero(Texture2D[] textures, IInputReader inputReader, List<SoundEffect> sounds)
+        public Hero(Texture2D[] textures, IInputReader inputReader, List<SoundEffect> sounds) 
         {
 
             this.soundEffects = sounds;
@@ -96,12 +96,9 @@ namespace GameProject.GameObjects.Characters.Player
             TextureHit = textures[18];
             HitboxText = textures[10];
 
-
             TextureIdling = TextureIdle;
             TextureRunning = TextureRunRight;
             TextureAttacking = TextureAttackUp;
-            
-
             
             Position = new Vector2(589f, 703f);
 
@@ -113,10 +110,7 @@ namespace GameProject.GameObjects.Characters.Player
             TimeSinceLastAttack = AttackCooldown;
             Speed = new Vector2(3f, 3f);
 
-            AnimationIdle = new Animation();
-            AnimationRun = new Animation();
-            AnimationAttacking = new Animation();
-            AnimationHit = new Animation();
+            InitializeAnimations();
 
             AnimationHit.GetFramesFromTextureProperties(TextureHit.Width, TextureHit.Height, 1, 1);
             AnimationIdle.GetFramesFromTextureProperties(TextureIdle.Width, TextureIdle.Height, 6, 1);
@@ -291,10 +285,8 @@ namespace GameProject.GameObjects.Characters.Player
                 }
                 if (InvincibleTimer < 0)
                 {
-                    
                     Invincible = false;
                     InvincibleTimer = 5f;
-                    
                 }
             }
         }

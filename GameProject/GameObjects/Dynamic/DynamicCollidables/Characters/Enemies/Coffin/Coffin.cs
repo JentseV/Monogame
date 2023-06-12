@@ -23,42 +23,18 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
     internal class Coffin : Enemy, IEnemy , IAttack
     {
 
-        public Coffin(Vector2 speed, Vector2 position, Texture2D[] textures)
+        public Coffin(Vector2 speed, Vector2 position, Texture2D[] textures) : base(speed, position, textures)
         {
             Idling = false;
             Hitpoints = 3;
             Range = 32f;
             Movable = true;
-            //SPRITESHEET 74x55
-            Speed = speed;
-            Position = position;
+
             AttackCooldown = 3f;
             Center = new Vector2(50 + Position.X, 55 + Position.Y);
             Hitbox = new Rectangle((int)Center.X, (int)Center.Y, 45, 45);
-            TextureIdle = textures[1];
-            TextureRunRight = textures[1];
-            TextureUpRun = textures[2];
-            TextureIdleFacingUp = textures[3];
-            HitboxText = textures[9];
-            TextureIdleFacingRight = textures[4];
-            TextureIdleFacingFront = textures[0];
-            TextureDownRun = textures[5];
-
-            TextureAttackRight = textures[7];
-            TextureAttackUp = textures[8];
-            TextureAttackFront = textures[6];
-            TextureHit = textures[10];
-
-            TextureIdling = TextureIdle;
-            TextureRunning = TextureRunRight;
-            TextureAttacking = TextureAttackFront;
 
             TimeSinceLastAttack = AttackCooldown;
-
-            AnimationIdle = new Animation();
-            AnimationRun = new Animation();
-            AnimationAttacking = new Animation();
-            AnimationHit = new Animation();
 
             AnimationHit.GetFramesFromTextureProperties(TextureHit.Width, TextureHit.Height, 1, 1);
             AnimationIdle.GetFramesFromTextureProperties(TextureIdle.Width, TextureIdle.Height, 6, 1);

@@ -34,32 +34,26 @@ namespace GameProject.Enemies
         
         public float Range { get { return range; } set { range = value; } }
 
-   
+        
+        public Enemy(Vector2 speed, Vector2 position, Texture2D[] textures) : base()
+        {
+            Speed = speed;
+            Position = position;
+            InitializeAnimations();
+            InitializeTextures(textures);
+        }
 
         public void Update(GameTime gameTime, Hero hero, List<ICollidable> collidables)
         {
             Idling = false;
             heroL = hero;
-            this.Center = new Vector2((int)Position.X, (int)Position.Y);
-            this.hitbox.X = (int)Center.X;
-            this.hitbox.Y = (int)Center.Y;
-
+            
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             TimeSinceLastAttack -= deltaTime;
-
             
             if (Hit)
             {
-                Invincible = true; 
-                Moving = false;
-                Attacking = false;
-                InvincibleTimer += deltaTime;
-                if (InvincibleTimer > 1.5f)
-                {
-                    Invincible = false;
-                    Hit = false;
-                    InvincibleTimer = 0f;
-                }
+                CheckInvincible(deltaTime);
             }
             else
             {
@@ -67,16 +61,27 @@ namespace GameProject.Enemies
             }
 
             HeroPos = hero.Position;
-
+            UpdateHitbox();
             OnDeath();
             GetFacingDirection();
-            
             DecideAnimation();
             UpdateAnimations(gameTime);
 
         }
 
-
+        public void CheckInvincible(float delta)
+        {
+            Invincible = true;
+            Moving = false;
+            Attacking = false;
+            InvincibleTimer += delta;
+            if (InvincibleTimer > 1.5f)
+            {
+                Invincible = false;
+                Hit = false;
+                InvincibleTimer = 0f;
+            }
+        }
         public void DecideAction()
         {
 
@@ -95,12 +100,10 @@ namespace GameProject.Enemies
 
             if (!Attacking && Invincible == false && heroInRange == false )
             {
-                
                 Move();
             }
             else
             {
-               
                 Attack();
             }
         }
@@ -207,9 +210,26 @@ namespace GameProject.Enemies
             PickupManager.AddPickup(pickup);  
         }
 
-        public void InitializeTextures(Texture2D[] textures)
+        public override void InitializeTextures(Texture2D[] textures)
         {
-            throw new NotImplementedException();
+            
+            TextureIdle = textures[0];
+            TextureRunRight = textures[1];
+            TextureUpRun = textures[2];
+            TextureIdleFacingUp = textures[3];
+            HitboxText = textures[9];
+            TextureIdleFacingRight = textures[4];
+            TextureIdleFacingFront = textures[0];
+            TextureDownRun = textures[5];
+            TextureAttackRight = textures[7];
+            TextureAttackUp = textures[8];
+            TextureAttackFront = textures[6];
+            TextureHit = textures[10];
+
+            TextureIdling = TextureIdle;
+            TextureRunning = TextureRunRight;
+            TextureAttacking = TextureAttackFront;
+
         }
     }
 }

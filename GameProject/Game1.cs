@@ -63,10 +63,10 @@ namespace GameProject
 
         private Texture2D[] defeatButtonTextures = new Texture2D[2];
         private Texture2D[] buttonTextures = new Texture2D[3];
-        private Texture2D[] coffinTextures = new Texture2D[11];
+        private Texture2D[] coffinTextures = new Texture2D[12];
         private Texture2D[] heroTextures = new Texture2D[19];
         private Texture2D[] cactusTextures = new Texture2D[12];
-        private Texture2D[] coyoteTextures = new Texture2D[14];
+        private Texture2D[] coyoteTextures = new Texture2D[12];
 
         string[] heroTextureNames = {
             "heroText/Fixed/runUp",
@@ -116,8 +116,6 @@ namespace GameProject
             "heroText/red_square",
             "coyoteEn/coyoteHitAnimation",
             "Projectiles/SpongeBullet",
-            "coyoteEn/coyoteRunLeft",
-            "coyoteEn/coyoteAttackLeft"
         };
         string[] coffinTextureNames = {
             "coffinEn/coffinIdleFront",
@@ -130,7 +128,8 @@ namespace GameProject
             "coffinEn/coffinAttackRight",
             "coffinEn/coffinAttackUp",
             "heroText/red_square",
-            "coffinEn/coffinHitAnimation"
+            "coffinEn/coffinHitAnimation",
+             "Projectiles/SpongeBullet"
         };
         string[] buttonTexturesNames =
         {

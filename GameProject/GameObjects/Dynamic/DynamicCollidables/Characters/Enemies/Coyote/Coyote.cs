@@ -21,59 +21,29 @@ using System.Windows.Forms;
 
 namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Coyote
 {
-    internal class Coyote : Enemy, IEnemy , IAttack 
+    internal class Coyote : Enemy, IEnemy , IAttack , IAnimated
     {
        
         private int TeleportCount = 0;
         
-        public Coyote(Vector2 speed, Vector2 position, Texture2D[] textures)
+        public Coyote(Vector2 speed, Vector2 position, Texture2D[] textures): base(speed, position, textures)
         {
 
             Movable = true;
-            Hitpoints = 3;
-            Speed = speed;
-            Position = position;
+            Hitpoints = 1;
+
             Range = 400f;
             Center = new Vector2(50 + Position.X, 55 + Position.Y);
             Hitbox = new Rectangle((int)Center.X, (int)Center.Y, 45, 45);
-
-            TextureIdle = textures[0];
-            TextureRunRight = textures[1];
-            TextureUpRun = textures[2];
-            TextureIdleFacingUp = textures[3];
-            HitboxText = textures[9];
-            TextureRunLeft = textures[12];
-            TextureIdleFacingRight = textures[4];
-            TextureIdleFacingFront = textures[0];
-            TextureDownRun = textures[5];
-
-            TextureAttackRight = textures[7];
-            TextureAttackUp = textures[8];
-            TextureAttackFront = textures[6];
-            TextureHit = textures[10];
-            TextureAttackLeft = textures[13];
-
-
-            TextureIdling = TextureIdle;
-            TextureRunning = TextureRunRight;
-            TextureAttacking = TextureAttackFront;
-
-            AttackCooldown = 2f;
-
+            
             TimeSinceLastAttack = AttackCooldown;
-
-            AnimationIdle = new Animation();
-            AnimationRun = new Animation();
-            AnimationAttacking = new Animation();
-            AnimationHit = new Animation();
+            AttackCooldown = 2f;
 
             AnimationHit.GetFramesFromTextureProperties(TextureHit.Width, TextureHit.Height, 1, 1);
             AnimationIdle.GetFramesFromTextureProperties(TextureIdle.Width, TextureIdle.Height, 7, 1);
             AnimationRun.GetFramesFromTextureProperties(TextureRunRight.Width, TextureRunRight.Height, 14, 1);
             AnimationAttacking.GetFramesFromTextureProperties(TextureAttacking.Width, TextureAttacking.Height, 24, 1);
         }
-
-
 
         public override void Attack()
         {
