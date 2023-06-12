@@ -7532,19 +7532,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Jentse\\.nuget\\packages\\": {}
+    "C:\\Users\\Jents\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Monogame\\Monogame\\GameProject\\GameProject.csproj",
+      "projectUniqueName": "D:\\Monogame\\GameProject\\GameProject\\GameProject.csproj",
       "projectName": "GameProject",
-      "projectPath": "D:\\Monogame\\Monogame\\GameProject\\GameProject.csproj",
-      "packagesPath": "C:\\Users\\Jentse\\.nuget\\packages\\",
-      "outputPath": "D:\\Monogame\\Monogame\\GameProject\\obj\\",
+      "projectPath": "D:\\Monogame\\GameProject\\GameProject\\GameProject.csproj",
+      "packagesPath": "C:\\Users\\Jents\\.nuget\\packages\\",
+      "outputPath": "D:\\Monogame\\GameProject\\GameProject\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Jentse\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Jents\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7598,7 +7598,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }

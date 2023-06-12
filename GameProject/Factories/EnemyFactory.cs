@@ -1,4 +1,5 @@
-﻿using GameProject.GameObjects.Characters.Player;
+﻿using GameProject.Enemies;
+using GameProject.GameObjects.Characters.Player;
 using GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Cactus;
 using GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Coffin;
 using GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Coyote;
@@ -12,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Enemies
+namespace GameProject.Factories
 {
     internal static class EnemyFactory
     {
@@ -20,7 +21,7 @@ namespace GameProject.Enemies
 
         public static List<Enemy> SpawnEnemies(Texture2D[] coffinTextures, Texture2D[] cactusTextures, Texture2D[] coyoteTextures, float difficulty)
         {
-            
+
             List<Enemy> enemies = new List<Enemy>();
 
             spawnLocations.Add(new Vector2(114F, 280f));
@@ -31,7 +32,7 @@ namespace GameProject.Enemies
             float enemiesToSpawn = difficulty * 1f;
             while (enemies.Count < enemiesToSpawn)
             {
-                
+
                 Random r = new Random();
                 short spawnerChance = (short)r.Next(0, 100);
 

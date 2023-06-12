@@ -29,7 +29,7 @@ using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace GameProject.GameObjects.Characters.Player
 {
-    internal class Hero : Character, IMovable, IGameComponent, ICollidable, IRangedAttacker, IPickupObserver, IAttack
+    internal class Hero : Character, IMovable, IGameComponent, ICollidable, IRangedAttacker, IPickupObserver, IAttack 
     {
 
         private List<SoundEffect> soundEffects;
@@ -321,6 +321,7 @@ namespace GameProject.GameObjects.Characters.Player
             }
             else
             {
+                Idling = true;
                 Moving = false;
                 canShoot = true;
             }
@@ -351,7 +352,7 @@ namespace GameProject.GameObjects.Characters.Player
                     if (collidable is Bullet)
                     {
                         Bullet b = collidable as Bullet;
-                        if (b.Tag == "CactusBullet" && !Invincible && !b.Remove)
+                        if (b.Tag == "CactusBullet"  && !b.Remove)
                         {
                             TakeDamage(b.Damage);
                         }
@@ -462,7 +463,7 @@ namespace GameProject.GameObjects.Characters.Player
             
         }
 
-        public void OnPickup(Pickup pickup) // hardcoded values, change later
+        public void OnPickup(Pickup pickup)
         {
             if(pickup is Health && !pickup.Remove)
             {

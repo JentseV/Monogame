@@ -1,14 +1,15 @@
 ﻿
 using GameProject.Characters;
 using GameProject.Enemies;
+using GameProject.Factories;
 using GameProject.GameObjects;
 using GameProject.GameObjects.Characters.Player;
 using GameProject.GameObjects.Dynamic.Characters.Enemies;
 using GameProject.GameObjects.Dynamic.DynamicCollidables;
 using GameProject.GameObjects.Static.StaticCollidable;
 using GameProject.GameObjects.Static.StaticCollidable.Buildings;
-using GameProject.GameObjects.Static.StaticCollidable.Pickups;
 using GameProject.Interfaces;
+using GameProject.Managers;
 using GameProject.Pickups;
 using GameProject.Projectiles;
 using GameProject.Screens;

@@ -120,7 +120,6 @@ D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coffinEn\co
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coffinEn\coffinAttackRight.xnb
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coffinEn\coffinAttackUp.xnb
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Atlas.xnb
-D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\Screens\background.xnb
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\testTree.xnb
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\coffinEn\coffinHitAnimation.xnb
 D:\Monogame\GameProject\GameProject\bin\Debug\net6.0-windows\Content\World\background.xnb

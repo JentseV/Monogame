@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.GameObjects.Static.StaticCollidable.Pickups
+namespace GameProject.Factories
 {
     internal class PickupFactory
     {
@@ -28,7 +28,7 @@ namespace GameProject.GameObjects.Static.StaticCollidable.Pickups
                 pickup = new Coin(id, tag, position, timeDespawn);
             }
 
-            // Add the hero as an observer for the pickup
+            
             pickup.AttachObserver(hero);
 
             return pickup;

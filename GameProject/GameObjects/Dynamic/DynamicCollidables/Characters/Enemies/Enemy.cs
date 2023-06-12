@@ -1,11 +1,12 @@
 ﻿using GameProject.Animations;
 using GameProject.Characters;
+using GameProject.Factories;
 using GameProject.GameObjects;
 using GameProject.GameObjects.Characters.Player;
 using GameProject.GameObjects.Dynamic.DynamicCollidables;
 using GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Cactus;
-using GameProject.GameObjects.Static.StaticCollidable.Pickups;
 using GameProject.Interfaces;
+using GameProject.Managers;
 using GameProject.Pickups;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
@@ -30,13 +31,14 @@ namespace GameProject.Enemies
         private bool heroInRange = false;
         public Vector2 Facing { get { return facing; } set { facing = value; } }
         public Vector2 HeroPos { get { return heroPos; } set { heroPos = value; } }
-
+        
         public float Range { get { return range; } set { range = value; } }
 
    
 
         public void Update(GameTime gameTime, Hero hero, List<ICollidable> collidables)
         {
+            Idling = false;
             heroL = hero;
             this.Center = new Vector2((int)Position.X, (int)Position.Y);
             this.hitbox.X = (int)Center.X;
@@ -59,12 +61,16 @@ namespace GameProject.Enemies
                     InvincibleTimer = 0f;
                 }
             }
+            else
+            {
+                DecideAction();
+            }
 
             HeroPos = hero.Position;
 
             OnDeath();
             GetFacingDirection();
-            DecideAction();
+            
             DecideAnimation();
             UpdateAnimations(gameTime);
 
@@ -77,31 +83,27 @@ namespace GameProject.Enemies
             if (Vector2.Distance(HeroPos, this.Position) < Range)
             {
                 heroInRange = true;
+                Attacking = true;
+                Moving = false;
             }
             else
             {
+                Moving = true;
                 Attacking = false;
                 heroInRange = false;
             }
 
             if (!Attacking && Invincible == false && heroInRange == false )
             {
-                Moving = true;
-                Attacking = false;
+                
                 Move();
             }
             else
             {
-                Moving = false;
+               
                 Attack();
             }
         }
-
-        public override void Attack()
-        {
-            Attacking = true;
-        }
-
 
         protected void DecideAnimation()
         {

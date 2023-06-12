@@ -25,6 +25,8 @@ namespace GameProject.Characters
     internal abstract class Character : DynamicCollidable, IGameComponent, IMovable, ICollidable , IDynamicCollidable
     {
 
+        private bool idling = false;
+        public bool Idling { get { return idling; } set { idling = value; } }
         private float damage;
         public float Damage { get { return damage; } set { damage = value; } }
         private float invincibleTimer;
@@ -129,7 +131,6 @@ namespace GameProject.Characters
             }
             else if (Attacking)
             {
-
                 spriteBatch.Draw(TextureAttacking, Center, AnimationAttacking.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
             }
 
@@ -137,21 +138,16 @@ namespace GameProject.Characters
             {
                 spriteBatch.Draw(TextureHit, Center, null, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
             }
-            else
+            else if (Idling)
             {
                 spriteBatch.Draw(TextureIdling, Center, AnimationIdle.CurrentFrame.SourceRectangle, Color.White, 0f, new Vector2(0f, 0f), 1f, Flip, 0f);
             }
         }
 
-        public override void Update(GameTime gameTime)
-        {
-
-        }
-
 
         public virtual void Attack()
         {
-
+            
         }
 
         protected void TakeDamage(float amountOfDamage)
@@ -170,26 +166,21 @@ namespace GameProject.Characters
 
         }
 
-        public override void CheckCollision(ICollidable collidables)
-        {
-
-        }
-
         protected void UpdateAnimations(GameTime gameTime)
         {
             if (Moving)
             {
                 AnimationRun.Update(gameTime);
             }
-            else if (Attacking)
+             else if (Attacking)
             {
                 AnimationAttacking.Update(gameTime);
             }
-            else if (Hit)
+             else if (Hit)
             {
                 AnimationHit.Update(gameTime);
             }
-            else
+            else if(Idling)
             {
                 AnimationIdle.Update(gameTime);
             }
@@ -204,7 +195,6 @@ namespace GameProject.Characters
         }
         public void Move()
         {
-            Moving = true;
             Position += Direction * Speed;
         }
     }

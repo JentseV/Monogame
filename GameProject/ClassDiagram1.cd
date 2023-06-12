@@ -24,7 +24,7 @@
   <Class Name="GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Cactus.Cactus" Collapsed="true">
     <Position X="8.25" Y="9.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAQAAAAAAACAAAAAAAAAAAAAIAAAAAAAQAAAAAAAAI=</HashCode>
+      <HashCode>AAAAgAAAAIACAAAAAAAAAAAAAIAAAAAAAQAAAAAAAAI=</HashCode>
       <FileName>GameObjects\Dynamic\DynamicCollidables\Characters\Enemies\Cactus\Cactus.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -62,7 +62,7 @@
   <Class Name="GameProject.Enemies.Enemy" Collapsed="true">
     <Position X="10.5" Y="8.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAQQABAIAEAQCQAAAAAAAYAAAIAAAACAAAAAgAAAgIA=</HashCode>
+      <HashCode>IAQAABAIAEAQCQAAAAAAAYAAAIACAACAAAAAgAAAgIA=</HashCode>
       <FileName>GameObjects\Dynamic\DynamicCollidables\Characters\Enemies\Enemy.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -77,7 +77,7 @@
   <Class Name="GameProject.GameObjects.Characters.Player.Hero" Collapsed="true">
     <Position X="15" Y="8.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAQUERAAAIAGBAQACAAAASAIEAACCACAAQAAAggAgIE=</HashCode>
+      <HashCode>QASEkRAAAIAGAAQACAAAASgIEIACCACAAQQAAggAgIE=</HashCode>
       <FileName>GameObjects\Dynamic\DynamicCollidables\Characters\Player\Hero.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -85,7 +85,7 @@
   <Class Name="GameProject.Characters.Character" Collapsed="true">
     <Position X="11.5" Y="6.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ACUkAjLXhagi0gAIG4YQACcikJRjCMiMJhKByFjBMwA=</HashCode>
+      <HashCode>ACU0AjLXhagi0gAIG4YQACcikJRjCMiMJhKByFjBMwA=</HashCode>
       <FileName>GameObjects\Dynamic\DynamicCollidables\Characters\Character.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -117,9 +117,10 @@
   <Class Name="GameProject.GameObjects.Dynamic.DynamicGO" Collapsed="true">
     <Position X="9.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAIAAAACAAAAABAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAQAAAAAAAAAIAAAACAAAAABAAAAAQAAAAAAAAAAAAA=</HashCode>
       <FileName>GameObjects\Dynamic\DynamicGO.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="GameProject.Pickups.Coin" Collapsed="true">
     <Position X="17.25" Y="8.25" Width="1.5" />
@@ -271,7 +272,7 @@
   <Interface Name="GameProject.GameObjects.Dynamic.Characters.Enemies.IRangedAttacker" Collapsed="true">
     <Position X="26.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>GameObjects\Dynamic\DynamicCollidables\Characters\Enemies\IRangedAttacker.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -299,14 +300,14 @@
   <Interface Name="GameProject.IInputReader" Collapsed="true">
     <Position X="30" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAACAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Input\IInputReader.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="GameProject.IMovable" Collapsed="true">
     <Position X="31.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAIAAAAAgAAAAAAABAAAACAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Input\IMovable.cs</FileName>
     </TypeIdentifier>
   </Interface>

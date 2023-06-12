@@ -45,7 +45,7 @@ namespace GameProject.Projectiles
             this.Position += Direction * Speed;
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             Move();
         }

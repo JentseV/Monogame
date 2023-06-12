@@ -1,5 +1,4 @@
-﻿
-using GameProject.GameObjects.Characters.Player;
+﻿using GameProject.GameObjects.Characters.Player;
 using GameProject.GameObjects.Dynamic.DynamicCollidables;
 using GameProject.Interfaces;
 using GameProject.Pickups;
@@ -11,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.GameObjects.Dynamic.Characters.Enemies
+namespace GameProject.Managers
 {
     internal static class CollisionManager
     {

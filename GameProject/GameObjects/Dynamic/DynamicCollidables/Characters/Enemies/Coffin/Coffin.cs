@@ -25,6 +25,7 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
 
         public Coffin(Vector2 speed, Vector2 position, Texture2D[] textures)
         {
+            Idling = false;
             Hitpoints = 3;
             Range = 32f;
             Movable = true;
@@ -72,7 +73,6 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
             {
                 Attacking = true;
                 TimeSinceLastAttack = AttackCooldown;
-                
             }
            
         }
