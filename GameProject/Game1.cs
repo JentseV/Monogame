@@ -51,7 +51,6 @@ namespace GameProject
         private Hero hero;
         private EnemyManager enemyManager;
         private StartScreen startScreen;
-        private Button button;
         private SpriteFont font;
         private DefeatScreen defeatScreen;
         private VictoryScreen victoryScreen;
@@ -59,8 +58,7 @@ namespace GameProject
         private List<SoundEffect> heroSounds = new List<SoundEffect>();
         private Dictionary<string, int[]> buildingParams = new Dictionary<string, int[]>();
 
-        private List<DynamicCollidable> dynamicCollidables = new List<DynamicCollidable>();
-        private List<StaticCollidable> staticCollidables = new List<StaticCollidable>();
+
         private List<Enemy> enemies;
         List<ICollidable> collidables = new List<ICollidable>();
 
@@ -164,7 +162,6 @@ namespace GameProject
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Volume = 0.4f;
             scoreUI = new ScoreUI(font);
-            button = new Button(buttonText, new Vector2(500f, 300f), () => hero.Hitpoints += 3);
             hero = new Hero(heroTextures, new KeyboardReader(),heroSounds);
             defeatScreen = new DefeatScreen(defeatButtonTextures,font, hero);
             enemyManager = new EnemyManager(enemies);
@@ -203,7 +200,6 @@ namespace GameProject
             backGroundDefeat = Content.Load<Texture2D>("World/defeatScreen");
             backGroundVictory = Content.Load<Texture2D>("World/victoryScreen");
             font = Content.Load<SpriteFont>("Fonts/west");
-            buttonText = Content.Load<Texture2D>("Buttons/boots");
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         }
