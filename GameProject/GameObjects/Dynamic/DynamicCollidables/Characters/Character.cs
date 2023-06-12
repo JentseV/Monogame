@@ -3,6 +3,8 @@ using GameProject.GameObjects;
 using GameProject.GameObjects.Characters.Player;
 using GameProject.GameObjects.Dynamic;
 using GameProject.GameObjects.Dynamic.DynamicCollidables;
+using GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies;
+using GameProject.Interfaces;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,7 +18,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using IGameComponent = GameProject.Interfaces.IGameComponent;
 
 namespace GameProject.Characters
 {
@@ -143,7 +145,13 @@ namespace GameProject.Characters
             //spriteBatch.Draw(hitboxText, Center, Hitbox, Color.White, 0f , new Vector2(0f,0f), 1f,SpriteEffects.None,0f);
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
+        {
+
+        }
+
+
+        public virtual void Attack()
         {
 
         }

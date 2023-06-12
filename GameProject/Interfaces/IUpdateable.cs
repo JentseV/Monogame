@@ -5,12 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject
+namespace GameProject.Interfaces
 {
-    internal interface IInputReader
+    internal interface IUpdateable
     {
-
-        Vector2 ReadInput();
-        public bool IsDestinationInput { get; }
+        public void Update(GameTime gameTime);
     }
 }

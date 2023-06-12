@@ -1,6 +1,7 @@
 ﻿using GameProject.GameObjects;
 using GameProject.GameObjects.Dynamic;
 using GameProject.GameObjects.Dynamic.DynamicCollidables;
+using GameProject.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IGameComponent = GameProject.Interfaces.IGameComponent;
 
 namespace GameProject.Projectiles
 {

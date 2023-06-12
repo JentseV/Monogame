@@ -3,6 +3,7 @@ using GameProject.Enemies;
 using GameProject.GameObjects.Characters.Player;
 using GameProject.GameObjects.Static;
 using GameProject.GameObjects.Static.StaticCollidable;
+using GameProject.Interfaces;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -17,6 +18,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using IGameComponent = GameProject.Interfaces.IGameComponent;
+
 namespace GameProject.Pickups
 {
     internal abstract class Pickup : StaticCollidable , ICollidable, IGameComponent

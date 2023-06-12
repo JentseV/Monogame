@@ -1,6 +1,7 @@
 ﻿using GameProject.Animations;
 using GameProject.Enemies;
 using GameProject.GameObjects.Characters.Player;
+using GameProject.Interfaces;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -19,7 +20,7 @@ using System.Windows.Forms;
 
 namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Coffin
 {
-    internal class Coffin : Enemy, IEnemy
+    internal class Coffin : Enemy, IEnemy , IAttack
     {
 
         public Coffin(Vector2 speed, Vector2 position, Texture2D[] textures)
@@ -64,7 +65,7 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
             AnimationAttacking.GetFramesFromTextureProperties(TextureAttacking.Width, TextureAttacking.Height, 18, 1);
         }
 
-        protected override void Attack()
+        public override void Attack()
         {
 
             if (TimeSinceLastAttack <= 0 && Invincible == false)

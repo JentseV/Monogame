@@ -3,10 +3,12 @@ using GameProject.Characters;
 using GameProject.Enemies;
 using GameProject.GameObjects.Dynamic.Characters.Enemies;
 using GameProject.GameObjects.Dynamic.DynamicCollidables;
+using GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies;
 using GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Coffin;
 using GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Coyote;
 using GameProject.GameObjects.Static.StaticCollidable;
 using GameProject.GameObjects.Static.StaticCollidable.Buildings;
+using GameProject.Interfaces;
 using GameProject.Pickups;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
@@ -22,11 +24,12 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using IGameComponent = GameProject.Interfaces.IGameComponent;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace GameProject.GameObjects.Characters.Player
 {
-    internal class Hero : Character, IMovable, IGameComponent, ICollidable, IRangedAttacker, IPickupObserver
+    internal class Hero : Character, IMovable, IGameComponent, ICollidable, IRangedAttacker, IPickupObserver, IAttack
     {
 
         private List<SoundEffect> soundEffects;
@@ -70,7 +73,7 @@ namespace GameProject.GameObjects.Characters.Player
             Hitpoints = 3f;
 
             Tag = "Hero";
-
+            this.Position = new Vector2(500F, 500F);
             Damage = 1f;
             Texture = textures[3];
             TextureIdle = textures[3];
@@ -317,7 +320,7 @@ namespace GameProject.GameObjects.Characters.Player
 
             if (Keyboard.GetState().IsKeyDown(Keys.K))
             {
-                this.Speed = new Vector2(6f, 6f);
+                this.Speed += new Vector2(0.1f, 0.1f); // momentum + acceleratie
             }
             else
             {
@@ -339,7 +342,7 @@ namespace GameProject.GameObjects.Characters.Player
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space) && canShoot)
             {
-                Shoot();
+                Attack();
             }
             else
             {
@@ -399,7 +402,7 @@ namespace GameProject.GameObjects.Characters.Player
             
         }
         private Random random = new Random();
-        public void Shoot()
+        public override void Attack()
         {
             if (TimeSinceLastAttack <= 0)
             {

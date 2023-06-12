@@ -17,7 +17,7 @@ using System.Windows.Forms;
 
 namespace GameProject.GameObjects.Dynamic
 {
-    internal class DynamicGO : GameObject
+    internal class DynamicGO : GameObject , Interfaces.IUpdateable
     {
 
         private Vector2 direction;
@@ -25,5 +25,10 @@ namespace GameProject.GameObjects.Dynamic
 
         public Vector2 Direction { get { return direction; } set { direction = value; } }
         public Vector2 Speed { get { return speed; } set { speed = value; } }
+
+        public virtual void Update(GameTime gameTime)
+        {
+
+        }
     }
 }

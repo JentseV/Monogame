@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Enemies
+namespace GameProject.Interfaces
 {
-    internal interface IEnemy
+    internal interface IAttack
     {
+        public void Attack();
     }
 }

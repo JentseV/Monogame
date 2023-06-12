@@ -13,18 +13,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin ../../../sprites/vacaroxa--generic-old-west-graphics--v.1.0/Generic Old West Graphicis/background.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:../../../sprites/vacaroxa--generic-old-west-graphics--v.1.0/Generic Old West Graphicis/background.png;Screens/background.png
-
 #begin Atlas.png
 /importer:TextureImporter
 /processor:TextureProcessor

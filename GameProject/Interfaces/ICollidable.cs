@@ -16,9 +16,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace GameProject
+namespace GameProject.Interfaces
 {
-    internal interface ICollidable 
+    internal interface ICollidable
     {
         Vector2 Position { get; set; }
         bool Remove { get; set; }

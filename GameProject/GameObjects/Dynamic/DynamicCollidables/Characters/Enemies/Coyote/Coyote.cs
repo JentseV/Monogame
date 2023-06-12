@@ -1,6 +1,7 @@
 ﻿using GameProject.Animations;
 using GameProject.Enemies;
 using GameProject.GameObjects.Characters.Player;
+using GameProject.Interfaces;
 using GameProject.Pickups;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
@@ -20,7 +21,7 @@ using System.Windows.Forms;
 
 namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Coyote
 {
-    internal class Coyote : Enemy, IEnemy
+    internal class Coyote : Enemy, IEnemy , IAttack 
     {
        
         private int TeleportCount = 0;
@@ -35,6 +36,7 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
             Range = 400f;
             Center = new Vector2(50 + Position.X, 55 + Position.Y);
             Hitbox = new Rectangle((int)Center.X, (int)Center.Y, 45, 45);
+
             TextureIdle = textures[0];
             TextureRunRight = textures[1];
             TextureUpRun = textures[2];
@@ -73,9 +75,8 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
 
 
 
-        protected override void Attack()
+        public override void Attack()
         {
-
             if (TimeSinceLastAttack <= 0 && Invincible == false)
             {
                 Attacking = true;

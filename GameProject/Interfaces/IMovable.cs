@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace GameProject
+namespace GameProject.Interfaces
 {
     internal interface IMovable
     {

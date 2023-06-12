@@ -1,4 +1,5 @@
-﻿using GameProject.Pickups;
+﻿using GameProject.Interfaces;
+using GameProject.Pickups;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;

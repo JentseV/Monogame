@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.GameObjects.Dynamic.DynamicCollidables
+namespace GameProject.Interfaces
 {
-    internal interface IDynamicCollidable
+    internal interface IEnemy
     {
     }
 }

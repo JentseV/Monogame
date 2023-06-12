@@ -2,6 +2,7 @@
 using GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Cactus;
 using GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Coffin;
 using GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Coyote;
+using GameProject.Interfaces;
 using GameProject.Pickups;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
@@ -17,6 +18,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using IGameComponent = GameProject.Interfaces.IGameComponent;
 
 namespace GameProject.Projectiles
 {

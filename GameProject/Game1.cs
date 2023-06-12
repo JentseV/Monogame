@@ -8,6 +8,7 @@ using GameProject.GameObjects.Dynamic.DynamicCollidables;
 using GameProject.GameObjects.Static.StaticCollidable;
 using GameProject.GameObjects.Static.StaticCollidable.Buildings;
 using GameProject.GameObjects.Static.StaticCollidable.Pickups;
+using GameProject.Interfaces;
 using GameProject.Pickups;
 using GameProject.Projectiles;
 using GameProject.Screens;
@@ -219,7 +220,9 @@ namespace GameProject
                 }
 
                 UpdateSpawnEnemies();
-               
+                CollisionManager.CheckCollisions(collidables, pickupObservers);
+
+
                 //upgradeUI.Update(Mouse.GetState());
 
                 enemyManager.Update(gameTime, hero, collidables);

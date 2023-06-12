@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using GameProject.Characters;
 using GameProject.Enemies;
 using GameProject.GameObjects.Dynamic.DynamicCollidables;
+using GameProject.Interfaces;
 
 namespace GameProject.GameObjects.Dynamic.Characters.Enemies
 {

@@ -1,6 +1,7 @@
 ﻿
 using GameProject.GameObjects.Characters.Player;
 using GameProject.GameObjects.Dynamic.DynamicCollidables;
+using GameProject.Interfaces;
 using GameProject.Pickups;
 using GameProject.Projectiles;
 using System;

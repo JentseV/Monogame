@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.GameObjects.Dynamic.Characters.Enemies
+namespace GameProject.Interfaces
 {
     internal interface IRangedAttacker
     {

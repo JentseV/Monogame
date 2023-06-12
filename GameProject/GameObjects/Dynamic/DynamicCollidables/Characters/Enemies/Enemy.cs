@@ -5,6 +5,7 @@ using GameProject.GameObjects.Characters.Player;
 using GameProject.GameObjects.Dynamic.DynamicCollidables;
 using GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Cactus;
 using GameProject.GameObjects.Static.StaticCollidable.Pickups;
+using GameProject.Interfaces;
 using GameProject.Pickups;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
@@ -21,7 +22,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 namespace GameProject.Enemies
 {
-    internal abstract class Enemy : Character, ICollidable
+    internal abstract class Enemy : Character, ICollidable, IAnimated , IAttack
     {
         private Hero heroL;
         private Vector2 heroPos, facing;
@@ -97,7 +98,7 @@ namespace GameProject.Enemies
             }
         }
 
-        protected virtual void Attack()
+        public override void Attack()
         {
             
         }
@@ -224,5 +225,9 @@ namespace GameProject.Enemies
             PickupManager.AddPickup(pickup);  
         }
 
+        public void InitializeTextures(Texture2D[] textures)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

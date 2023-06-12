@@ -1,8 +1,8 @@
 ﻿using GameProject.Animations;
 using GameProject.Enemies;
 using GameProject.GameObjects.Characters.Player;
-using GameProject.GameObjects.Dynamic.Characters.Enemies;
 using GameProject.GameObjects.Dynamic.DynamicCollidables;
+using GameProject.Interfaces;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,7 +18,7 @@ using System.Windows.Forms;
 
 namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.Cactus
 {
-    internal class Cactus : Enemy, IEnemy, IRangedAttacker
+    internal class Cactus : Enemy, IEnemy, IRangedAttacker, IAttack
     {
 
         private Texture2D BulletTexture;
@@ -72,7 +72,7 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
 
 
        
-        protected override void Attack()
+        public override void Attack()
         {
 
             if (TimeSinceLastAttack <= 0 && Invincible == false)
