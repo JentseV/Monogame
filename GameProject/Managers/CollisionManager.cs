@@ -34,7 +34,7 @@ namespace GameProject.Managers
                         {
                             if (otherCollidable is Hero hero)
                             {
-                                pickup.OnPickup(hero);
+                                pickup.OnPickup();
                                 NotifyObservers(pickupObservers, pickup);
                                 break;
                             }

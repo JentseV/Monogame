@@ -16,7 +16,7 @@ using System.Windows.Forms;
 
 namespace GameProject.GameObjects
 {
-    internal class GameObject
+    internal abstract class GameObject
     {
 
         protected bool remove;

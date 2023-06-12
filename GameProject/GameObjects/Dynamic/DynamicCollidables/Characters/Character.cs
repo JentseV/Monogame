@@ -22,7 +22,7 @@ using IGameComponent = GameProject.Interfaces.IGameComponent;
 
 namespace GameProject.Characters
 {
-    internal abstract class Character : DynamicCollidable, IGameComponent, IMovable, ICollidable , IDynamicCollidable , IAnimated, IUpdateableCharacter , IAttack
+    internal abstract class Character : DynamicCollidable, IMovable, ICollidable , IDynamicCollidable , IAnimated, IUpdateableCharacter , IAttack
     {
 
         private bool idling = false;
@@ -165,7 +165,7 @@ namespace GameProject.Characters
                 Hit = true;
                 Hitpoints -= amountOfDamage; 
             }
-            else if(Hitpoints < 1)
+            else if(Hitpoints < 1f || Hitpoints == 0)
             {
                 Hit = false;
                 Dead = true;

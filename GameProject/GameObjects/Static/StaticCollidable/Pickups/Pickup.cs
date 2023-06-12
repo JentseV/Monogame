@@ -61,12 +61,12 @@ namespace GameProject.Pickups
                     {
                         
                         Hero h = collidable as Hero;
-                        OnPickup(h);
+                        OnPickup();
                     }
                 }
         }
 
-        public void OnPickup(Hero h)
+        public void OnPickup()
         {
             
             NotifyObservers();
@@ -86,7 +86,6 @@ namespace GameProject.Pickups
 
         protected virtual void NotifyObservers()
         {
-            Debug.WriteLine("Notify observer");
             foreach (var observer in observers)
             {
                 observer.OnPickup(this);

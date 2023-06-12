@@ -7,7 +7,7 @@ using GameProject.Interfaces;
 
 namespace GameProject.GameObjects.Static.StaticCollidable
 {
-    internal class StaticCollidable : StaticGO, ICollidable
+    internal  abstract class StaticCollidable : StaticGO, ICollidable
     {
         public virtual void CheckCollision(ICollidable collidables)
         {

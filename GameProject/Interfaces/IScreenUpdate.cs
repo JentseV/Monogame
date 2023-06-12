@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.GameObjects.Static.StaticNonCollidable
+namespace GameProject.Interfaces
 {
-    internal abstract class StaticNonCollidable : StaticGO
+    internal interface IScreenUpdate
     {
+
     }
 }

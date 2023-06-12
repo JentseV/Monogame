@@ -8,13 +8,8 @@ using System.Threading.Tasks;
 
 namespace GameProject.Interfaces
 {
-    internal interface IGameComponent
+    internal interface IGameComponent // wordt niet gebruikt
     {
-        int ID { get; set; }
-        string Tag { get; set; }
-        Vector2 Position { get; set; }
-
-        void Update(GameTime gameTime);
-        void Draw(SpriteBatch spriteBatch);
+        
     }
 }

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace GameProject.Screens
 {
-    internal class StartScreen : GameScreen, IScreen
+    internal class StartScreen : GameScreen
     {
         private Button easyButton, mediumButton, hardButton;
         public StartScreen(Texture2D[] buttonText, SpriteFont font, Hero  hero): base(buttonText,font,hero)

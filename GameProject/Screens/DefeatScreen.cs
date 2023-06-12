@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace GameProject.Screens
 {
-    internal class DefeatScreen : GameScreen, IScreen
+    internal class DefeatScreen : GameScreen
     {
         private Button restartButton, exitButton;
 

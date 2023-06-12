@@ -19,7 +19,7 @@ using System.Windows.Forms;
 
 namespace GameProject.GameObjects.Dynamic
 {
-    internal class DynamicGO : GameObject , Interfaces.IUpdateable
+    internal abstract class DynamicGO : GameObject , Interfaces.IUpdateable
     {
 
         private Vector2 direction;

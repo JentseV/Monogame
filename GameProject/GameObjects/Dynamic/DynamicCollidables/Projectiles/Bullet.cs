@@ -130,11 +130,11 @@ namespace GameProject.Projectiles
                     {
                         if (collidable is Coffin)
                         {
-                            Debug.WriteLine("hit coffin");
+                           
                             Coffin c = collidable as Coffin;
                         if (!c.Invincible)
                         {
-                            Debug.WriteLine("Coffin was not invincible so we make bullet Remove true");
+                            
                             Remove = true;
                         }
                             
