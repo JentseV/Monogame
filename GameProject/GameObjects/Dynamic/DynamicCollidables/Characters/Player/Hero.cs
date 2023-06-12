@@ -65,7 +65,7 @@ namespace GameProject.GameObjects.Characters.Player
         }
 
         private MovementManager movementManager;
-        public Hero(Texture2D[] textures, IInputReader inputReader, List<SoundEffect> sounds) 
+        public Hero(Texture2D[] textures, IInputReader inputReader, List<SoundEffect> sounds) :base(textures)
         {
 
             this.soundEffects = sounds;
@@ -75,6 +75,30 @@ namespace GameProject.GameObjects.Characters.Player
             Tag = "Hero";
             this.Position = new Vector2(500F, 500F);
             Damage = 1f;
+           
+            
+            Position = new Vector2(589f, 703f);
+
+            Hitbox = new Rectangle((int)Position.X, (int)Position.Y, 32, 32);
+
+            InvincibleTimer = 5f;
+
+            AttackCooldown = 0.5f;
+            TimeSinceLastAttack = AttackCooldown;
+            Speed = new Vector2(3f, 3f);
+
+            AnimationHit.GetFramesFromTextureProperties(TextureHit.Width, TextureHit.Height, 1, 1);
+            AnimationIdle.GetFramesFromTextureProperties(TextureIdle.Width, TextureIdle.Height, 6, 1);
+            AnimationRun.GetFramesFromTextureProperties(TextureRunRight.Width, TextureRunRight.Height, 8, 1);
+            AnimationAttacking.GetFramesFromTextureProperties(TextureAttacking.Width, TextureAttacking.Height, 6, 1);
+
+            movementManager = new MovementManager();
+            this.inputReader = inputReader;
+        }
+
+
+        public override void InitializeTextures(Texture2D[] textures)
+        {
             Texture = textures[3];
             TextureIdle = textures[3];
             TextureUpRun = textures[0];
@@ -99,30 +123,9 @@ namespace GameProject.GameObjects.Characters.Player
             TextureIdling = TextureIdle;
             TextureRunning = TextureRunRight;
             TextureAttacking = TextureAttackUp;
-            
-            Position = new Vector2(589f, 703f);
-
-            Hitbox = new Rectangle((int)Position.X, (int)Position.Y, 32, 32);
-
-            InvincibleTimer = 5f;
-
-            AttackCooldown = 0.5f;
-            TimeSinceLastAttack = AttackCooldown;
-            Speed = new Vector2(3f, 3f);
-
-            InitializeAnimations();
-
-            AnimationHit.GetFramesFromTextureProperties(TextureHit.Width, TextureHit.Height, 1, 1);
-            AnimationIdle.GetFramesFromTextureProperties(TextureIdle.Width, TextureIdle.Height, 6, 1);
-            AnimationRun.GetFramesFromTextureProperties(TextureRunRight.Width, TextureRunRight.Height, 8, 1);
-            AnimationAttacking.GetFramesFromTextureProperties(TextureAttacking.Width, TextureAttacking.Height, 6, 1);
-
-            movementManager = new MovementManager();
-            this.inputReader = inputReader;
         }
 
-
-        public void Update(GameTime gameTime, List<ICollidable> collidables)
+        public override void Update(GameTime gameTime, List<ICollidable> collidables)
         {
             hitPoints2 = Hitpoints;
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;

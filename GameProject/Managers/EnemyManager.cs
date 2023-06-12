@@ -31,7 +31,7 @@ namespace GameProject.GameObjects.Dynamic.Characters.Enemies
                 
                 if (!enemy.Remove)
                 {
-                    enemy.Update(gameTime, hero, collidables);
+                    enemy.Update(gameTime, collidables);
 
                     if (enemy is IRangedAttacker rangedEnemy)
                         rangedEnemy.UpdateBullets(gameTime, collidables);

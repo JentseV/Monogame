@@ -11,7 +11,6 @@ namespace GameProject.Screens
 {
     internal interface IScreen
     {
-
         void Update(MouseState mouseState);
 
         void Draw(SpriteBatch spriteBatch);

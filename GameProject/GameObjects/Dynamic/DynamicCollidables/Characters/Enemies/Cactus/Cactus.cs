@@ -26,17 +26,14 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
         private List<Bullet> bullets = new List<Bullet>();
         public List<Bullet> Bullets { get { return bullets; } set { bullets = value; } }
 
-        public Cactus(Vector2 speed, Vector2 position, Texture2D[] textures) : base(speed,position,textures)
+        public Cactus(Vector2 speed, Vector2 position, Texture2D[] textures, Hero hero) : base(speed, position, textures,hero)
         {
             Movable = true;
             Damage = 1f;
             Hitpoints = 2;
-
             Range = 200f;
             Center = new Vector2(50 + Position.X, 55 + Position.Y);
             Hitbox = new Rectangle((int)Center.X + 5, (int)Center.Y, 30, 40);
-            
-            
             BulletTexture = textures[11];
 
             AttackCooldown = 0.5f;

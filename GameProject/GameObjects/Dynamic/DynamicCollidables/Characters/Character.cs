@@ -22,7 +22,7 @@ using IGameComponent = GameProject.Interfaces.IGameComponent;
 
 namespace GameProject.Characters
 {
-    internal abstract class Character : DynamicCollidable, IGameComponent, IMovable, ICollidable , IDynamicCollidable , IAnimated
+    internal abstract class Character : DynamicCollidable, IGameComponent, IMovable, ICollidable , IDynamicCollidable , IAnimated, IUpdateableCharacter , IAttack
     {
 
         private bool idling = false;
@@ -124,10 +124,12 @@ namespace GameProject.Characters
         #endregion
 
 
-        public Character()
+        public Character(Texture2D[] textures)
         {
-
+            InitializeTextures(textures);
+            InitializeAnimations();
         }
+
 
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -161,8 +163,7 @@ namespace GameProject.Characters
             if (Hitpoints > 0 && Invincible == false)
             {
                 Hit = true;
-                Hitpoints -= amountOfDamage;
-               // Invincible = true;  
+                Hitpoints -= amountOfDamage; 
             }
             else if(Hitpoints < 1)
             {
@@ -215,6 +216,11 @@ namespace GameProject.Characters
             AnimationRun = new Animation();
             AnimationAttacking = new Animation();
             AnimationHit = new Animation();
+        }
+
+        public virtual void Update(GameTime gameTime, List<ICollidable> collidables)
+        {
+            
         }
     }
 }

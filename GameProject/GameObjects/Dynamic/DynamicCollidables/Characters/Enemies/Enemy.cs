@@ -25,7 +25,9 @@ namespace GameProject.Enemies
 {
     internal abstract class Enemy : Character, ICollidable, IAnimated , IAttack
     {
+
         private Hero heroL;
+        public Hero HeroL { get { return heroL; } set { heroL = value; } }
         private Vector2 heroPos, facing;
         private float range;
         private bool heroInRange = false;
@@ -35,19 +37,19 @@ namespace GameProject.Enemies
         public float Range { get { return range; } set { range = value; } }
 
         
-        public Enemy(Vector2 speed, Vector2 position, Texture2D[] textures) : base()
+        public Enemy(Vector2 speed, Vector2 position, Texture2D[] textures, Hero hero) : base(textures)
         {
+            HeroL = hero;
             Speed = speed;
             Position = position;
             InitializeAnimations();
             InitializeTextures(textures);
         }
 
-        public void Update(GameTime gameTime, Hero hero, List<ICollidable> collidables)
+
+        public override void Update(GameTime gameTime, List<ICollidable> collidables)
         {
             Idling = false;
-            heroL = hero;
-            
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             TimeSinceLastAttack -= deltaTime;
             
@@ -60,7 +62,7 @@ namespace GameProject.Enemies
                 DecideAction();
             }
 
-            HeroPos = hero.Position;
+            HeroPos = HeroL.Position;
             UpdateHitbox();
             OnDeath();
             GetFacingDirection();
@@ -187,7 +189,6 @@ namespace GameProject.Enemies
             }
         }
 
-
         public override void CheckCollision(ICollidable collidables)
         {
                 if (this.Hitbox.Intersects(collidables.Hitbox) && !(collidables is Cactus))
@@ -206,7 +207,7 @@ namespace GameProject.Enemies
 
         public void SpawnPickup()
         {
-            Pickup pickup = PickupFactory.SpawnPickup(PickupManager.CountPickups(), "Pickup", this.Center, 5f, heroL);
+            Pickup pickup = PickupFactory.SpawnPickup(PickupManager.CountPickups(), "Pickup", this.Center, 5f, HeroL);
             PickupManager.AddPickup(pickup);  
         }
 

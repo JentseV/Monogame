@@ -17,18 +17,14 @@ namespace GameProject.Screens
     {
         private Button restartButton, exitButton;
 
-        public DefeatScreen(Texture2D[] buttonText, SpriteFont font, Hero hero)
+        public DefeatScreen(Texture2D[] buttonText, SpriteFont font, Hero hero):base(buttonText,font,hero)
         {
-            Buttons = new List<Button>();
-
             restartButton = new Button(buttonText[0], new Microsoft.Xna.Framework.Vector2(266f, 368f), () =>
             {
-
                 Game1.Difficulty = 0;
                 Game1.GameStarted = false;
                 Game1.FirstUpdate = false;
                 hero.Dead = false;
-
             });
             exitButton = new Button(buttonText[1], new Microsoft.Xna.Framework.Vector2(425f, 368f), () =>
             {

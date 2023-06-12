@@ -14,6 +14,16 @@ namespace GameProject.Screens
     {
         private List<Button> buttons;
         public List<Button> Buttons { get { return buttons; } set { buttons = value; } }
+
+        private Texture2D[] buttonTextI;
+
+        public GameScreen(Texture2D[] buttonText, SpriteFont font, Hero hero)
+        {
+            buttonTextI = buttonText;
+            buttons = new List<Button>();
+
+        }
+
         public void Update(MouseState mouseState)
         {
             foreach (var button in buttons)

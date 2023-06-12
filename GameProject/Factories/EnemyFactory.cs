@@ -19,7 +19,7 @@ namespace GameProject.Factories
     {
         private static List<Vector2> spawnLocations = new List<Vector2>();
 
-        public static List<Enemy> SpawnEnemies(Texture2D[] coffinTextures, Texture2D[] cactusTextures, Texture2D[] coyoteTextures, float difficulty)
+        public static List<Enemy> SpawnEnemies(Texture2D[] coffinTextures, Texture2D[] cactusTextures, Texture2D[] coyoteTextures, float difficulty,Hero hero)
         {
 
             List<Enemy> enemies = new List<Enemy>();
@@ -38,15 +38,15 @@ namespace GameProject.Factories
 
                 if (spawnerChance > 0 && spawnerChance < 50)
                 {
-                    enemies.Add(new Coffin(new Vector2(1f, 1f), spawnLocations[r.Next(0, 4)], coffinTextures));
+                    enemies.Add(new Coffin(new Vector2(1f, 1f), spawnLocations[r.Next(0, 4)], coffinTextures,hero));
                 }
                 else if (spawnerChance > 50 && spawnerChance < 80)
                 {
-                    enemies.Add(new Cactus(new Vector2(1.5f, 1.5f), spawnLocations[r.Next(0, 4)], cactusTextures));
+                    enemies.Add(new Cactus(new Vector2(1.5f, 1.5f), spawnLocations[r.Next(0, 4)], cactusTextures, hero));
                 }
                 else
                 {
-                    enemies.Add(new Coyote(new Vector2(1f, 1f), spawnLocations[r.Next(0, 4)], coyoteTextures));
+                    enemies.Add(new Coyote(new Vector2(1f, 1f), spawnLocations[r.Next(0, 4)], coyoteTextures, hero));
                 }
             }
             return enemies;

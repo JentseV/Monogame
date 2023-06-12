@@ -26,7 +26,7 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
        
         private int TeleportCount = 0;
         
-        public Coyote(Vector2 speed, Vector2 position, Texture2D[] textures): base(speed, position, textures)
+        public Coyote(Vector2 speed, Vector2 position, Texture2D[] textures, Hero hero): base(speed, position, textures, hero)
         {
 
             Movable = true;

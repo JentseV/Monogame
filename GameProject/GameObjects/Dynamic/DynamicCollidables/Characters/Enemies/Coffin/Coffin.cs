@@ -23,7 +23,7 @@ namespace GameProject.GameObjects.Dynamic.DynamicCollidables.Characters.Enemies.
     internal class Coffin : Enemy, IEnemy , IAttack
     {
 
-        public Coffin(Vector2 speed, Vector2 position, Texture2D[] textures) : base(speed, position, textures)
+        public Coffin(Vector2 speed, Vector2 position, Texture2D[] textures,Hero hero) : base(speed, position, textures,hero)
         {
             Idling = false;
             Hitpoints = 3;

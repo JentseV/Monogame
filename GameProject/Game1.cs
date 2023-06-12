@@ -31,6 +31,8 @@ namespace GameProject
     {
         public static Texture2D healthTexture, coinTexture;
         private static List<Pickup> s = new List<Pickup>();
+
+        public static bool Victory { get; set; } = false;
         public static bool GameStarted { get; set; } = false;
         public static bool FirstUpdate { get; set; } = false;
         public static int Difficulty { get; set; } = 0;
@@ -38,11 +40,10 @@ namespace GameProject
         private List<Building> buildings = new List<Building>();
 
         private List<IPickupObserver> pickupObservers = new();
-        private UI ui;
         private ScoreUI scoreUI;
         private bool spawnEnemies = true;
         private Rectangle backgroundRect;
-        private Texture2D background, buttonText, backGroundStart, backGroundDefeat;
+        private Texture2D background, buttonText, backGroundStart, backGroundDefeat,backGroundVictory;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Hero hero;
@@ -51,10 +52,10 @@ namespace GameProject
         private Button button;
         private SpriteFont font;
         private DefeatScreen defeatScreen;
+        private VictoryScreen victoryScreen;
 
         private List<SoundEffect> heroSounds = new List<SoundEffect>();
         private Dictionary<string, int[]> buildingParams = new Dictionary<string, int[]>();
-        private UpgradeUI upgradeUI;
 
         private List<DynamicCollidable> dynamicCollidables = new List<DynamicCollidable>();
         private List<StaticCollidable> staticCollidables = new List<StaticCollidable>();
@@ -156,7 +157,7 @@ namespace GameProject
         protected override void Initialize()
         {
             
-            // TODO: Add your initialization logic here
+           
             base.Initialize();
             scoreUI = new ScoreUI(font);
             button = new Button(buttonText, new Vector2(500f, 300f), () => hero.Hitpoints += 3);
@@ -164,11 +165,11 @@ namespace GameProject
             defeatScreen = new DefeatScreen(defeatButtonTextures,font, hero);
             enemyManager = new EnemyManager(enemies);
             startScreen = new StartScreen(buttonTextures, font,hero) ;
+            victoryScreen = new VictoryScreen(defeatButtonTextures, font, hero);
             collidables.Add(hero);
 
             InitializeBuildings();
-            
-            upgradeUI = new UpgradeUI(font, buttonText, hero);
+         
             pickupObservers.Add(hero);
             backgroundRect = new Rectangle(0, 0, 32, 47);
 
@@ -196,39 +197,33 @@ namespace GameProject
             background = Content.Load<Texture2D>("World/background");
             backGroundStart = Content.Load<Texture2D>("World/startScreen");
             backGroundDefeat = Content.Load<Texture2D>("World/defeatScreen");
+            backGroundVictory = Content.Load<Texture2D>("World/victoryScreen");
             font = Content.Load<SpriteFont>("Fonts/west");
             buttonText = Content.Load<Texture2D>("Buttons/boots");
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            if (GameStarted && hero.Dead == false)
+            if (GameStarted && hero.Dead == false && !Victory)
             {
                 FirstUpdate = true;
                 hero.Update(gameTime, collidables);
-
+                if (hero.Gold > 5) Victory = true;
                 if (spawnEnemies)
                 {
-                    enemies = EnemyFactory.SpawnEnemies(coffinTextures, cactusTextures, coyoteTextures, Difficulty);
+                    enemies = EnemyFactory.SpawnEnemies(coffinTextures, cactusTextures, coyoteTextures, Difficulty,hero);
                     enemyManager.enemies = enemies;
                     collidables.AddRange(enemies);
                 }
-
                 UpdateSpawnEnemies();
+                
                 CollisionManager.CheckCollisions(collidables, pickupObservers);
-
-
-                //upgradeUI.Update(Mouse.GetState());
-
                 enemyManager.Update(gameTime, hero, collidables);
                 PickupManager.Update(gameTime, collidables);
- 
-
                 CollisionManager.CheckCollisions(collidables, pickupObservers);
                 
                 scoreUI.Update(gameTime);
@@ -245,6 +240,9 @@ namespace GameProject
             else if(GameStarted == false && FirstUpdate == false)
             {
                 startScreen.Update(Mouse.GetState());
+            }else if(Victory)
+            {
+                victoryScreen.Update(Mouse.GetState());
             }
             
             base.Update(gameTime);
@@ -256,7 +254,7 @@ namespace GameProject
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
 
-            if (GameStarted && FirstUpdate && hero.Dead == false)
+            if (GameStarted && FirstUpdate && hero.Dead == false && !Victory)
             {
                 desiredWidth = 1200;
                 desiredHeight = 800;
@@ -266,7 +264,6 @@ namespace GameProject
                 hero.DrawBullets(_spriteBatch);
                 enemyManager.Draw(_spriteBatch);
                 PickupManager.Draw(_spriteBatch);
-                //upgradeUI.Draw(_spriteBatch);
                 scoreUI.Draw(_spriteBatch);
             }
             else if (hero.Dead)
@@ -276,13 +273,20 @@ namespace GameProject
                 _spriteBatch.Draw(backGroundDefeat, Vector2.Zero, null, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
                 defeatScreen.Draw(_spriteBatch);
             }
-            else if(GameStarted == false && FirstUpdate == false)
+            else if(GameStarted == false && FirstUpdate == false && !Victory)
             {
                 desiredWidth = 960;
                 desiredHeight = 1024;
                 _spriteBatch.Draw(backGroundStart, Vector2.Zero, null, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
                 startScreen.Draw(_spriteBatch);
+            }else if (Victory)
+            {
+                desiredWidth = 960;
+                desiredHeight = 1024;
+                _spriteBatch.Draw(backGroundVictory, Vector2.Zero, null, Color.White, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
+                victoryScreen.Draw(_spriteBatch);
             }
+
             _graphics.PreferredBackBufferWidth = desiredWidth;
             _graphics.PreferredBackBufferHeight = desiredHeight;
             _graphics.ApplyChanges();

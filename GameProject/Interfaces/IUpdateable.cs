@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameProject.GameObjects.Characters.Player;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace GameProject.Interfaces
     internal interface IUpdateable
     {
         public void Update(GameTime gameTime);
+        
     }
 }

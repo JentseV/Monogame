@@ -1,6 +1,8 @@
 ﻿using GameProject.Animations;
 using GameProject.GameObjects;
+using GameProject.GameObjects.Characters.Player;
 using GameProject.GameObjects.Dynamic;
+using GameProject.Interfaces;
 using GameProject.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -29,6 +31,11 @@ namespace GameProject.GameObjects.Dynamic
         public virtual void Update(GameTime gameTime)
         {
 
+        }
+
+        public virtual void Update(GameTime gameTime, Hero hero, List<ICollidable> collidables)
+        {
+            
         }
     }
 }

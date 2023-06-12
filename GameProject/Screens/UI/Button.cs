@@ -11,15 +11,18 @@ using System.Threading.Tasks;
 
 namespace GameProject.Screens.UI
 {
-    internal class Button : GameObject
+    internal class Button
     {
+        private Rectangle hitbox;
+
+        public Rectangle Hitbox { get { return hitbox; } set { hitbox = value; } }
         private Texture2D texture;
         private Action action;
 
         public Button(Texture2D texture, Vector2 position, Action action)
         {
             this.texture = texture;
-            this.hitbox = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
+            this.Hitbox = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
             this.action = action;
         }
 
